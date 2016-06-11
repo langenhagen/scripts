@@ -7,6 +7,8 @@
 #
 # Note: This must be run from the sdk_extensions directory: scripts/check-doc.sh
 
+cd /Users/langenha/code/olympia-prime/auto-core-sdk/sdk_extensions/
+
 cd doc
 
 eval `sed -ne 's/\s\+//g;/WARN_LOGFILE.*=/p' Doxyfile | tr -d ' '`
@@ -27,7 +29,7 @@ QHELPGENERATOR_BIN=`locate bin/qhelpgenerator | head -n 1`
 
 # generate sequence diagrams etc. with PlantUML
 export PLANTUML_JAR=`pwd`/plantuml.jar
-java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)"
+java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)" > plantuml_output.txt
 
 # build docs
 doxygen Doxyfile > doxylog.txt 2>&1
@@ -36,7 +38,8 @@ doxygen Doxyfile > doxylog.txt 2>&1
 python doxy-coverage.py --ignoredir ../../locationsdk/carlo/ xml > $DOC_COVERAGE
 
 # general coverage check
-! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
+# ! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
+! grep '100% API documentation coverage' $DOC_COVERAGE && false
 
 # ignore missing Tag file warning in Doxygen warnings file
 sed -i.bak '/error: Tag file.*/d' $WARN_LOGFILE

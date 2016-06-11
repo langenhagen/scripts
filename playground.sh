@@ -5,18 +5,21 @@
 
 source common.sh
 
-echo-head PLAYGROUND.SH
+echo-head 'PLAYGROUND.SH'
 
 cd ~/code/olympia-prime/build/
 echo `pwd`
 
 
 echo $@
-echo ''
+echo
+# YOUG CODE GOES HERE #########################################################
 
-echo-error test dies ist
-echo-ok der bestanden ist
-echo-warn oder "was"
 
-echo "????"
-echo-ok ✔
+
+
+
+
+
+# END OF YOUR CODE ############################################################
+echo-ok '✔'

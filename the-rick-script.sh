@@ -17,5 +17,5 @@ echo '>>>>>>>>>>> RICK DOES THE NINJA SDLJNI'
 bash $SCRIPTS_DIR/build-integration-tests.sh
 
 
-echo ''
-echo RICK DONE.
+echo
+echo 'RICK DONE.'

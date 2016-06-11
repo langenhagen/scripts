@@ -2,11 +2,10 @@
 source common.sh
 
 
-cd ~/code/olympia-prime/build/
-
-
 echo-head RIT Running Integration Tests
+cd ~/code/olympia-prime/build/
 echo `pwd`
+
 
 # check for libgls.dylib alias
 if [ ! -f libgls.dylib ]; then
@@ -15,7 +14,7 @@ if [ ! -f libgls.dylib ]; then
     echo RIT SCRIPT EXITS
     exit 1
 else
-    echo "*** alias for libgls.dylib found ***"
+    echo '*** alias for libgls.dylib found ***'
 fi
 
 # set variables
@@ -24,19 +23,17 @@ IS_LOG_TO_STD_OUT=$2
 
 
 if [ "$WILDCARD" = "" ]; then
-    WILDCARD=testloccatsync.*
+    WILDCARD=testlocsync.*
 fi
-
 if [ "$IS_LOG_TO_STD_OUT" != "" ]; then
     IS_LOG_TO_STD_OUT=--log-to-stdout
 fi
 
 
-echo ""
+echo
 echo Wildcard: $WILDCARD
 echo Additional: $IS_LOG_TO_STD_OUT
-echo ""
-echo ""
+echo
 
 
 # do the integration tests
