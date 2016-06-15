@@ -17,9 +17,10 @@ echo
 
 
 
-
-
-
+bash /Users/langenha/code/scripts/easy.sh
+varrr=$?
+echo whats the status
+echo $varrr
 
 # END OF YOUR CODE ############################################################
 echo-ok '✔'

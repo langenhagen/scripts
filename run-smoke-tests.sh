@@ -22,4 +22,4 @@ fi
 
 # do the smoke tests
 auto-core-sdk/sdk_extensions/tests/integration/runner/carlo_sdl_integration_tests \
-../auto-core-sdk/sdk_extensions/tests/integration/test.py
+../auto-core-sdk/sdk_extensions/tests/integration/smoke/test.py

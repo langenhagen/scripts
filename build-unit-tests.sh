@@ -11,3 +11,5 @@ echo `pwd`
 echo ''
 
 ninja carlo_sdl_unit_tests
+
+exit $?
