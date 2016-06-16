@@ -1,0 +1,51 @@
+[
+	{
+		"args":
+		{
+			"characters": "/**"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": " *"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": " TODO"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "\n"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "*"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "/"
+		},
+		"command": "insert"
+	}
+]

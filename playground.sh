@@ -1,14 +1,12 @@
 #!/bin/bash
+source ~/common.sh
+
 
 #export MY_CURRENT_PATH=`pwd`
 #cd $MY_CURRENT_PATH
 
-source common.sh
 
 echo-head 'PLAYGROUND.SH'
-
-cd ~/code/olympia-prime/build/
-echo `pwd`
 
 
 echo $@
@@ -16,11 +14,15 @@ echo
 # YOUG CODE GOES HERE #########################################################
 
 
+cd $OLYMPIA_MAIN_DIR/auto-core-sdk
 
-bash /Users/langenha/code/scripts/easy.sh
-varrr=$?
-echo whats the status
-echo $varrr
+git rev-parse --verify 1622 &>/dev/null
+echo $?
+echo ORWHAT
+
+# git checkout -b a-OLYMP-4406s
+
+
 
 # END OF YOUR CODE ############################################################
 echo-ok '✔'

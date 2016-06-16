@@ -1,15 +1,15 @@
 #!/bin/bash
+source ~/common.sh
 
 # RICK stands for Remove **/*.I and **./*.Cxx files (which is now done by the cmake script), run cmaKe and build sdljni
 # still RICK \m/
 
-source common.sh
 
 
-cd /Users/langenha/code/olympia-prime/build
+cd $OLYMPIA_BUILD_DIR
 
 
-echo-head DOING THE RICK - do CMake and call ninja carlo_sdl_integration_tests ...
+echo-head 'DOING THE RICK - do CMake and call ninja carlo_sdl_integration_tests ...'
 echo '>>>>>>>>>>> RICK CALLS THE CMAKE'
 bash $SCRIPTS_DIR/the-cmake-script.sh
 

@@ -1,0 +1,3 @@
+[
+    { "keys": ["ctrl+shift+d"], "command": "run_macro_file", "args": {"file": "Packages/User/add_docstring.sublime-macro"} }
+]

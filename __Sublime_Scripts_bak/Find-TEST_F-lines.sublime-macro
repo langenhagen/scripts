@@ -1,0 +1,78 @@
+[
+	{
+		"args": null,
+		"command": "select_all"
+	},
+	{
+		"args":
+		{
+			"characters": "^"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"contents": "($0)"
+		},
+		"command": "insert_snippet"
+	},
+	{
+		"args":
+		{
+			"contents": "($0)"
+		},
+		"command": "insert_snippet"
+	},
+	{
+		"args":
+		{
+			"characters": "?!TEST"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "_F"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"by": "characters",
+			"forward": true
+		},
+		"command": "move"
+	},
+	{
+		"args":
+		{
+			"characters": "."
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"by": "characters",
+			"forward": true
+		},
+		"command": "move"
+	},
+	{
+		"args":
+		{
+			"characters": "*"
+		},
+		"command": "insert"
+	},
+	{
+		"args":
+		{
+			"characters": "$"
+		},
+		"command": "insert"
+	}
+]

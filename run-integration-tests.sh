@@ -1,9 +1,9 @@
 #!/bin/bash
-source common.sh
+source ~/common.sh
 
 
 echo-head RIT Running Integration Tests
-cd ~/code/olympia-prime/build/
+cd $OLYMPIA_BUILD_DIR
 echo `pwd`
 
 
@@ -38,4 +38,4 @@ echo
 
 # do the integration tests
 auto-core-sdk/sdk_extensions/tests/integration/runner/carlo_sdl_integration_tests \
-../auto-core-sdk/sdk_extensions/tests/integration/test.py $WILDCARD $IS_LOG_TO_STD_OUT
+$OLYMPIA_MAIN_DIR/auto-core-sdk/sdk_extensions/tests/integration/test.py $WILDCARD $IS_LOG_TO_STD_OUT

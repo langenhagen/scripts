@@ -1,8 +1,8 @@
 #!/bin/bash
-source common.sh
+source ~/common.sh
 
 
-cd ~/code/olympia-prime/build/
+cd $OLYMPIA_BUILD_DIR
 
 
 echo-head 'RST Running Smoke Tests'
