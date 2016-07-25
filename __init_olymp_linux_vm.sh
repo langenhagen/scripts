@@ -126,7 +126,7 @@ function stage_two {
     ln -sfn /media/sf_code/olympia-prime /home/$USER/Desktop/olymp-prime-repo
     ln -sfn /home/$USER/olympia/olymp-prime-build /home/$USER/Desktop/olymp-prime-build
 
-    ln -sfn /media/sf_code/scripts/common_ubuntu_vm.sh /home/$USER/common.sh        # <<< plz review: the source might be just common.sh !!!
+    ln -sfn /media/sf_code/scripts/common.sh /home/$USER/common.sh
 
     mkdir -p /home/$USER/.config/fish
     cp /media/sf_Dropbox/config.fish /home/$USER/.config/fish/config.fish           # <<< actually provide the file that is to be copied
