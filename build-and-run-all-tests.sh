@@ -28,7 +28,7 @@ echo
 echo-ok 'Building and running the unit tests...'
 bash $SCRIPTS_DIR/build-and-run-unit-tests.sh $GOOGLETEST_ARGUMENTS
 if [ $? != 0 ] ; then
-    echo-error 'Build-And-Run-Unit Tests failed! Aborting.'
+    echo-error 'Build-And-Run-Unit Tests failed on Unit Tests! Aborting.'
     exit 1
 fi
 
@@ -37,7 +37,7 @@ echo
 echo-ok 'Building integration tests...'
 bash $SCRIPTS_DIR/build-integration-tests.sh
 if [ $? != 0 ] ; then
-    echo-error 'Building Integration Tests failed! Aborting.'
+    echo-error 'Building Integration Tests failed on building Integration Tests! Aborting.'
     exit 2
 fi
 

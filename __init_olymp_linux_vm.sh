@@ -1,10 +1,13 @@
-# prepare / review common_ubuntu_vm.sh
+# prepare / review common.sh
 # prepare / review config.fish
 # set base mem
 # set network
 # create sf_Dropbox
 # create sf_Code
 # install guest additions (if you seem to have already a pre-installed version you can do: sudo apt-get purge virtualbox*)
+# run this script. this script will set up almost every precondition you need for olympia.
+# please refer then to:
+# https://confluence.in.here.com/display/AE/How+to+build+Olympia+Integration+for+Linux
 
 
 HERE_USER=langenha
@@ -36,9 +39,18 @@ function stage_one {
     sudo passwd $USER
 
 
-    sudo apt-get install software-properties-common
+    gpg --keyserver keyserver.ubuntu.com --recv 3E5C1192
+    gpg --export --armor 3E5C1192 | sudo apt-key add -
+
+
+    sudo apt-get update
+    sudo apt-get install -y --force-yes software-properties-common
+
+    sudo apt-add-repository "deb http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu trusty main"
+    sudo add-apt-repository "http://extras.ubuntu.com/ubuntu main"
     sudo add-apt-repository ppa:george-edison55/cmake-3.x
 
+    sudo apt-get update
     sudo apt-get --assume-yes install git cmake ccache ninja-build build-essential doxygen libcurl4-openssl-dev mono-devel
     sudo apt-get --assume-yes install mesa-common-dev libglu1-mesa-dev libicu-dev libexpat1-dev libpng12-dev git-gui gitk
     sudo apt-get --assume-yes install meld ruby ruby-nokogiri libglew-dev
@@ -49,9 +61,13 @@ function stage_one {
     sudo apt-get --assume-yes install vim fish tig
     sudo apt-get --assume-yes install clang-3.5
     sudo apt-get --assume-yes install freeglut3 freeglut3-dev binutils-gold g++ mesa-common-dev build-essential libglew1.5-dev libglm-dev
+    sudo apt-get --assume-yes install gcc-4.9 g++-4.9 libegl1-mesa-dev libcogl-gles2-dev mscgen
 
     sudo apt-get update
     sudo apt-get -y upgrade
+
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 10
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 10
 
 
     wget http://de.archive.ubuntu.com/ubuntu/pool/universe/s/swig/swig3.0_3.0.2-1ubuntu1_amd64.deb
@@ -115,14 +131,14 @@ function stage_two {
 
     mkdir -p /home/$USER/olympia
     mkdir -p /home/$USER/olympia/repo
-    mkdir -p /home/$USER/olympia/olymp-vm-build
+    mkdir -p /home/$USER/olympia/repo/build
     mkdir -p /home/$USER/olympia/olymp-prime-build
 
     ln -sfn /media/sf_Dropbox /home/$USER/Desktop/sf_Dropbox
     ln -sfn /media/sf_code /home/$USER/Desktop/sf_code
     ln -sfn /media/sf_code/scripts /home/$USER/Desktop/sf_scripts
     ln -sfn /home/$USER/olympia/repo /home/$USER/Desktop/olymp-vm-repo
-    ln -sfn /home/$USER/olympia/olymp-vm-build /home/$USER/Desktop/olymp-vm-build
+    ln -sfn /home/$USER/olympia/repo/build /home/$USER/Desktop/olymp-vm-build
     ln -sfn /media/sf_code/olympia-prime /home/$USER/Desktop/olymp-prime-repo
     ln -sfn /home/$USER/olympia/olymp-prime-build /home/$USER/Desktop/olymp-prime-build
 

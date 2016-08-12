@@ -48,8 +48,8 @@ fi
 
 git branch $1
 
-git pull origin staging
 repo sync
+git pull origin staging
 git checkout $1
 
 

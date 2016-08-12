@@ -45,9 +45,8 @@ rm -f **/*.cxx
 cmake -GNinja -Wno-dev -DCMAKE_USE_CCACHE=1 -DADDRESS_SANITIZER=0 -DMONITOR_QUERY_EXECUTION=0 -DMOS_SHARED=0 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=installdir -DNO_QT=1 -DXMLSEC_CRYPTO_OPENSSL=0 -DWITH_DBUS=0 $OLYMPIA_MAIN_DIR
 
 
-
 echo
-echo 'linking a valid libgls.dylib alias into olympia build dir (although their sources do not yet exit) ...'      # we do both just bc the code yould be mor complex otherwise :)
+echo 'linking a valid libgls.dylib alias into olympia build dir (although their sources do not yet exit) ...'      # we do both just bc the code would be more complex otherwise :)
 ln -s $OLYMPIA_BUILD_DIR/auto-core-sdk/locationsdk/samples/positioning/glsempty/libgls.dylib $OLYMPIA_BUILD_DIR    # Mac X
 ln -s $OLYMPIA_BUILD_DIR/auto-core-sdk/locationsdk/samples/positioning/glsempty/libgls.so $OLYMPIA_BUILD_DIR       # Linux
 
