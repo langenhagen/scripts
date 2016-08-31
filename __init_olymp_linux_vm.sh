@@ -57,7 +57,7 @@ function stage_one {
     sudo apt-get --assume-yes install libjogl2-java
     sudo apt-get --assume-yes install libxmlsec1-openssl chrpath libxml2-dev libssl-dev keychain
     sudo apt-get --assume-yes install libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 ant default-jdk
-    sudo apt-get --assume-yes install python-dev python-pip curl
+    sudo apt-get --assume-yes install python-dev python-pip curl bpython
     sudo apt-get --assume-yes install vim fish tig
     sudo apt-get --assume-yes install clang-3.5
     sudo apt-get --assume-yes install freeglut3 freeglut3-dev binutils-gold g++ mesa-common-dev build-essential libglew1.5-dev libglm-dev
@@ -135,12 +135,8 @@ function stage_two {
     mkdir -p /home/$USER/olympia/olymp-prime-build
 
     ln -sfn /media/sf_Dropbox /home/$USER/Desktop/sf_Dropbox
-    ln -sfn /media/sf_code /home/$USER/Desktop/sf_code
     ln -sfn /media/sf_code/scripts /home/$USER/Desktop/sf_scripts
-    ln -sfn /home/$USER/olympia/repo /home/$USER/Desktop/olymp-vm-repo
-    ln -sfn /home/$USER/olympia/repo/build /home/$USER/Desktop/olymp-vm-build
-    ln -sfn /media/sf_code/olympia-prime /home/$USER/Desktop/olymp-prime-repo
-    ln -sfn /home/$USER/olympia/olymp-prime-build /home/$USER/Desktop/olymp-prime-build
+
 
     ln -sfn /media/sf_code/scripts/common.sh /home/$USER/common.sh
 

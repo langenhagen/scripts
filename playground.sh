@@ -11,16 +11,28 @@ echo-head 'PLAYGROUND.SH'
 
 echo $@
 echo
-# YOUG CODE GOES HERE #########################################################
+# YOUR CODE GOES HERE #########################################################
 
 
-cd $OLYMPIA_MAIN_DIR/auto-core-sdk
 
-git rev-parse --verify 1622 &>/dev/null
-echo $?
-echo ORWHAT
+path_to_docker=$(which docker)
 
-# git checkout -b a-OLYMP-4406s
+if [ "$path_to_docker" == "" ]
+then
+    echo "$path_to_docker does not exist or is empty."
+else
+    echo "$path_to_docker exists"
+fi
+
+
+path_to_docker=$(which dockesr)
+
+if [ "$path_to_docker" == "" ]
+then
+    echo "$path_to_docker does not exist or is empty."
+else
+    echo "$path_to_docker exists"
+fi
 
 
 

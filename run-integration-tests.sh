@@ -2,16 +2,17 @@
 source ~/common.sh
 
 
-echo-head RIT Running Integration Tests
 cd $OLYMPIA_BUILD_DIR
-echo `pwd`
 
+
+echo-head 'RIT Running Integration Tests'
+echo `pwd`
 
 # check for libgls.dylib alias
 if [ ! -f libgls.dylib ]; then
     echo-error ERROR
     echo-error `pwd`"/libgls.dylib alias not found"
-    echo RIT SCRIPT EXITS
+    echo 'RIT SCRIPT EXITS'
     exit 1
 else
     echo '*** alias for libgls.dylib found ***'
@@ -23,7 +24,7 @@ IS_LOG_TO_STD_OUT=$2
 
 
 if [ "$WILDCARD" = "" ]; then
-    WILDCARD=testlocsync.*
+    WILDCARD=""
 fi
 if [ "$IS_LOG_TO_STD_OUT" != "" ]; then
     IS_LOG_TO_STD_OUT=--log-to-stdout
