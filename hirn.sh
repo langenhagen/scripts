@@ -1,4 +1,4 @@
 #!/bin/bash
 
-grep -Hirn $1 .
+grep -Hirn --color $1 .
 
