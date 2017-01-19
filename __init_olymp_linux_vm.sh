@@ -62,6 +62,7 @@ function stage_one {
     sudo apt-get --assume-yes install clang-3.5
     sudo apt-get --assume-yes install freeglut3 freeglut3-dev binutils-gold g++ mesa-common-dev build-essential libglew1.5-dev libglm-dev
     sudo apt-get --assume-yes install gcc-4.9 g++-4.9 libegl1-mesa-dev libcogl-gles2-dev mscgen
+    sudo apt-get --assume-yes install icecc
 
     sudo apt-get update
     sudo apt-get -y upgrade

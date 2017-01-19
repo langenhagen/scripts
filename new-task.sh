@@ -1,15 +1,13 @@
 #!/bin/bash
 source ~/common.sh
 
-if [ "$1" == "" ] ; then
+### INPUT VARS #####################################################################################
+
+BRANCH_NAME=$1
+if [ "$BRANCH_NAME" == "" ] ; then
     echo-error 'ERROR: new-task needs a name for a new branch.'
     exit 1
 fi
-
-echo-head "Creating new Task named $1"
-
-
-### INPUT VARS
 
 DO_RATS=false
 if [ "$2" == "rats" ] ; then
@@ -17,12 +15,13 @@ if [ "$2" == "rats" ] ; then
     DO_RATS=true
 fi
 
+### PROGRAM ########################################################################################
 
-### PROGRAM
+echo-head "Creating new Task named $BRANCH_NAME"
 
-cd $OLYMPIA_MAIN_DIR/auto-core-sdk
+cd $ACS_MAIN_DIR
 
-git checkout staging                                                                                # go to staging
+git checkout staging
 if [ $? != 0 ] ; then
     echo-error "ERROR: Cannot checkout staging. Have you committed your current changes? ;)"
     git branch
@@ -30,9 +29,9 @@ if [ $? != 0 ] ; then
 fi
 
 
-git rev-parse --verify $1 &>/dev/null                                                               # check if branch already exists
+git rev-parse --verify $BRANCH_NAME &>/dev/null
 if [ $? == 0 ] ; then
-    echo-warn "ERROR: Branch $1 exists already."
+    echo-warn "ERROR: Branch $BRANCH_NAME exists already."
 
     echo 'You want to create delete it? (y/n) '
     read -n 1 key
@@ -43,14 +42,14 @@ if [ $? == 0 ] ; then
         exit 3
     fi
 
-    git branch -D $1
+    git branch -D $BRANCH_NAME
 fi
 
-git branch $1
+git branch $BRANCH_NAME
 
 repo sync
 git pull origin staging
-git checkout $1
+git checkout $BRANCH_NAME
 
 
 echo
@@ -59,14 +58,13 @@ git branch;
 echo '-----------------------------------------------'
 
 
-echo                                                                                                # run cmake
 echo-ok 'Doing the CMake...'
 bash $SCRIPTS_DIR/the-cmake-script.sh --allnew
 
 
-                                                                                                    # run rats
 if [ $DO_RATS == true ] ; then
-    bash $SCRIPTS_DIR/build-and-run-all-tests.sh
+    echo-ok 'Doing the Rats...'
+    bash $SCRIPTS_DIR/rats.sh
 fi
 
 
@@ -76,4 +74,4 @@ git branch;
 echo '-----------------------------------------------'
 
 echo
-echo-ok "New-Task done"
+echo-ok "New-Task done."

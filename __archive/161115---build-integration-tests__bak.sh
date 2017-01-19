@@ -2,7 +2,7 @@
 source ~/common.sh
 
 
-cd $OLYMPIA_BUILD_DIR
+cd $ACS_BUILD_DIR
 
 
 echo-head 'building carlo_sdl_integration_tests...'

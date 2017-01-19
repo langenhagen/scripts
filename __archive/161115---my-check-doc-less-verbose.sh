@@ -7,15 +7,9 @@
 #
 # Note: This must be run from the sdk_extensions directory: scripts/check-doc.sh
 
+cd $ACS_MAIN_DIR/sdk_extensions/
 
-### INPUT VARIABLES ################################################################################
-
-VEROSE=false
-if echo $* | grep -we '--verbose' -q ; then VEROSE=true; fi
-
-### PROGRAM ########################################################################################
-
-cd $ACS_MAIN_DIR/sdk_extensions/doc
+cd doc
 
 eval `sed -ne 's/\s\+//g;/WARN_LOGFILE.*=/p' Doxyfile | tr -d ' '`
 # langenhagen - 160418 - i added this one ____________^^^^^^^^^^^
@@ -35,11 +29,7 @@ QHELPGENERATOR_BIN=`locate bin/qhelpgenerator | head -n 1`
 
 # generate sequence diagrams etc. with PlantUML
 export PLANTUML_JAR=`pwd`/plantuml.jar
-if [ $VERBOSE ] ; then
-    java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)"
-else
-    java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)" > plantuml_output.txt
-fi
+java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)" > plantuml_output.txt
 
 # build docs
 doxygen Doxyfile > doxylog.txt 2>&1
@@ -47,14 +37,9 @@ doxygen Doxyfile > doxylog.txt 2>&1
 
 python doxy-coverage.py --ignoredir ../../locationsdk/carlo/ xml > $DOC_COVERAGE
 
-
 # general coverage check
-if [ $VERBOSE ] ; then
-    ! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
-else
-    ! grep '100% API documentation coverage' $DOC_COVERAGE && false
-fi
-
+# ! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
+! grep '100% API documentation coverage' $DOC_COVERAGE && false
 
 # ignore missing Tag file warning in Doxygen warnings file
 sed -i.bak '/error: Tag file.*/d' $WARN_LOGFILE

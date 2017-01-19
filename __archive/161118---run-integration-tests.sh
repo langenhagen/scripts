@@ -1,6 +1,10 @@
 #!/bin/bash
 source ~/common.sh
 
+# cd build dir
+# checks for dylib
+# starts the integration tests from the correct folder
+
 
 cd $OLYMPIA_BUILD_DIR
 
@@ -40,3 +44,8 @@ echo
 # do the integration tests
 auto-core-sdk/sdk_extensions/tests/integration/runner/carlo_sdl_integration_tests \
 $OLYMPIA_MAIN_DIR/auto-core-sdk/sdk_extensions/tests/integration/test.py $WILDCARD $IS_LOG_TO_STD_OUT
+
+
+# Check fot DYLIB
+# [Compile]
+# RUN THE TESTS
