@@ -16,11 +16,27 @@ cd ~/Desktop
 #     echo "MAAAAUUU"
 # fi
 
-if grep -Hirn 'carlo' my_docker_out.txt; then
-    echo is found
-else
-    echo is not found
-fi
+# if [ ! -d $E2E_ARTIFACTS ]; then
+#     mkdir $E2E_ARTIFACTS
+#     echo "here"
+# fi
+
+
+function myfunc()
+{
+    myresult='some value'
+}
+
+function myfunc3()
+{
+    myresult='fr value'
+}
+
+myfunc
+echo $myresult
+myfunc3
+echo $myresult
+
 
 
 # END OF YOUR CODE ############################################################
