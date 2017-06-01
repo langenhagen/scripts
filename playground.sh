@@ -9,35 +9,20 @@ echo 'input params:      ' $@
 echo
 # YOUR CODE GOES HERE #########################################################
 
-cd ~/Desktop
+# from:
+# https://www.gnu.org/software/grep/manual/html_node/Exit-Status.html
+#
+# Normally the exit status is 0 if a line is selected,
+# 1 if no lines were selected, and 2 if an error occurred.
+# However, if the -q or --quiet or --silent option is used and a line is selected,
+# the exit status is 0 even if an error occurred.
+# Other grep implementations may exit with status greater than 2 on error.
 
-# cat my_docker_out.txt | grep -c -Hirn 'ssegmentation'
-# if [ $? == 0 ] ; then
-#     echo "MAAAAUUU"
-# fi
-
-# if [ ! -d $E2E_ARTIFACTS ]; then
-#     mkdir $E2E_ARTIFACTS
-#     echo "here"
-# fi
-
-
-function myfunc()
-{
-    myresult='some value'
-}
-
-function myfunc3()
-{
-    myresult='fr value'
-}
-
-myfunc
-echo $myresult
-myfunc3
-echo $myresult
-
-
+if echo $HOME | grep -v -q "/Users/" ; then
+    echo "we're not on mac"
+else
+    echo "we're on mac"
+fi
 
 # END OF YOUR CODE ############################################################
 echo-ok '✔'
