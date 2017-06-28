@@ -51,10 +51,10 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string># opens a Terminal from Finder with a current working directory right where You are.# You cann add the app to Finder's toolbar with cmd + drag/drop. ## author: langenhagen# version: 170428on run {input, parameters}	tell application "Finder"
-    	set current_path to path to (folder of the front window as alias)
-    	make new folder at current_path with properties {name:"unnamed"}
-	end tellend run</string>
+					<string># Creates a folder in Finder right where You are.# You cann add the app to Finder's toolbar with cmd + drag/drop. ## author: langenhagen# version: 1700628on run {input, parameters}
+	
+	set fileNameDialog to display dialog "Name of the new folder?" default answer "unnamed"
+	tell application "Finder"		set current_path to (folder of the front window) as alias		make new folder at current_path with properties {name: text returned of fileNameDialog}	end tellend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -71,15 +71,15 @@
 				<key>Class Name</key>
 				<string>RunScriptAction</string>
 				<key>InputUUID</key>
-				<string>9E8ABCFD-008A-497D-8B01-A84CBDDBE455</string>
+				<string>BAE6ABE6-7BD6-4F13-9FE8-376DC4FBFE8A</string>
 				<key>Keywords</key>
 				<array>
 					<string>Run</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>2D02AD0C-9BB5-410C-8750-D79E91553C64</string>
+				<string>8677D631-B3EF-47F8-9B96-29C7D82CB8EA</string>
 				<key>UUID</key>
-				<string>540CB600-2A8F-4CD7-8B3A-3F546FD1634A</string>
+				<string>B4F3B486-161B-45F7-A6DA-93EA9F3C0F48</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -108,7 +108,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>649.000000:730.000000</string>
+				<string>649.000000:616.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

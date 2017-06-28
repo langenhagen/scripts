@@ -18,11 +18,11 @@ echo
 # the exit status is 0 even if an error occurred.
 # Other grep implementations may exit with status greater than 2 on error.
 
-if echo $HOME | grep -v -q "/Users/" ; then
-    echo "we're not on mac"
-else
-    echo "we're on mac"
-fi
+for VALUE in 0 1 3 ; do
+
+    echo $VALUE
+
+done
 
 # END OF YOUR CODE ############################################################
 echo-ok '✔'

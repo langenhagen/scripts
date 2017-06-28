@@ -30,3 +30,12 @@ function echo-ok {
 function echo-warn {
     printf "${YELLOW}${@}${NC}\n"
 }
+
+
+function check_if_this_computer_is_a_mac {
+    if echo $HOME | grep -v -q "/Users/" ; then
+        echo "we're not on mac"
+    else
+        echo "we're on mac"
+    fi
+}

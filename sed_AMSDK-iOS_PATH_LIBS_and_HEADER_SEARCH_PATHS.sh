@@ -1,0 +1,4 @@
+sed -i -e 's#//PATH_LIBS = $(DEBUG_HCVD_LIBS)#PATH_LIBS = $(DEBUG_HCVD_LIBS)#g' /Users/langenha/code/AMSDK-iOS/Configurations/OEM/Olympia.xcconfig
+sed -i -e 's#PATH_LIBS = $(PATH_TO_HCVD_LIBS)#//PATH_LIBS = $(PATH_TO_HCVD_LIBS)#g' /Users/langenha/code/AMSDK-iOS/Configurations/OEM/Olympia.xcconfig
+sed -i -e 's#//HEADER_SEARCH_PATHS = $(DEBUG_HCVD_HEADERS)#HEADER_SEARCH_PATHS = $(DEBUG_HCVD_HEADERS)#g' /Users/langenha/code/AMSDK-iOS/Configurations/OEM/Olympia.xcconfig
+sed -i -e 's#HEADER_SEARCH_PATHS = $(PATH_TO_HCVD_HEADERS)#//HEADER_SEARCH_PATHS = $(PATH_TO_HCVD_HEADERS)#g' /Users/langenha/code/AMSDK-iOS/Configurations/OEM/Olympia.xcconfig
