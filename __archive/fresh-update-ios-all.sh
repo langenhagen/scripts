@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "semiscript!"
+exit 0
+
+
 # AMSKD iOS
 cd /Users/langenha/code/AMSDK-iOS
 git pull origin staging
