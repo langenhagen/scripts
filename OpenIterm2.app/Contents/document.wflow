@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>428</string>
+	<string>444.4</string>
 	<key>AMApplicationVersion</key>
-	<string>2.7</string>
+	<string>2.8</string>
 	<key>AMDocumentVersion</key>
 	<string>2</string>
 	<key>actions</key>
@@ -51,15 +51,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>source</key>
-					<string>
-# taken for the most part from 
-# http://peterdowns.com/posts/open-iterm-finder-service.html
-#
-# on Yosemite and later, adjustments had to be made
-# http://stackoverflow.com/questions/39430002/applescript-expected-end-of-line-but-found-identifier-for-terminal-app
-
-
-on run {input, parameters}  tell application "Finder"    set dir_path to quoted form of (POSIX path of (folder of the front window as alias))  end tell  CD_to(dir_path)end runon CD_to(theDir)  tell application "iTerm"    activate    try      set sesh to current session    on error      set term to (create window with default profile)      tell term        launch session "Default"        set sesh to current session      end tell    end try    tell sesh      write text "cd " &amp; theDir &amp; ";clear;"    end tell  end tellend CD_to</string>
+					<string># taken for the most part from # http://peterdowns.com/posts/open-iterm-finder-service.html and# https://www.iterm2.com/documentation-scripting.html## on Yosemite and later, adjustments had to be made that you can find here:# http://stackoverflow.com/questions/39430002/applescript-expected-end-of-line-but-found-identifier-for-terminal-appon run {input, parameters}	# opens a new iTerm2 tab at the given path or	# if started without a given path, uses the path of the front finder window.		if input is in {{}, {""}, ""} then		tell application "Finder"			set dir_path to quoted form of (POSIX path of (folder of the front window as alias))		end tell	else		set dir_path to quoted form of POSIX path of input	end if		tell application "iTerm"		activate		if not (exists current window) then			create window with default profile		end if				tell current window			create tab with default profile			tell current session				write text "cd " &amp; dir_path			end tell		end tell	end tellend run</string>
 				</dict>
 				<key>BundleIdentifier</key>
 				<string>com.apple.Automator.RunScript</string>
@@ -113,7 +105,7 @@ end run</string>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
-				<string>309.000000:630.000000</string>
+				<string>649.000000:718.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run AppleScript.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>

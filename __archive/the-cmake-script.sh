@@ -67,7 +67,7 @@ else
     echo "Normal Ninja Case"
     cmake -GNinja -Wno-dev \
         -DCMAKE_USE_CCACHE=1 \
-        -DADDRESS_SANITIZER=0 
+        -DADDRESS_SANITIZER=0 \
         -DMONITOR_QUERY_EXECUTION=0 \
         -DMOS_SHARED=0 \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
