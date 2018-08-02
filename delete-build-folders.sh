@@ -6,10 +6,10 @@
 # author: andreasl
 # version: 18-06-24
 
-# if [ $# != 1 ] ; then
-#     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
-#     exit
-# fi
+if [ $# != 1 ] ; then
+    printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
+    exit
+fi
 
 echo "Delete..."
 echo "(1) delete MINI: sdk's and apps {build, jniLibs, libs} folder contents"
@@ -47,8 +47,8 @@ new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
 sed -i "s/$line/$new_line/" "$script_path"
 
 # # each chooce has been taken
-# Number of runs on with option 1: 115
-# Number of runs on with option 2: 11
+# Number of runs on with option 1: 119
+# Number of runs on with option 2: 12
 # Number of runs on with option 3: 7
 # Number of runs on with option 4: 33
 
