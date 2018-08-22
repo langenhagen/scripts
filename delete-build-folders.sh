@@ -4,29 +4,29 @@
 # deletes the distributed sparta build folders given a certain impact level.
 #
 # author: andreasl
-# version: 18-06-24
+# version: 18-08-20
 
 if [ $# != 1 ] ; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
     exit
 fi
 
-echo "Delete..."
-echo "(1) delete MINI: sdk's and apps {build, jniLibs, libs} folder contents"
-echo "(2) delete SMALL:  <BUILD-PATH>/corenav/sdk; sdk's and apps {build, jniLibs, libs} folder contents"
-echo "(3) delete ALL: <BUILD-PATH>; sdk's and apps {build, jniLibs, libs} folder contents"
-echo "(4) delete <BUILD-PATH>/preinstall-image; sdk's and apps {build, jniLibs, libs} folder contents"
-read -p "Your choice?: " impact_level
+echo 'Delete...'
+echo '(1) delete MINI: `git clean -dxf` folder contents'
+echo '(2) delete SMALL:  <BUILD-PATH>/corenav/sdk; `git clean -dxf` sdk and apps'
+echo '(3) delete ALL: <BUILD-PATH>; `git clean -dxf` sdk and appsr'
+echo '(4) delete <BUILD-PATH>/preinstall-image; `git clean -dxf` sdk and apps'
+read -p 'Your choice?: ' impact_level
 
 # compile the folders that are to be deleted
 build_and_lib_dirs=(
-    "/Users/langenha/code/sparta/apps/android-reference"
-    "/Users/langenha/code/sparta/corenav/sdk"
+    '/Users/langenha/code/sparta/apps/android-reference'
+    '/Users/langenha/code/sparta/corenav/sdk'
     )
 additional_dirs=( )
 
 if [ $impact_level == 1 ] ; then
-    : # noop
+    : # colon means a noop in if-clauses in bash
 elif [ $impact_level == 2 ] ; then
     additional_dirs+=("$1/corenav/sdk")
 elif [ $impact_level == 3 ] ; then
@@ -47,8 +47,8 @@ new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
 sed -i "s/$line/$new_line/" "$script_path"
 
 # # each chooce has been taken
-# Number of runs on with option 1: 122
-# Number of runs on with option 2: 12
+# Number of runs on with option 1: 138
+# Number of runs on with option 2: 15
 # Number of runs on with option 3: 9
 # Number of runs on with option 4: 33
 
@@ -58,7 +58,7 @@ for dir in ${additional_dirs[@]} ; do
     rm -rf $dir
 done
 for dir in ${build_and_lib_dirs[@]} ; do
-    find $dir -regex ".*/build/.*" -exec rm -rf '{}' \;
-    find $dir -regex ".*/libs/.*" -not -path "*/\.keepme" -exec rm -fd '{}' \;  # rm -fd: don't kill non-empty dirs
-    find $dir -regex ".*/jniLibs/.*" -exec rm -rf '{}' \;
+pushd ${dir}
+git clean -dxf
+popd
 done
