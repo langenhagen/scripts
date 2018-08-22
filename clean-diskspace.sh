@@ -3,7 +3,7 @@
 # Deletes superfluous storage-consuming directories and files.
 #
 # author: andreasl
-# version: 18-07-30
+# version: 18-08-22
 
 set -x
 
@@ -18,7 +18,8 @@ rm -rfv ~/.gradle/caches
 rm -rfv ~/.gradle/daemon  # TODO verify
 rm -rfv ~/.m2/repository
 
-
 find ~/code -iname '.gradle' -type d -exec rm -rfv '{}' \;
+
+find ~ -type d -name '.git' -exec sh -c "pushd '{}'; git gc; popd ;" \;
 
 docker container prune --force
