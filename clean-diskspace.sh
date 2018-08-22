@@ -2,6 +2,9 @@
 
 # Deletes superfluous storage-consuming directories and files.
 #
+# Input Parameters:
+#   --wholesome (optional): calls git `gq --aggressive` on all .git folders (indirectly) under "/".
+#
 # author: andreasl
 # version: 18-08-22
 
@@ -23,3 +26,8 @@ find ~/code -iname '.gradle' -type d -exec rm -rfv '{}' \;
 find ~ -type d -name '.git' -exec sh -c "pushd '{}'; git gc; popd ;" \;
 
 docker container prune --force
+
+if [[ "$#" -ge "2" && "$2" == "--wholesome" ]]; then
+   echo 'Do a git `gq --aggressive` on all git repos on the machine'
+   find / -type d -name '.git' -exec sh -c "pushd '{}'; git gc --aggressive; popd ;" \;
+fi
