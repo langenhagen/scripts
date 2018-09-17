@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=Reboot
+Exec=reboot
+Type=Application
+Icon=view-refresh-symbolic

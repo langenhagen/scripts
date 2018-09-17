@@ -47,10 +47,10 @@ new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
 sed -i "s/$line/$new_line/" "$script_path"
 
 # # each chooce has been taken
-# Number of runs on with option 1: 138
-# Number of runs on with option 2: 15
-# Number of runs on with option 3: 9
-# Number of runs on with option 4: 33
+# Number of runs on with option 1: 140
+# Number of runs on with option 2: 16
+# Number of runs on with option 3: 13
+# Number of runs on with option 4: 34
 
 # do the delete process
 set -x

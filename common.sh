@@ -60,7 +60,7 @@ function increment_count {
     # The line's last column must consist of a number.
     # There should exactly be one matching line.
     # The file should exist.
-    # The function does no erroch checking!
+    # The function does no error checking!
     #
     # Parameters:
     #   $1:  the grep-pattern for which to look for.

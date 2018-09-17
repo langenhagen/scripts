@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=Shutdown
+Exec=shutdown -Ph now
+Type=Application
+Icon=system-shutdown-symbolic

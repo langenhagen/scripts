@@ -1,0 +1,1 @@
+explorer %~dp1
