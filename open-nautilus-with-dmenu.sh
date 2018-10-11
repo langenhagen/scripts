@@ -3,11 +3,22 @@
 # Calls dmenu with a bunch of options
 # and uses the selected option to open a folder with  nautilus.
 #
-# TODO: somehow use a key command to start this program from the environment.
-#
 # author: andreasl
 # version: 18-09-23
 
-dmenu_result="$(printf "Administrative\nBarn\nDev\nDropbox\nMedia\nWork" | dmenu -i)"  # -i: ignore case
+choices=(
+    "Dropbox"
+    "Administrative"
+    "Barn"
+    "Dev"
+    "Dev/scripts"
+    "Media"
+    "Media/Images/Fotos/Cam"
+    "Media/Audio"
+    "Work")
 
-nautilus /home/barn/${dmenu_result}  # opens nautilus at given point
+dmenu_result="$(printf '%s\n' "${choices[@]}" | dmenu -i -l 30)"  # -i: ignore case
+
+if [ $? == 0 ] ; then
+    nautilus /home/barn/${dmenu_result}  # opens nautilus at given point
+fi

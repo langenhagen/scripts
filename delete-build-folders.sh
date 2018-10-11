@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Given a build folder,
+# Given a sparta build folder,
 # deletes the distributed sparta build folders given a certain impact level.
 #
 # author: andreasl
@@ -58,7 +58,7 @@ for dir in ${additional_dirs[@]} ; do
     rm -rf $dir
 done
 for dir in ${build_and_lib_dirs[@]} ; do
-pushd ${dir}
-git clean -dxf
-popd
+    pushd ${dir}
+    git clean -dxf
+    popd
 done
