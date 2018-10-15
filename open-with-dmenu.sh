@@ -16,7 +16,6 @@ choices=(
     "Media"
     "Media/Images/Fotos/Cam"
     "Media/Audio"
-    "Thunderbird/thunderbird"
     "Work")
 
 dmenu_result="$(printf '%s\n' "${choices[@]}" | dmenu -i -l 30)"  # -i: ignore case
