@@ -6,18 +6,20 @@
 #   --wholesome (optional): calls git `gq --aggressive` on all .git folders (indirectly) under "/".
 #
 # author: andreasl
-# version: 18-09-29
+# version: 18-10-29
 
 set -x
 
-echo 'Info: ~/.gradle/caches has the following size:'
-du -sh ~/.gradle/caches
+dirsize=$(du -sh ~/.gradle/caches 2>/dev/null)
+echo "Info: ~/.gradle/caches has the following size: ${dirsize}"
 rm -rfv ~/.gradle/caches
-echo 'Info: ~/.gradle/daemon has the following size:'
-du -sh ~/.gradle/daemon
+
+dirsize=$(du -sh ~/.gradle/daemon 2>/dev/null)
+echo "Info: ~/.gradle/daemon has the following size: ${dirsize}"
 rm -rfv ~/.gradle/daemon  # TODO verify
-echo 'Info: ~/.m2/repository has the following size:'
-du -sh ~/.m2/repository
+
+dirsize=$(du -sh ~/.m2/repository 2>/dev/null)
+echo "Info: ~/.m2/repository has the following size: ${dirsize}"
 rm -rfv ~/.m2/repository
 
 command -v brew >/dev/null && brew cleanup -s
@@ -29,7 +31,7 @@ if [ "$(command -v apt)" ] ; then
     sudo apt autoremove
 fi
 
-find ~/code -iname '.gradle' -type d -exec rm -rfv '{}' \;
+find ~ -iname '.gradle' -type d -exec rm -rfv '{}' \;
 
 find ~ -type d -name '.git' -exec sh -c "pushd '{}'; git gc; popd ;" \;
 
