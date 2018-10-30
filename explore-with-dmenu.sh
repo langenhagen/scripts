@@ -9,7 +9,7 @@
 # author: andreasl
 # version: 18-10-30
 
-selected_path="/home/barn"
+selected_path="${HOME}"
 
 choices=(
     'Dropbox'
