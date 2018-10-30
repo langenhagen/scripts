@@ -3,11 +3,11 @@
 # Calls dmenu on the given array of choices.
 # If the selected choice is a folder, recursively open dmenu with the folder's contents as choices.
 # If the selection is not a folder, attempt to open it with xdg-open.
-# If a terminal session is open, it can create a tmux window at the selected directory
+# It can also open the terminal program `konsole` at the given path.
 # Can handle symlinks.
 #
 # author: andreasl
-# version: 18-10-29
+# version: 18-10-30
 
 selected_path="/home/barn"
 
@@ -28,9 +28,8 @@ while : ; do
         exit 1
     fi
 
-    if [ "${dmenu_result}" = '<open tmux window here>' ]; then
-        # TODO
-        tmux new-window -c "${selected_path}"
+    if [ "${dmenu_result}" = '<open terminal here>' ]; then
+        konsole --workdir "${selected_path}"
         exit 0
     fi
 
@@ -40,7 +39,7 @@ while : ; do
         xdg-open "${selected_path}"
         exit 0
     elif [ -d "${selected_path}" ]; then
-        choices=( '<open tmux window here>' '.' '..' "$(ls -t "${selected_path}")")
+        choices=( '<open terminal here>' '.' '..' "$(ls -t "${selected_path}")")
     fi
 
 done
