@@ -24,10 +24,16 @@ function define_standard_settings {
 define_standard_settings
 source "${HOME}/.edmrc" 2>/dev/null
 
-search_query="$(printf '' | dmenu -i -p "search for?:" )"
+search_history_file="${HOME}/.fwdm_history"
+historic_searches="$(tac ${search_history_file})"
+
+search_query="$(printf "${historic_searches}" | dmenu -i -l 3 -p "search for?:" )"
 if [ $? != 0 ] ; then
     exit 1
 fi
+
+sed -i "/${search_query}/d" "${search_history_file}"
+echo "${search_query}" >> "${search_history_file}"
 
 search_results="$(find ${root_path} -iname "*${search_query}*" 2>/dev/null)"
 
