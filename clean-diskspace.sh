@@ -22,6 +22,13 @@ dirsize=$(du -sh ~/.m2/repository 2>/dev/null)
 echo "Info: ~/.m2/repository has the following size: ${dirsize}"
 rm -rfv ~/.m2/repository
 
+dirsize=$(du -sh ~/.buildout/download-cache 2>/dev/null)
+echo "Info: ~/.buildout/download-cache has the following size: ${dirsize}"
+rm -rfv ~/.buildout/download-cache
+dirsize=$(du -sh ~/.buildout/eggs 2>/dev/null)
+echo "Info: ~/.buildout/eggs has the following size: ${dirsize}"
+rm -rfv ~/.buildout/eggs
+
 command -v brew >/dev/null && brew cleanup -s
 
 if [ "$(command -v apt)" ] ; then
