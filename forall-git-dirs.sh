@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Given a directory, will call a given command on all its git subdirectories recursively or down to
-# a given number of directory levels.
+# Given a directory, will call a given command in bash on all its git subdirectories recursively or
+# down to a given number of directory levels.
 #
 # Usage: $0 [-d|--depth <number>] [<path>] [-- <command>]
 #
