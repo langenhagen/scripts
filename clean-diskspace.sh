@@ -40,14 +40,11 @@ fi
 
 find ~ -iname '.gradle' -type d -exec rm -rfv '{}' \;
 
-find ~ -type d -name '.git' -exec sh -c "pushd '{}'; git gc; popd ;" \;
+find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd ;" \;
 
 if [[ "$#" -ge "1" && "$1" == "--wholesome" ]]; then
    echo 'Do a git `gq --aggressive` on all git repos on the machine'
-   find / -type d -name '.git' -exec sh -c "pushd '{}'; git gc --aggressive; popd ;" \;
+   find / -type d -name '.git' -exec bash -c "pushd '{}'; git gc --aggressive; popd ;" \;
 fi
 
 command -v docker >/dev/null && docker container prune --force
-
-
-
