@@ -37,7 +37,7 @@ echo "${search_query}" >> "${search_history_file}"
 
 search_results="$(find ${root_path} -iname "*${search_query}*" 2>/dev/null)"
 
-selected_result="$(printf '%s\n' "${search_results[@]}" | dmenu -i -p "select:" -l 100)"
+selected_result="$(printf '%s\n' "${search_results[@]}" | dmenu -i -p "select:" -l 30)"
 if [ $? != 0 ] ; then
     exit 2
 fi
