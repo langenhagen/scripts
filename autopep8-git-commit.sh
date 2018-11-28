@@ -1,6 +1,29 @@
+#!/bin/bash
+#
+# Runs autopep against a list of files
+#
+# author: andreasl
+# version: 18-11-26
 
-$HOME/.config/pep8
-$HOME/.config/.pycodestyle  # autopep config, taken from https://pypi.org/project/autopep8/#features
+
+staged_python_files=$(git diff --name-only --cached | grep -i "\.py$")  # fetch staged *.py files
+
+
+
+# 2. for each staged python file go through its patches and autopep8 check them
+# 3. proceed y/n?
+# 4. for each staged python file go through its patches and autopep8 patch them
+
+
+
+
+
+${HOME}/.config/pep8
+${HOME}/.config/.pycodestyle  # autopep config, taken from https://pypi.org/project/autopep8/#features
+
+
+
+
 
 autopep8 -j 8 --diff  # --diff: print diff for fixed source
 
