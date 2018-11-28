@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Calls dmenu and asks for a seqrch query to call find under the ${HOME} directory,
+# Calls dmenu and asks for a search query to call find under the ${HOME} directory,
 # then calls dmenu with the list of results.
 # The result of the latter query is attempted to be opened with xdg-open or a comparable tool.
 #
 # TODO: at the moment, this script uses the ~/.edmrc file but possibly, it does not need any rc file
-#       or deserves its own
+#       or deserves its own.
 #
 # author: andreasl
 # version: 18-11-04
