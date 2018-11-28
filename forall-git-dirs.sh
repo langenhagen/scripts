@@ -45,8 +45,9 @@ while [ $# -gt 0 ] ; do
         shift # past argument
         ;;
     --)
-        command="$@"
         shift # past argument
+        command="$@"
+        break
         ;;
     -h|--help)
         show_usage
