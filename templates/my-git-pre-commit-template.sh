@@ -1,11 +1,11 @@
-#!/bin/sh
-
+#!/bin/bash
+#
 # Git pre commit hook template
 # It can be used for hook logic that should be called on your behalf but can be omitted if needed,
-# e.g. long running operations
+# e.g. long running operations.
 #
-# author: langenhagen
-# version: 17-09-14
+# author: andreasl
+# version: 18-11-26
 
 echo 'Running GIT pre-commit hook...'
 echo
@@ -16,15 +16,17 @@ exec < /dev/tty     # Allows us to read user input below, assigns stdin to keybo
 read -n 1 key
 if [ "$key" != "y" ] && [ "$key" != "Y" ] ; then
     echo "You do not want to execute the pre-commit hook."
-    exit 0
+    exit 1
 fi
 
-# Custom git pre commit logic goes here...
-
-
-# TODO add your logic here...
+# TODO add your custom git pre commit logic here, e.g.:
+#
+# staged_file_paths=$(git diff --name-only --cached)
+# for file in ${staged_file_paths} ; do
+#     echo "${file} will be committed."
+# done
 
 
 echo 'Pre-commit hook executed. Check and run git commit again.'
 
-exit 1
+exit 0
