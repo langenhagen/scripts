@@ -1,40 +1,57 @@
 #!/usr/bin/env python3
-
-# Add a Ubuntu global key shortcut via command line.
-# Use like:  `python3 add-ubuntu-key-shortcut.py 'open gedit' 'gedit' '<Alt>7'`
 #
-# found on:
+# Add a Ubuntu global schema_and_key shortcut via command line.
+#
+# Usage:
+#   python3 $0 <command name> <command> <schema_and_key-kombination>
+#
+# Example:
+#   python3 $0 'open gedit' 'gedit' '<Alt>7'
+#
+# Special keys are: <Ctrl>, <Alt>, <Super>.
+#
+# based on:
 # https://askubuntu.com/questions/597395/how-to-set-custom-keyboard-shortcuts-from-terminal
+#
+#
+# TODO: remove a command that already has the given key-combination.
+#
+# author: andreasl
+# version: 18-12-01
 
+import ast
 import subprocess
 import sys
 
-# defining keys & strings to be used
-key = "org.gnome.settings-daemon.plugins.media-keys custom-keybindings"
-subkey1 = key.replace(" ", ".")[:-1]+":"
-item_s = "/"+key.replace(" ", "/").replace(".", "/")+"/"
-firstname = "custom"
-# get the current list of custom shortcuts
-get = lambda cmd: subprocess.check_output(["/bin/bash", "-c", cmd]).decode("utf-8")
-array_str = get("gsettings get "+key)
-# in case the array was empty, remove the annotation hints
-command_result = array_str.lstrip("@as")
-current = eval(command_result)
-# make sure the additional keybinding mention is no duplicate
-n = 1
+def get_list_from_cmd_output(cmd):
+    """Get the list-output of a bash command that looks as a python list.
+    In case the list was empty, remove the annotation hints '@as'.
+    """
+    list_as_string = subprocess.check_output(["/bin/bash", "-c", cmd]).decode("utf-8").lstrip("@as")
+    return ast.literal_eval(list_as_string)
+
+
+schema_and_key = "org.gnome.settings-daemon.plugins.media-keys custom-keybindings"
+schema_and_key_slash_separated = "/" + schema_and_key.replace(" ", "/").replace(".", "/")
+already_installed_custom_shortcuts = get_list_from_cmd_output("gsettings get " + schema_and_key)
+
+# make sure the additional keybinding mention gets a new index
+index = 1
 while True:
-    new = item_s+firstname+str(n)+"/"
-    if new in current:
-        n = n+1
+    new_entry = schema_and_key_slash_separated + "/" + "custom" + str(index) + "/"
+    if new_entry in already_installed_custom_shortcuts:
+        index = index + 1
     else:
         break
-# add the new keybinding to the list
-current.append(new)
-# create the shortcut, set the name, command and shortcut key
-cmd0 = 'gsettings set '+key+' "'+str(current)+'"'
-cmd1 = 'gsettings set '+subkey1+new+" name '"+sys.argv[1]+"'"
-cmd2 = 'gsettings set '+subkey1+new+" command '"+sys.argv[2]+"'"
-cmd3 = 'gsettings set '+subkey1+new+" binding '"+sys.argv[3]+"'"
+
+subkey = schema_and_key.replace(" ", ".")[:-1] + ":"
+already_installed_custom_shortcuts.append(new_entry)
+# to create the shortcut, set the name, command and shortcut schema_and_key
+cmd0 = 'gsettings set ' + schema_and_key + ' "' + str(already_installed_custom_shortcuts) + '"'
+cmd1 = 'gsettings set ' + subkey + new_entry + " name '" + sys.argv[1] + "'"
+cmd2 = 'gsettings set ' + subkey + new_entry + " command '" + sys.argv[2] + "'"
+cmd3 = 'gsettings set ' + subkey + new_entry + " binding '" + sys.argv[3] + "'"
 
 for cmd in [cmd0, cmd1, cmd2, cmd3]:
+    print(" +  {}".format(cmd))
     subprocess.call(["/bin/bash", "-c", cmd])
