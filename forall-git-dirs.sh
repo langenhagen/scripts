@@ -12,7 +12,7 @@ function show_usage {
     # Given the name of the script, prints the usage string.
     #
     # Usage:
-    #   $0
+    #   ${FUNCNAME[0]}
 
     script_name="$(basename $0)"
 
