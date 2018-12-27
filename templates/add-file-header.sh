@@ -1,61 +1,52 @@
 #!/bin/bash
 #
 # Adds or updates file headers for different file types.
-# Ideally, file headers shall be retrieved from a file tat is read into a variable, but they may
-# also be defined in this file
+# Ideally, file headers may be retrieved from files from version control that are read into a
+# variable, but they may as well be defined in this file.
 #
 # author: andreasl
-# version: 18-11-26
+# version: 18-12-27
 
+# current copyright headers and regexes to match possibly outdated headers for each file type
 
-# copyright headers for each file type
-
-celeraone_python_header=$(cat << HEADER_EOF
+c1_python_header=$(cat << HEADER_EOF
 # -*- coding: utf-8 -*-
 # (c) $(date +"%Y") CeleraOne GmbH
 HEADER_EOF
 )
-
-celeraone_python_header=$(cat << HEADER_EOF
--- -*- coding: utf-8 -*-
--- (c) $(date +"%Y") CeleraOne GmbH
-HEADER_EOF
-)
-
-# arrays of regexes that mark lines of copyright headers for each file type
-
-celeraone_python_header_regexes=(
+c1_python_header_regexes=(
 '# \-\*\- coding: utf\-8 \-\*\-'
 '# (c).*CeleraOne GmbH'
 )
 
-celeraone_lua_header_regexes=(
+c1_lua_header=$(cat << HEADER_EOF
+-- -*- coding: utf-8 -*-
+-- (c) $(date +"%Y") CeleraOne GmbH
+HEADER_EOF
+)
+c1_lua_header_regexes=(
 '\-\- \-\*\- coding: utf\-8 \-\*\-'
 '\-\- (c).*CeleraOne GmbH'
 )
 
+function add_file_header {
+    # usage:
+    #   add_file_header <HEADER> <HEADER-REGEX> [--update] <file> [file] [...]
 
-
-
-# write function add_file_header <HEADER> [--update] <file> [file] [...]
-
-# use/write function remove_file_header -- also use sed and regexes
+    # 1. determine whether file has old_header
+    if [ -z ${old_header} ] ; then
+    #   add header
+    elif [ "${3}" == '--update' ] ; then
+    #   remove old header using sed and regexes
+    #   add header
+    fi
+}
 
 # 1. fetch staged files
-# 2. for all lua files / for all python files
-# 3. check where headers are missing or outdated
-# 4. if outdated, add headers
+staged_files_string=$(git diff --name-only --cached)
+mapfile -t staged_files_array <<< "${staged_files_string}"
 
-# or
-
-# 1. determine whether file has already a header
-# 1.1 if no
-# 1.1.1 add header
-# 1.2. if yes
-# 1.2.1. should header be updated
-# 1.2.1.1 if no
-# 1.2.1.1.1 do nothing
-# 1.2.1.1 if yes
-# 1.2.1.1.1 remove header using sed and regexes
-# 1.2.1.1.2 add header
-
+for file in "${staged_files_array[@]}" ; do
+    # 2. for all files determine filetype and dispatch to add header / else pass
+    echo $file
+done

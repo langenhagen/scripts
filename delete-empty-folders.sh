@@ -1,28 +1,27 @@
 #!/bin/bash
-
-# Finds all empty sub folders in the given directory
-# prompts the user whether to delete every individual empty folder,
+#
+# Finds all empty subfolders in a hardcoded directory
+# and prompts the user whether to delete every individual empty folder,
 # and does accordingly.
 #
-# TODO: review
-#
 # author: andreasl
-# version: 18-08-09
+# version: 18-08-23
 
-arr=()
+root_folder="/Users/langenha/personal/Dev/Cpp"  # adjust this
+
+directory_array=()
 while IFS=  read -r -d $'\0'; do
-    arr+=("$REPLY")
-done < <(find "/Users/langenha/personal/Dev/Cpp" -type d -print0)
+    directory_array+=("$REPLY")
+done < <(find "${root_folder}" -type d -print0)
 
-# DOES NOT BREAK ON SPACES
-for ((i = 0; i < ${#arr[@]}; i++)) do
-    cur="${arr[$i]}"
-    is_empty=$(ls -A "$cur")
-    if [ -z "$is_empty" ]; then
-        echo $cur
-        read -e -n10 -p " Delete?: " dodelete  # -e newline after input is read  -n10 capture 10 characters, no ENTER needed
-        if [ $dodelete == "y" ]; then
-            rm -rf "$cur"
+for ((i = 0; i < ${#directory_array[@]}; i++)) do
+    current_directory="${directory_array[$i]}"
+    is_empty=$(ls -A "${current_directory}")
+    if [ -z "${is_empty}" ]; then
+        echo "${current_directory}"
+        read -e -n1 -p " Delete [y/n]?: " do_delete  # -e newline after input is read  -n1 capture 1 character, no ENTER needed
+        if [ "${do_delete}" == "y" ]; then
+            rm -rf "${current_directory}"
         fi
     fi
 done
