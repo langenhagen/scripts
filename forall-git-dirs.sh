@@ -2,11 +2,11 @@
 #
 # Given a directory, will call a given command in bash on all its git subdirectories recursively or
 # down to a given number of directory levels.
-#
+##
 # For usage type: $0 --help
 #
 # author: andreasl
-# version: 18-11-25
+# version: 19-01-11
 
 function show_usage {
     # Given the name of the script, prints the usage string.
@@ -16,18 +16,28 @@ function show_usage {
 
     script_name="$(basename $0)"
 
-    printf 'Usage:\n'
-    printf "  ${script_name} [-d|--depth <number>] [<path>] [-- <command>]\n"
-    printf '\n'
-    printf 'Examples:\n'
-    printf "  ${script_name}                      # lists the found git repositories\n"
-    printf "  ${script_name} -d 2 -- ls           # calls \`ls\` from all git repos in this file level and one level below\n"
-    printf "  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given path\n"
-    printf "  ${script_name} -- realpath .        # prints the paths of all git repos below the current path\n"
-    printf "  ${script_name} -h                   # prints the usage message\n"
-    printf "  ${script_name} --help               # prints the usage message\n"
+    output='Usage:\n'
+    output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
+    output="${output}\n"
+    output="${output}Examples:\n"
+    output="${output}  ${script_name}                      # lists the found git repositories\n"
+    output="${output}  ${script_name} -d 2 -- ls           # lists the found git repositories and"
+    output="${output} calls \`ls\` from all git repos in this file level and one level below\n"
+    output="${output}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in"
+    output="${output} this file level and one level below but does not list the found gir repos\n"
+    output="${output}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below"
+    output="${output} the given path\n"
+    output="${output}  ${script_name} -q -- realpath .     # prints the paths of all git repos"
+    output="${output} below the current path\n"
+    output="${output}  ${script_name} -h                   # prints the usage message\n"
+    output="${output}  ${script_name} --help               # prints the usage message\n"
+    output="${output}\n"
+    output="${output}Note:\n"
+    output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
+    output="${output} into single quotation marks so that they will not be expanded ''"
+    output="${output} immediately.\n"
+    printf "${output}"
 }
-
 
 use_maxdepth=false
 search_dir='.'
@@ -35,6 +45,9 @@ search_dir='.'
 while [ $# -gt 0 ] ; do
     key="$1"
     case ${key} in
+    -q|--quiet)
+        quiet="True"
+        ;;
     -d|--depth)
         use_maxdepth=true
         depth="${2}"
@@ -51,7 +64,7 @@ while [ $# -gt 0 ] ; do
         ;;
     -h|--help)
         show_usage
-        return 0
+        exit 0
         ;;
     *) # unknown option
         ;;
@@ -60,13 +73,14 @@ while [ $# -gt 0 ] ; do
 done
 
 function function_called_by_find {
-    printf "\033[1m${PWD}\033[0m\n"
+    [ -n "${quiet}" ] || printf "\033[1m${PWD}\033[0m\n"
     eval "${command}"
 }
 
-# export the function and the command, since the subshell should you open below in find
+# export the function and the command, since the subshell you open below in find
 # should know about the function and the command
 export -f function_called_by_find
+export quiet
 export command
 
 if [ ${use_maxdepth} == true ]; then
