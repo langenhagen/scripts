@@ -5,9 +5,9 @@
 # variable, but they may as well be defined in this file.
 #
 # author: andreasl
-# version: 18-12-27
+# version: 18-12-28
 
-# current copyright headers and regexes to match possibly outdated headers for each file type
+# copyright headers and regexes to match possibly existing headers for each file type
 
 c1_python_header=$(cat << HEADER_EOF
 # -*- coding: utf-8 -*-
@@ -16,7 +16,7 @@ HEADER_EOF
 )
 c1_python_header_regexes=(
 '# \-\*\- coding: utf\-8 \-\*\-'
-'# (c).*CeleraOne GmbH'
+'# \(c\).*CeleraOne GmbH'
 )
 
 c1_lua_header=$(cat << HEADER_EOF
@@ -24,29 +24,38 @@ c1_lua_header=$(cat << HEADER_EOF
 -- (c) $(date +"%Y") CeleraOne GmbH
 HEADER_EOF
 )
-c1_lua_header_regexes=(
+c1_lua_regexes=(
 '\-\- \-\*\- coding: utf\-8 \-\*\-'
-'\-\- (c).*CeleraOne GmbH'
+'\-\- \(c\).*CeleraOne GmbH'
 )
 
 function add_file_header {
+    # If a file header is missing, adds, or, if specified, updates a file's header.
+    # It is given a string that will be added to the top of the file and an array of regexes
+    # that will be used to check if possibly already existing headers exist and to delete them if
+    # the flag --update is provided.
+    #
     # usage:
-    #   add_file_header <HEADER> <HEADER-REGEX> [--update] <file> [file] [...]
+    #   add_file_header <HEADER> <HEADER-REGEX> [--update] <file>
 
-    # 1. determine whether file has old_header
-    if [ -z ${old_header} ] ; then
-    #   add header
+    header_string="${1}"
+    header_regexes="${2}"                                      # TODO: how to pass an array to a function in bash?
+    file="${4:-${3}}"
+
+    # determine whether file has old_header, i.e. if it contains all regexes on consecutive lines
+
+    if [ -z "${old_header}" ] ; then
+        # add header
     elif [ "${3}" == '--update' ] ; then
-    #   remove old header using sed and regexes
-    #   add header
+        for line in "${header_regexes[@]}" ; do  # iterates safely over an array and retains whitespaces
+            sed -i "0,/${line}/d" "${file}"
+        done
+        # add header
     fi
 }
 
-# 1. fetch staged files
-staged_files_string=$(git diff --name-only --cached)
-mapfile -t staged_files_array <<< "${staged_files_string}"
-
+mapfile -t staged_files_array <<< "$(git diff --name-only --cached)"
 for file in "${staged_files_array[@]}" ; do
-    # 2. for all files determine filetype and dispatch to add header / else pass
+    # TODO for all files determine filetype and dispatch to add header / else pass
     echo $file
 done
