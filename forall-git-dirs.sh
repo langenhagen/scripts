@@ -2,11 +2,11 @@
 #
 # Given a directory, will call a given command in bash on all its git subdirectories recursively or
 # down to a given number of directory levels.
-##
+#
 # For usage type: $0 --help
 #
 # author: andreasl
-# version: 19-01-11
+# version: 19-01-28
 
 function show_usage {
     # Given the name of the script, prints the usage string.
