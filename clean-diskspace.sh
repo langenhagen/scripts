@@ -1,12 +1,11 @@
 #!/bin/bash
 #
-# Deletes superfluous storage-consuming directories and files.
+# Deletes superfluous storage-consuming directories and files and removes old packages.
 #
 # Input Parameters:
 #   --wholesome (optional): calls `git gq --aggressive` on all .git folders (indirectly) under "/".
 #
 # author: andreasl
-# version: 19-02-08
 
 set -x;
 
@@ -52,6 +51,11 @@ if [ "$(command -v apt)" ] ; then
     sudo apt clean;
     sudo apt autoremove --purge;
     sudo apt autoremove;
+fi
+
+# dpkg
+if [ "$(command -v dpkg)" ] ; then
+    sudo dpkg --purge --pending;
 fi
 
 # Docker
