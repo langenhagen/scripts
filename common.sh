@@ -12,11 +12,11 @@ DIR_OF_THIS_SCRIPT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # --------------------------------------------------------------------------------------------------
 # Coloring and printing
 
-CYAN='\033[1;36m'
-RED='\033[0;31m'
-GREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+CYAN='\e[1;36m'
+RED='\e[0;31m'
+GREEN='\e[1;32m'
+YELLOW='\e[1;33m'
+NC='\e[0m' # No Color
 
 function echo-error {
     printf "${RED}${@}${NC}\n"

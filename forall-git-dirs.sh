@@ -72,7 +72,7 @@ while [ $# -gt 0 ] ; do
 done
 
 function function_called_by_find {
-    [ -n "${quiet}" ] || printf "\033[1m${PWD}\033[0m\n"
+    [ -n "${quiet}" ] || printf "\e[1m${PWD}\e[0m\n"
     eval "${command}"
 }
 

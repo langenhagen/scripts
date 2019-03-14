@@ -36,8 +36,8 @@ fi
 
 if [ ${use_maxdepth} == true ]; then
     find "${search_dir}" -maxdepth ${depth} -type d -iname "*.git" -execdir \
-        bash -c 'printf "\033[1m${PWD}\033[0m\n"; git pull --rebase; ' '{}' \;
+        bash -c 'printf "\e[1m${PWD}\e[0m\n"; git pull --rebase; ' '{}' \;
 else
     find "${search_dir}" -type d -iname "*.git" -execdir \
-        bash -c 'printf "\033[1m${PWD}\033[0m\n"; git pull --rebase; ' '{}' \;
+        bash -c 'printf "\e[1m${PWD}\e[0m\n"; git pull --rebase; ' '{}' \;
 fi

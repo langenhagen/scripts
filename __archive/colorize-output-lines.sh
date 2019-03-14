@@ -14,9 +14,9 @@ else
     command_output=`$@`
 fi
 
-readonly color1='\033[0m'
-readonly color2='\033[90m'
-readonly no_color='\033[0m'
+readonly color1='\e[0m'
+readonly color2='\e[90m'
+readonly no_color='\e[0m'
 
 cur_line=0
 while IFS= read -r line; do  # declaring IFS configures read not to trim the given line

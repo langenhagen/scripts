@@ -19,9 +19,9 @@ read -r -d '' scriptVariable << 'EOF'
 {
     for (i=1; i<=NF; ++i) {
         if(i%2) {
-            printf ("%s%s%s", "\033[1;31m", $i, "\033[0m ");
+            printf ("%s%s%s", "\e[1;31m", $i, "\e[0m ");
         } else {
-            printf ("%s%s%s", "\033[1;34m", $i, "\033[0m ");
+            printf ("%s%s%s", "\e[1;34m", $i, "\e[0m ");
         }
     }
 }
