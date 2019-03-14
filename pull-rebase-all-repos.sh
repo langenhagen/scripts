@@ -8,19 +8,27 @@
 #
 # author: andreasl
 
-# This sources a list named repo_paths2default_branch_names of all repos that may be worked with
+# Source a list named repo_paths2default_branch_names of all repos that will be worked with
 . "$HOME/.gitprojectsrc"
 
 # color codes; overwrite with empty string '' if you want to disable them
-r='\033[0;31m'
-b='\033[1m'
-rb='\033[1;31m'
-n='\033[0m'
+r='\e[0;31m'
+b='\e[1m'
+rb='\e[1;31m'
+n='\e[0m'
+
+function die {
+    # Will be called on failure
+    printf "${1}"
+    printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
+    printf "Command 'cd ${repo_path}' written to system clipboard\n"
+    exit ${2}
+}
 
 n_current_repo=0
 n_all_repos=${#repo_paths2default_branch_names[@]}
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
-    default_branch_name="${repo_paths2default_branch_names[${repo_path}]}";
+    local_branch_name="$(local_branch "${repo_path}")"
 
     (( n_current_repo += 1 ))
     printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}${n}...\n"
@@ -31,52 +39,36 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
         exit 1
     fi
 
-    git rev-parse --verify "${default_branch_name}" 1>/dev/null 2>&1
+    git rev-parse --verify "${local_branch_name}" 1>/dev/null 2>&1
     if [ $? != 0 ] ; then
         output="${r}Error: The repo ${rb}${repo_path}${r} does not contain a branch called"
-        output="${output} ${rb}${default_branch_name}${n}\n"
-        printf "${output}"
-        printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
-        printf "Command 'cd ${repo_path}' written to system clipboard\n"
-        exit 2
+        output="${output} ${rb}${local_branch_name}${n}\n"
+        die "${output}" 2
     fi
 
-    git checkout "${default_branch_name}"
+    git checkout "${local_branch_name}"
     if [ $? != 0 ] ; then
-        output="${r}Error: Could not git checkout ${rb}${default_branch_name}${r} on"
+        output="${r}Error: Could not git checkout ${rb}${local_branch_name}${r} on"
         output="${output} ${rb}${repo_path}${n}\n"
-        printf "${output}"
-        printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
-        printf "Command 'cd ${repo_path}' written to system clipboard\n"
-        exit 3
+        die "${output}" 3
     fi
 
     git fetch --prune
-    git pull --rebase origin "${default_branch_name}"
+    git pull --rebase origin "${local_branch_name}"
     code="${?}"
-    if [ "${code}" == 0 ] ; then
-        continue
-    elif [ "${code}" == 1 ] ; then
-        output="${r}Error: git pull --rebase origin ${default_branch_name} on the repo"
-        output="${output} ${rb}${repo_path}${r} did not find this remote branch${n}\n"
-        printf "${output}"
-        printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
-        printf "Command 'cd ${repo_path}' written to system clipboard\n"
-        exit 4
-    elif [ "${code}" == 128 ] ; then
-        output="${r}Error: git pull --rebase origin ${default_branch_name} on the repo"
-        output="${output} ${rb}${repo_path}${r} caused a merge conflict${n}\n"
-        printf "${output}"
-        printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
-        printf "Command 'cd ${repo_path}' written to system clipboard\n"
-        exit 5
-    else
-        output="${r}Error: git pull --rebase origin ${default_branch_name} on the repo"
-        output="${output} ${rb}${repo_path}${r} caused an unknown error${n}\n"
-        printf "${output}"
-        printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
-        printf "Command 'cd ${repo_path}' written to system clipboard\n"
-        exit 6
+    if [ "${code}" != 0 ] ; then
+        output="${r}Error: git pull --rebase origin ${local_branch_name} on the repo"
+        output="${output} ${rb}${repo_path}${r}"
+        if [ "${code}" == 1 ] ; then
+            output="${output} did not find this remote branch${n}\n"
+            die "${output}" 4
+        elif [ "${code}" == 128 ] ; then
+            output="${output} caused a merge conflict${n}\n"
+            die "${output}" 5
+        else
+            output="${output} caused an unknown error${n}\n"
+            die "${output}" 6
+        fi
     fi
 done
 
