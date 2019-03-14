@@ -3,7 +3,6 @@
 # Runs autopep against a list of files
 #
 # author: andreasl
-# version: 18-11-26
 
 
 staged_python_files=$(git diff --name-only --cached | grep -i "\.py$")  # fetch staged *.py files

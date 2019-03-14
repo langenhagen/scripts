@@ -1,7 +1,6 @@
 #!/bin/bash
-
+#
 # author: andreasl
-# version: 18-01-27
 
 sudo docker kill $(docker ps -q)
 sudo docker rm $(docker ps -a -q)

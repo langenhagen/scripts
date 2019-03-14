@@ -5,8 +5,6 @@
 # and forces a scan of the filesystem for user barn in order to sync the files to all machines
 #
 # author: langenhagen
-# version: 170507
-
 
 echo "Really? Forces owncloud to re-scan the folders and that might take a while..."
 echo "<ctrl+c> to escape or enter to proceed"

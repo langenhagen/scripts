@@ -5,7 +5,6 @@
 # variable, but they may as well be defined in this file.
 #
 # author: andreasl
-# version: 18-12-28
 
 # copyright headers and regexes to match possibly existing headers for each file type
 

@@ -4,7 +4,6 @@
 # deletes the distributed sparta build folders given a certain impact level.
 #
 # author: andreasl
-# version: 18-08-20
 
 if [ $# != 1 ] ; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"

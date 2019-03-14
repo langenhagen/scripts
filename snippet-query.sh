@@ -6,7 +6,6 @@
 # print all these lines to the output and write the first line to the clipboard.
 #
 # author: andreasl
-# version: 18-12-13
 
 file="${HOME}/Work/2018-CeleraOne/day-notes.md"
 results=$(grep -i '#snippet' "${file}")

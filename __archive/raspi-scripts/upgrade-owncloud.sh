@@ -8,8 +8,6 @@
 # https://doc.owncloud.org/server/9.1/admin_manual/maintenance/manual_upgrade.html
 #
 # author: langenhagen
-# version: 170508
-
 
 echo "Really?"
 echo "<ctrl+c> to escape or enter to proceed"

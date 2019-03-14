@@ -5,7 +5,6 @@
 # e.g. long running operations.
 #
 # author: andreasl
-# version: 18-11-26
 
 echo 'Running GIT pre-commit hook...'
 echo

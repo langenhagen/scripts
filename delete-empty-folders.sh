@@ -5,7 +5,6 @@
 # and does accordingly.
 #
 # author: andreasl
-# version: 18-08-23
 
 root_folder="/Users/langenha/personal/Dev/Cpp"  # adjust this
 

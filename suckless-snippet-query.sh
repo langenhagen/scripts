@@ -12,7 +12,6 @@
 # TODO review the docs.
 #
 # author: andreasl
-# version: 18-12-14
 
 query_history_file="${HOME}/.ssq_history"
 historic_queries="$(tac ${query_history_file})"

@@ -8,7 +8,6 @@
 # deserves its own.
 #
 # author: andreasl
-# version: 18-11-04
 
 function define_standard_settings {
 

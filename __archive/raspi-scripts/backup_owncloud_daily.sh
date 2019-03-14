@@ -5,7 +5,6 @@
 # sends pushover notification on error
 #
 # author: langenhagen
-# version: 170507
 
 NOW="$(date +'%Y-%m-%d--%H-%M-%S')"
 

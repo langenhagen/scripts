@@ -6,7 +6,6 @@
 # .PHONY: <target> to the Makefile target.
 #
 # author: andreasl
-# version: 19-02-02
 
 
 arguments:

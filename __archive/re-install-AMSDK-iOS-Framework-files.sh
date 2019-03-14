@@ -1,7 +1,6 @@
 #/bin/bash
-
+#
 # author: langenhagen
-# version: 17-07-14
 
 # hopefully you have the *.framework files downloaded into the right folder :)
 # download them and unzip them and put them into the right folder

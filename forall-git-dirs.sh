@@ -6,7 +6,6 @@
 # For usage type: $0 --help
 #
 # author: andreasl
-# version: 19-01-28
 
 function show_usage {
     # Given the name of the script, prints the usage string.

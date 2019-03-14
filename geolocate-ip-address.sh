@@ -28,7 +28,6 @@
 # The whole thing was made possible by maxmind: https://www.maxmind.com/en/home
 #
 # author: andreasl
-# version: 18-11-27
 
 geoip_database_city="${HOME}/Dev/Zeugs/GeoLite2-City.mmdb"
 ip_address="${1}"

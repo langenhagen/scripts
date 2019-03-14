@@ -1,7 +1,6 @@
 #!/bin/bash
-
+#
 # author: andreasl
-# version: 18-01-28
 
 function pushover() {
     # echoes the given input and

@@ -12,7 +12,6 @@
 #   $0 path/to/dir          # updates all git repos in the given dir and its subdirs
 #
 # author: andreasl
-# version: 18-11-09
 
 use_maxdepth=false
 while [ $# -gt 1 ] ; do

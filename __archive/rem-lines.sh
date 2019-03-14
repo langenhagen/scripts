@@ -16,7 +16,6 @@
 #
 #
 # author: andreasl
-# version: 18-07-20
 
 files=`git diff --name-only HEAD`
 

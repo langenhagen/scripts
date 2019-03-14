@@ -3,7 +3,6 @@
 # is capable of running backups and owncloud
 #
 #author: langenhagen
-#version: 170507
 
 echo 'semiscript'
 exit 0

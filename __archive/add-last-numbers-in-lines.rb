@@ -5,7 +5,6 @@
 # returns 0 on error
 #
 # author: langenhagen
-# version: 17-08-05
 
 if ARGV.empty?
   puts "Usage: #{__FILE__} <filename>"

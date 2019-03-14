@@ -5,8 +5,6 @@
 # sends a pushover notification at the end
 #
 # author: langenhagen
-# version: 170507
-#
 
 echo "Really?"
 echo "<ctrl+c> to escape or enter to proceed"

@@ -6,7 +6,6 @@
 #       are steps to be mentioned?
 #
 # author: langenhagen
-# version: 170507
 
 echo "Really?"
 echo "<ctrl+c> to escape or enter to proceed"
