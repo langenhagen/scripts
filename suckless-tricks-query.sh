@@ -2,15 +2,14 @@
 #
 # Opens a dmenu which prompts for any number of whitespace-separated search terms and suggests
 # old queries.
-# Greps iteratively the tricks.txt file for lines that contain all of the given search terms.
+# Greps iteratively the tricks.sh file for lines that contain all of the given search terms.
 # These lines are presented in a second dmenu pass from which the user can select one.
 # The raw selected item will be written to the system clipboard.
-# This is a neat way of querying and retrieving snippets from the tricks.md file.
+# This is a neat way of querying and retrieving snippets from the tricks.sh file.
 #
 # TODO review the docs.
 #
 # author: andreasl
-# version: 18-12-14
 
 query_history_file="${HOME}/.stq_history"
 historic_queries="$(tac ${query_history_file})"
@@ -20,7 +19,7 @@ if [ $? != 0 ] ; then
     exit 1
 fi
 
-file="${HOME}/Dev/Zeugs/tricks.txt"
+file="${HOME}/Dev/Zeugs/tricks.sh"
 results=$(cat "${file}")
 for searchterm in ${query} ; do
     results="$(printf '%s' "${results}" | grep -i "${searchterm}")"
