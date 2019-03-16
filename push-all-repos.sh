@@ -51,6 +51,10 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
         die "${output}" 3
     fi
 
+    git remote update
+    if [ "$(git rev-list --count origin/${local_branch_name}..${local_branch_name})" == '0' ] ; then
+        continue
+    fi
     git push origin HEAD:"$(remote_push_branch "${repo_path}")"
     code="${?}"
     if [ "${code}" != 0 ] && [ "${code}" != 1 ] ; then  # 1 is "no new changes" on gerrit
