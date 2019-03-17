@@ -23,7 +23,7 @@ function show_usage {
     output="${output}  ${script_name} -d 2 -- ls           # lists the found git repositories and"
     output="${output} calls \`ls\` from all git repos in this file level and one level below\n"
     output="${output}  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in"
-    output="${output} this file level and one level below but does not list the found gir repos\n"
+    output="${output} this file level and one level below but does not list the found git repos\n"
     output="${output}  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below"
     output="${output} the given path\n"
     output="${output}  ${script_name} -q -- realpath .     # prints the paths of all git repos"
