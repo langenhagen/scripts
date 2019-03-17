@@ -10,6 +10,7 @@
 #
 # Usage:
 #   cloc-all-repos.sh
+#   cloc-all-repos.sh 1>loc.csv 2>/dev/null
 #
 # author: andreasl
 
