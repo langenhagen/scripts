@@ -14,6 +14,7 @@ r='\e[0;31m'
 b='\e[1m'
 rb='\e[1;31m'
 n='\e[0m'
+g='\e[1;32m'
 
 function die {
     # Will be called on failure
@@ -57,7 +58,9 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     fi
     git push origin HEAD:"$(remote_push_branch "${repo_path}")"
     code="${?}"
-    if [ "${code}" != 0 ] && [ "${code}" != 1 ] ; then  # 1 is "no new changes" on gerrit
+    if [ "${code}" == 0 ] ; then
+        printf "${g}Pushed changes from ${repo_path} to $(remote_push_branch "${repo_path}")${n}\n"
+    elif [ "${code}" != 0 ] && [ "${code}" != 1 ] ; then  # 1 is "no new changes" on gerrit
         output="${r}Error: git push on the repo ${rb}${repo_path}${r} failed."
         if [ "${code}" == 128 ] ; then
             output="${output} Do you have access rights?${n}\n"
