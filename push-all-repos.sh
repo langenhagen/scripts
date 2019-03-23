@@ -56,7 +56,8 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     git push origin HEAD:"$(remote_push_branch "${repo_path}")"
     code="${?}"
     if [ "${code}" == 0 ] ; then
-        printf "${g}Pushed changes from ${repo_path} to $(remote_push_branch "${repo_path}")${n}\n"
+        remote_branch="origin $(remote_push_branch "${repo_path}")"
+        printf "${g}Pushed changes from ${repo_path} to ${remote_branch}${n}\n"
     elif [ "${code}" != 0 ] && [ "${code}" != 1 ] ; then  # 1 is "no new changes" on gerrit
         output="${r}Error: git push on the repo ${rb}${repo_path}${r} failed."
         if [ "${code}" == 128 ] ; then
@@ -78,4 +79,4 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     git status --short --untracked-files
 done
 
->&2 printf "${error_output}"
+>&2 printf -- "${error_output}"
