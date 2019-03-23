@@ -30,7 +30,7 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     local_branch_name="$(local_branch "${repo_path}")"
 
     (( n_current_repo += 1 ))
-    printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}${n}...\n"
+    printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}...${n}\n"
 
     if ! cd "${repo_path}"; then
         printf "${r}Error: Path ${rb}${repo_path}${r} does not exist${n}\n"
@@ -74,6 +74,7 @@ done
 printf "Checking status for all repos:\n"
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     printf "${b}${repo_path}${n}\n"
+    cd "$repo_path"
     git status --short --untracked-files
 done
 
