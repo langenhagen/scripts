@@ -14,40 +14,40 @@ b='\e[1m'  # bold
 n='\e[m'  # normal
 
 # Empty Trash
-dirsize=$(du -sh "~/.local/share/Trash/" 2>/dev/null);
-printf "${b}Info: ~/.local/share/Trash has the following size: ${dirsize}${n}\n";
-rm -rfv "~/.local/share/Trash/*";
+dirsize=$(du -sh "$HOME/.local/share/Trash/" 2>/dev/null);
+printf "${b}Info: $HOME/.local/share/Trash has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.local/share/Trash/*";
 
 # Gradle & related
-dirsize=$(du -sh ~/.gradle/caches 2>/dev/null);
-printf "${b}Info: ~/.gradle/caches has the following size: ${dirsize}${n}\n";
-rm -rfv ~/.gradle/caches;
+dirsize=$(du -sh "$HOME/.gradle/caches" 2>/dev/null);
+printf "${b}Info: $HOME/.gradle/caches has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.gradle/caches";
 
-dirsize=$(du -sh ~/.gradle/daemon 2>/dev/null);
-printf "${b}Info: ~/.gradle/daemon has the following size: ${dirsize}${n}\n";
-rm -rfv ~/.gradle/daemon;  # TODO verify
+dirsize=$(du -sh "$HOME/.gradle/daemon" 2>/dev/null);
+printf "${b}Info: $HOME/.gradle/daemon has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.gradle/daemon";  # TODO verify
 
-dirsize=$(du -sh ~/.m2/repository 2>/dev/null);
-printf "${b}Info: ~/.m2/repository has the following size: ${dirsize}${n}\n";
-rm -rfv ~/.m2/repository;
+dirsize=$(du -sh "$HOME/.m2/repository" 2>/dev/null);
+printf "${b}Info: $HOME/.m2/repository has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.m2/repository";
 
 find ~ -iname '.gradle' -type d -exec rm -rf '{}' \;
 
 # Buildout
-dirsize=$(du -sh ~/.buildout/download-cache 2>/dev/null);
-printf "${b}Info: ~/.buildout/download-cache has the following size: ${dirsize}${n}\n";
-rm -rfv ~/.buildout/download-cache;
+dirsize=$(du -sh "$HOME/.buildout/download-cache" 2>/dev/null);
+printf "${b}Info: $HOME/.buildout/download-cache has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.buildout/download-cache";
 
-dirsize=$(du -sh ~/.buildout/eggs 2>/dev/null);
-printf "${b}Info: ~/.buildout/eggs has the following size: ${dirsize}${n}\n";
-rm -rfv ~/.buildout/eggs;
+dirsize=$(du -sh "$HOME/.buildout/eggs" 2>/dev/null);
+printf "${b}Info: $HOME/.buildout/eggs has the following size: ${dirsize}${n}\n";
+rm -rfv "$HOME/.buildout/eggs";
 
 # Brew
 command -v brew >/dev/null && brew cleanup -s;
 
 # Apt
 if [ "$(command -v apt)" ] ; then
-    sudo du -sh /var/cache/apt/archives;
+    sudo du -sh '/var/cache/apt/archives';
     sudo apt clean;
     sudo apt autoremove --purge;
     sudo apt autoremove;
@@ -62,7 +62,7 @@ fi
 command -v docker >/dev/null && docker system prune --all --force;
 
 # Git
-find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd ;" \;
+find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd;" \;
 if [[ "$1" == '--wholesome' ]]; then
    printf "${b}Do a  git gq --aggressive  on all git repos on the machine${n}\n";
    find / -type d -name '.git' -exec bash -c "pushd '{}'; sudo git gc --aggressive; popd ;" \;

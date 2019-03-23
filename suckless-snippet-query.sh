@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Opens a dmenu which prompts for any number of whitespace-separated search terms and suggests
-# old queries.
+# Opens a dmenu which prompts for any number of whitespace-separated search terms and suggests old
+# queries.
 # Greps iteratively in a certain hard coded file for lines that contain all of the given search
 # terms and the special term '#snippet'.
 # From these lines, the trimmed parts before the '#snippet' are presented in a second dmenu pass
@@ -9,12 +9,10 @@
 # The raw selected item will be written to the system clipboard.
 # This is a neat way of querying and retrieving snippets into any desktop environment.
 #
-# TODO review the docs.
-#
 # author: andreasl
 
 query_history_file="${HOME}/.ssq_history"
-historic_queries="$(tac ${query_history_file})"
+historic_queries="$(tac "${query_history_file}")"
 
 query="$(printf "${historic_queries}" | dmenu -i -l 5 -p "snippet query?:" )"
 if [ $? != 0 ] ; then

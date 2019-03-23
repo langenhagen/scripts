@@ -6,7 +6,7 @@
 #
 # author: andreasl
 
-root_folder="/Users/langenha/personal/Dev/Cpp"  # adjust this
+root_folder='/Users/langenha/personal/Dev/Cpp'  # adjust this
 
 directory_array=()
 while IFS=  read -r -d $'\0'; do

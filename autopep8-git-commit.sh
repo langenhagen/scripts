@@ -56,8 +56,8 @@ git pull origin feature/ev-routing                                  # git pull f
 git diff-tree --no-commit-id --name-only -r HEAD~1                  # git list all the files that have been changed in the given commit
 
 
-AUTOPEP8_CONFIG_FILE="${HOME}/.config/pep8"
-cat > $AUTOPEP8_CONFIG_FILE << MYFILE_EOF
+autopep8_config_file="${HOME}/.config/pep8"
+cat > "$autopep8_config_file" << MYFILE_EOF
 [pycodestyle]
 max_line_length = 100
 ignore = E501

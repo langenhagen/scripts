@@ -32,13 +32,13 @@
 geoip_database_city="${HOME}/Dev/Zeugs/GeoLite2-City.mmdb"
 ip_address="${1}"
 
-continent=$(mmdblookup -v -f "${geoip_database_city}" -i ${ip_address} continent names en | \
+continent=$(mmdblookup -v -f "${geoip_database_city}" -i "${ip_address}" continent names en | \
     grep -oP '"\K[^"\047]+(?=["\047])')
-country=$(mmdblookup -v -f "${geoip_database_city}" -i ${ip_address} country names en | \
+country=$(mmdblookup -v -f "${geoip_database_city}" -i "${ip_address}" country names en | \
     grep -oP '"\K[^"\047]+(?=["\047])')
-city=$(mmdblookup -v -f "${geoip_database_city}" -i ${ip_address} city names en | \
+city=$(mmdblookup -v -f "${geoip_database_city}" -i "${ip_address}" city names en | \
     grep -oP '"\K[^"\047]+(?=["\047])')
-postal_code=$(mmdblookup -v -f "${geoip_database_city}" -i ${ip_address} postal code | \
+postal_code=$(mmdblookup -v -f "${geoip_database_city}" -i "${ip_address}" postal code | \
     grep -oP '"\K[^"\047]+(?=["\047])')
 
 printf "${continent}

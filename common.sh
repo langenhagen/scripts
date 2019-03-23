@@ -1,6 +1,6 @@
 ############## VARIABLES ##############
 
-export COMMON_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # --------------------------------------------------------------------------------------------------
 # Generics
@@ -35,10 +35,10 @@ function echo-warn {
 }
 
 function check_if_this_computer_is_a_mac {
-    if echo $HOME | grep -v -q "/Users/" ; then
-        echo "we're not on mac"
+    if echo "$HOME" | grep -v -q "/Users/" ; then
+        echo 'client is not a mac'
     else
-        echo "we're on mac"
+        echo 'client is a mac'
     fi
 }
 
@@ -46,11 +46,7 @@ function gitup {
     # if you are in a git repo, move up to its top level
 
     git_dir="$(git rev-parse --show-toplevel 2> /dev/null)"
-    if [ -z $git_dir ] ; then
-        cd ..
-    else
-        cd $git_dir
-    fi
+    cd "$git_dir" || cd .. || exit 1
 }
 
 function increment_count {
@@ -79,15 +75,19 @@ function increment_count {
     #       The current count is: 1
     # .
 
-    local line=`grep "$1" "$2"`
-    local current_count=`echo $line | awk '{print $NF}'`
-    local new_count=`expr $current_count + 1`
-    local new_line=`echo $line | awk -v nc="$new_count" '{$NF = nc; print}'`
-    sed -i "s/$line/$new_line/" "$2"
+    local line
+    line=$(grep "$1" "$2")
+    local current_count
+    current_count=$(echo "$line" | awk '{print $NF}')
+    local new_count
+    (( new_count = current_count+1 ))
+    local new_line
+    new_line=$(echo "$line" | awk -v nc="$new_count" '{$NF = nc; print}')
+    sed -i "s/${line}/${new_line}/" "$2"
 }
 
 function is_folder_empty {
-    if [ -z "$(ls -A $1)" ]; then
+    if [ -z "$(ls -A "$1")" ]; then
         echo 'given folder is empty'
     else
         echo 'given folder is NOT empty'

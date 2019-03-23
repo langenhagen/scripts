@@ -13,7 +13,7 @@ function show_usage {
     # Usage:
     #   ${FUNCNAME[0]}
 
-    script_name="$(basename $0)"
+    script_name="$(basename "$0")"
 
     output='Usage:\n'
     output="${output} ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
@@ -82,8 +82,8 @@ export -f function_called_by_find
 export quiet
 export command
 
-if [ ${use_maxdepth} == true ]; then
-    find "${search_dir}" -maxdepth ${depth} -type d -iname "*.git" -execdir \
+if [ "${use_maxdepth}" == "true" ]; then
+    find "${search_dir}" -maxdepth "${depth}" -type d -iname "*.git" -execdir \
         bash -c "function_called_by_find ;" \;
 else
     find "${search_dir}" -type d -iname "*.git" -execdir \

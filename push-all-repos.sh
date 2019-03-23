@@ -21,7 +21,7 @@ function die {
     printf "${1}"
     printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
     printf "Command 'cd ${repo_path}' written to system clipboard\n"
-    exit ${2}
+    exit "${2}"
 }
 
 n_current_repo=0
@@ -32,21 +32,18 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     (( n_current_repo += 1 ))
     printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}${n}...\n"
 
-    cd "${repo_path}"
-    if [ $? != 0 ] ; then
+    if cd "${repo_path}"; then
         printf "${r}Error: Path ${rb}${repo_path}${r} does not exist${n}\n"
         exit 1
     fi
 
-    git rev-parse --verify "${local_branch_name}" 1>/dev/null 2>&1
-    if [ $? != 0 ] ; then
+    if git rev-parse --verify "${local_branch_name}" 1>/dev/null 2>&1; then
         output="${r}Error: The repo ${rb}${repo_path}${r} does not contain a branch called"
         output="${output} ${rb}${local_branch_name}${n}\n"
         die "${output}" 2
     fi
 
-    git checkout "${local_branch_name}"
-    if [ $? != 0 ] ; then
+    if git checkout "${local_branch_name}"; then
         output="${r}Error: Could not git checkout ${rb}${local_branch_name}${r} on"
         output="${output} ${rb}${repo_path}${n}\n"
         die "${output}" 3
