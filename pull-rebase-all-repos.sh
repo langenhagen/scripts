@@ -31,20 +31,20 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     local_branch_name="$(local_branch "${repo_path}")"
 
     (( n_current_repo += 1 ))
-    printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}${n}...\n"
+    printf "${b}(${n_current_repo}/${n_all_repos}) ${repo_path}...${n}\n"
 
-    if cd "${repo_path}"; then
+    if ! cd "${repo_path}"; then
         printf "${r}Error: Path ${rb}${repo_path}${r} does not exist${n}\n"
         exit 1
     fi
 
-    if git rev-parse --verify "${local_branch_name}" 1>/dev/null 2>&1; then
+    if ! git rev-parse --verify "${local_branch_name}" 1>/dev/null 2>&1; then
         output="${r}Error: The repo ${rb}${repo_path}${r} does not contain a branch called"
         output="${output} ${rb}${local_branch_name}${n}\n"
         die "${output}" 2
     fi
 
-    if git checkout "${local_branch_name}"; then
+    if ! git checkout "${local_branch_name}"; then
         output="${r}Error: Could not git checkout ${rb}${local_branch_name}${r} on"
         output="${output} ${rb}${repo_path}${n}\n"
         die "${output}" 3
@@ -73,5 +73,6 @@ done
 printf "Checking status for all repos:\n"
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     printf "${b}${repo_path}${n}\n"
+    cd "$repo_path"
     git status --short --untracked-files
 done
