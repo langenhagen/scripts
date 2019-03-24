@@ -57,12 +57,12 @@ git diff-tree --no-commit-id --name-only -r HEAD~1                  # git list a
 
 
 autopep8_config_file="${HOME}/.config/pep8"
-cat > "$autopep8_config_file" << MYFILE_EOF
+cat > "$autopep8_config_file" << EOF
 [pycodestyle]
 max_line_length = 100
 ignore = E501
 # ...
-MYFILE_EOF
+EOF
 
 num_issues_found_by_autopep8=0
 for patch in ${diffs[@]} ; do
