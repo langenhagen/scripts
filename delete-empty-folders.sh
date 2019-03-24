@@ -18,7 +18,7 @@ for ((i = 0; i < ${#directory_array[@]}; i++)) do
     is_empty=$(ls -A "${current_directory}")
     if [ -z "${is_empty}" ]; then
         echo "${current_directory}"
-        read -e -n1 -p " Delete [y/n]?: " do_delete  # -e newline after input is read  -n1 capture 1 character, no ENTER needed
+        read -r -e -n1 -p " Delete [y/n]?: " do_delete  # -r raw, i.e. don't mangle backslashes -e newline after input is read  -n1 capture 1 character, no ENTER needed
         if [ "${do_delete}" == "y" ]; then
             rm -rf "${current_directory}"
         fi

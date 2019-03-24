@@ -1,11 +1,10 @@
-#!/bin/sh
-
+#!/bin/bash
+#
 # Executes the input arguments as a command or
 # pipes the input stream and
 # prints the output with every second line colored differently.
 #
 # author: andreasl
-# version 18-06-28
 
 # decide whether we take input from pipe | or from input parameter list
 if [ $# -eq 0 ] ; then
