@@ -8,21 +8,21 @@
 
 # copyright headers and regexes to match possibly existing headers for each file type
 
-c1_python_header=$(cat << HEADER_EOF
+IFS='' read -r -d '' c1_python_header << HEADER_EOF
 # -*- coding: utf-8 -*-
 # (c) $(date +"%Y") CeleraOne GmbH
 HEADER_EOF
-)
+
 c1_python_header_regexes=(
 '# \-\*\- coding: utf\-8 \-\*\-'
 '# \(c\).*CeleraOne GmbH'
 )
 
-c1_lua_header=$(cat << HEADER_EOF
+IFS='' read -r -d '' c1_lua_header << HEADER_EOF
 -- -*- coding: utf-8 -*-
 -- (c) $(date +"%Y") CeleraOne GmbH
 HEADER_EOF
-)
+
 c1_lua_regexes=(
 '\-\- \-\*\- coding: utf\-8 \-\*\-'
 '\-\- \(c\).*CeleraOne GmbH'
