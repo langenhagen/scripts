@@ -76,7 +76,7 @@ done
 printf "Checking status for all repos:\n"
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     printf "${b}${repo_path}${n}\n"
-    cd "$repo_path"
+    cd "$repo_path" || die "Could not cd into ${repo_path}!" 6
     git status --short --untracked-files
 done
 
