@@ -11,10 +11,11 @@
 
 # color codes; overwrite with empty string '' if you want to disable them
 r='\e[0;31m'
+g='\e[0;32m'
 b='\e[1m'
 rb='\e[1;31m'
+gb='\e[1;32m'
 n='\e[0m'
-g='\e[1;32m'
 
 function die {
     # Will be called on failure
@@ -57,7 +58,7 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     code="${?}"
     if [ "${code}" == 0 ] ; then
         remote_branch="origin $(remote_push_branch "${repo_path}")"
-        printf "${g}Pushed changes from ${repo_path} to ${remote_branch}${n}\n"
+        printf "${g}Pushed changes from ${gb}${repo_path}${g} to ${gb}${remote_branch}${n}\n"
     elif [ "${code}" != 0 ] && [ "${code}" != 1 ] ; then  # 1 is "no new changes" on gerrit
         output="${r}Error: git push on the repo ${rb}${repo_path}${r} failed."
         if [ "${code}" == 128 ] ; then
