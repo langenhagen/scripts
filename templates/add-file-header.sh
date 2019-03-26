@@ -45,6 +45,7 @@ function add_file_header {
 
     if [ -z "${old_header}" ] ; then
         # add header
+        :
     elif [ "${3}" == '--update' ] ; then
         for line in "${header_regexes[@]}" ; do  # iterates safely over an array and retains whitespaces
             sed -i "0,/${line}/d" "${file}"
