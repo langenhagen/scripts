@@ -80,4 +80,4 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     git status --short --untracked-files
 done
 
->&2 printf -- "${error_output}"
+>&2 printf "${error_output}"
