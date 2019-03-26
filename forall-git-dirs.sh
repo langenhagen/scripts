@@ -58,7 +58,7 @@ while [ $# -gt 0 ] ; do
         ;;
     --)
         shift # past argument
-        command="$@"
+        command="$*"
         break
         ;;
     -h|--help)

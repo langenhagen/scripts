@@ -19,19 +19,19 @@ YELLOW='\e[1;33m'
 NC='\e[0m' # No Color
 
 function echo-error {
-    printf "${RED}${@}${NC}\n"
+    printf "${RED}${*}${NC}\n"
 }
 
 function echo-head {
-    printf "${CYAN}${@}${NC}\n"
+    printf "${CYAN}${*}${NC}\n"
 }
 
 function echo-ok {
-    printf "${GREEN}${@}${NC}\n"
+    printf "${GREEN}${*}${NC}\n"
 }
 
 function echo-warn {
-    printf "${YELLOW}${@}${NC}\n"
+    printf "${YELLOW}${*}${NC}\n"
 }
 
 function check_if_this_computer_is_a_mac {
