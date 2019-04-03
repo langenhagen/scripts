@@ -7,10 +7,12 @@
 # author: andreasl
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-if [ $# -eq 1 ]; then
+if [ $# -eq 0 ]; then
     . "$HOME/.gitprojectsrc"
-else
+elif [ $# -eq 1 ]; then
     . "$1"
+else
+    exit 1
 fi
 
 # color codes; overwrite with empty string '' if you want to disable them

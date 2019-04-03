@@ -36,9 +36,14 @@ function show_usage {
     printf -- "${output}"
 }
 
+gitprojectsrc_file_path="$HOME/.gitprojectsrc"
 while [ $# -gt 0 ] ; do
     key="$1"
     case ${key} in
+    -f|--file)
+        gitprojectsrc_file_path="$2"
+        shift # past argument
+        ;;
     -q|--quiet)
         quiet="True"
         ;;
@@ -58,11 +63,7 @@ while [ $# -gt 0 ] ; do
 done
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-if [ $# -eq 1 ]; then
-    . "$HOME/.gitprojectsrc"
-else
-    . "$1"
-fi
+. "$gitprojectsrc_file_path"
 
 n_all_repos=${#repo_paths2default_branch_names[@]}
 n_current_repo=0
