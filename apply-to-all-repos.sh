@@ -58,7 +58,11 @@ while [ $# -gt 0 ] ; do
 done
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-. "$HOME/.gitprojectsrc"
+if [ $# -eq 1 ]; then
+    . "$HOME/.gitprojectsrc"
+else
+    . "$1"
+fi
 
 n_all_repos=${#repo_paths2default_branch_names[@]}
 n_current_repo=0
