@@ -70,4 +70,7 @@ fi
 
 # Python
 find ~ -name "*.py[co]" -delete;
-find ~ -name "__pycache__" -delete;
+find ~ -name '__pycache__' -delete;
+
+# Jupyter
+find ~ -name '.ipynb_checkpoints' -exec rm -rf '{}' \;
