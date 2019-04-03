@@ -17,10 +17,11 @@ function show_usage {
     script_name="$(basename "$0")"
 
     output='Usage:\n'
-    output="${output} ${script_name} [-q|--quiet] [-- <command>]\n"
+    output="${output} ${script_name} [-f|--file] [-q|--quiet] [-- <command>]\n"
     output="${output}\n"
     output="${output}Examples:\n"
     output="${output}  ${script_name}                      # lists all git repositories\n"
+    output="${output}  ${script_name} -f myfile            # source myfile instead .gitprojectsrc\n"
     output="${output}  ${script_name} -- ls                # lists all git repositories and"
     output="${output} calls \`ls\` on the path of all git repos\n"
     output="${output}  ${script_name} -q -- ls             # calls \`ls\` on the path of all git"
