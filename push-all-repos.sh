@@ -1,19 +1,14 @@
 #!/bin/bash
 #
-# For each pair in a mapping of git repo paths and branch names,
+# Given an optional reposet name,
+# for each pair in a mapping of git repo paths and branch names,
 # checkout the default branch name and
 # call git push refs/for/branchnames.
 #
 # author: andreasl
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-if [ $# -eq 0 ]; then
-    . "$HOME/.gitprojectsrc"
-elif [ $# -eq 1 ]; then
-    . "$1"
-else
-    exit 1
-fi
+source "$HOME/.reposets/reposets.inc.sh" "$1"
 
 # color codes; overwrite with empty string '' if you want to disable them
 r='\e[0;31m'

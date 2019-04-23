@@ -21,7 +21,7 @@ function show_usage {
     output="${output}\n"
     output="${output}Examples:\n"
     output="${output}  ${script_name}                      # lists all git repositories\n"
-    output="${output}  ${script_name} -f myfile            # source myfile instead .gitprojectsrc\n"
+    output="${output}  ${script_name} -f my                # source my.reposet instead .reposet\n"
     output="${output}  ${script_name} -- ls                # lists all git repositories and"
     output="${output} calls \`ls\` on the path of all git repos\n"
     output="${output}  ${script_name} -q -- ls             # calls \`ls\` on the path of all git"
@@ -37,12 +37,12 @@ function show_usage {
     printf -- "${output}"
 }
 
-gitprojectsrc_file_path="$HOME/.gitprojectsrc"
+reposet=
 while [ $# -gt 0 ] ; do
     key="$1"
     case ${key} in
     -f|--file)
-        gitprojectsrc_file_path="$2"
+        reposet="$2"
         shift # past argument
         ;;
     -q|--quiet)
@@ -64,7 +64,7 @@ while [ $# -gt 0 ] ; do
 done
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-. "$gitprojectsrc_file_path"
+source "$HOME/.reposets/reposets.inc.sh" "$reposet"
 
 n_all_repos=${#repo_paths2default_branch_names[@]}
 n_current_repo=0
