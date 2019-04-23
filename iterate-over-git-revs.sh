@@ -17,7 +17,7 @@ echo "$all_revs"
 echo
 
 prior_rev="$(git rev-parse HEAD)"
-script_dir="$(dirname ${BASH_SOURCE[0]})"
+script_dir="$(dirname "${BASH_SOURCE[0]}")"
 exit_code=0
 for rev in $all_revs; do
     git checkout "$rev" 1>/dev/null 2>&1

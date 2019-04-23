@@ -10,29 +10,29 @@
 # author: andreasl
 
 query_history_file="${HOME}/.stq_history"
-historic_queries="$(tac "${query_history_file}")"
+historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "${historic_queries}" | dmenu -i -l 5 -p "tricks query?:" )"
+query="$(printf "$historic_queries" | dmenu -i -l 5 -p "tricks query?:" )"
 if [ $? != 0 ] ; then
     exit 1
 fi
 
 file="${HOME}/Dev/Zeugs/tricks.sh"
-results=$(cat "${file}")
+results=$(cat "$file")
 for searchterm in ${query} ; do
-    results="$(printf '%s' "${results}" | grep -i "${searchterm}")"
+    results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 
-if [ -z "${results}" ] ; then
+if [ -z "$results" ] ; then
     exit 1
 fi
 
 selected_result="$(printf '%s\n' "${results[@]}" | dmenu -i -p "select:" -l 30)"
-if [ -z "${selected_result}" ] ; then
+if [ -z "$selected_result" ] ; then
     exit 1
 fi
 
-sed -i "/${query}/d" "${query_history_file}"
-echo "${query}" >> "${query_history_file}"
+sed -i "/${query}/d" "$query_history_file"
+echo "$query" >> "$query_history_file"
 
-printf '%s' "${selected_result}" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard
+printf '%s' "$selected_result" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard

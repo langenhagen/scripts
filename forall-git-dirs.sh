@@ -43,7 +43,7 @@ search_dir='.'
 
 while [ $# -gt 0 ] ; do
     key="$1"
-    case ${key} in
+    case $key in
     -q|--quiet)
         quiet="True"
         ;;
@@ -72,8 +72,8 @@ while [ $# -gt 0 ] ; do
 done
 
 function function_called_by_find {
-    [ -n "${quiet}" ] || printf "\e[1m${PWD}\e[0m\n"
-    eval "${command}"
+    [ -n "$quiet" ] || printf "\e[1m${PWD}\e[0m\n"
+    eval "$command"
 }
 
 # export the function and the command, since the subshell you open below in find
@@ -82,10 +82,10 @@ export -f function_called_by_find
 export quiet
 export command
 
-if [ "${use_maxdepth}" == "true" ]; then
-    find "${search_dir}" -maxdepth "${depth}" -type d -iname "*.git" -execdir \
+if [ "$use_maxdepth" == "true" ]; then
+    find "$search_dir" -maxdepth "$depth" -type d -iname "*.git" -execdir \
         bash -c "function_called_by_find ;" \;
 else
-    find "${search_dir}" -type d -iname "*.git" -execdir \
+    find "$search_dir" -type d -iname "*.git" -execdir \
         bash -c "function_called_by_find ;" \;
 fi

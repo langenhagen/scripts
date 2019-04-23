@@ -20,6 +20,6 @@ function on_exit {
 
 trap on_exit EXIT
 
-. $HOME/miniconda3/etc/profile.d/conda.sh
+source "${HOME}/miniconda3/etc/profile.d/conda.sh"
 conda activate my
 jupyter lab&

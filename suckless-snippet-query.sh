@@ -12,29 +12,29 @@
 # author: andreasl
 
 query_history_file="${HOME}/.ssq_history"
-historic_queries="$(tac "${query_history_file}")"
+historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "${historic_queries}" | dmenu -i -l 5 -p "snippet query?:" )"
+query="$(printf "$historic_queries" | dmenu -i -l 5 -p "snippet query?:" )"
 if [ $? != 0 ] ; then
     exit 1
 fi
 
 file="${HOME}/Work/2018-CeleraOne/day-notes.md"
-results=$(grep -i '#snippet' "${file}")
-for searchterm in ${query} ; do
-    results="$(printf '%s' "${results}" | grep -i "${searchterm}")"
+results=$(grep -i '#snippet' "$file")
+for searchterm in $query ; do
+    results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 
-if [ -z "${results}" ] ; then
+if [ -z "$results" ] ; then
     exit 1
 fi
 
 selected_result="$(printf '%s\n' "${results[@]}" | sed 's/[ \t]*#snippet.*$//' | dmenu -i -p "select:" -l 30)"
-if [ -z "${selected_result}" ] ; then
+if [ -z "$selected_result" ] ; then
     exit 1
 fi
 
-sed -i "/${query}/d" "${query_history_file}"
-echo "${query}" >> "${query_history_file}"
+sed -i "/${query}/d" "$query_history_file"
+echo "$query" >> "$query_history_file"
 
-printf '%s' "${selected_result}" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard
+printf '%s' "$selected_result" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # Calls dmenu and asks for a search query to call find under the ${HOME} directory,
 # then calls dmenu with the list of results.
 # The result of the latter query is attempted to be opened with xdg-open or a comparable tool.
@@ -11,7 +11,7 @@
 
 function define_standard_settings {
 
-    root_path="${HOME}"
+    root_path="$HOME"
 
     if [ "$(uname)" == "Darwin" ] ; then
         open_command='open'
@@ -31,10 +31,10 @@ if [ $? != 0 ] ; then
     exit 1
 fi
 
-sed -i "/${search_query}/d" "${search_history_file}"
-echo "${search_query}" >> "${search_history_file}"
+sed -i "/${search_query}/d" "$search_history_file"
+echo "$search_query" >> "$search_history_file"
 
-search_results="$(find "${root_path}" -iname "*${search_query}*" 2>/dev/null)"
+search_results="$(find "$root_path" -iname "*${search_query}*" 2>/dev/null)"
 
 selected_result="$(printf '%s\n' "${search_results[@]}" | dmenu -i -p "select:" -l 30)"
 if [ $? != 0 ] ; then

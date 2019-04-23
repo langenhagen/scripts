@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Counts the lines of code on a list of git repositories using cloc and
+# Counts the lines of code on a set of git repositories using cloc and
 # prepends the results with the current date, repository name, directory path and
 # writes the results in csv-format to stdout.
 # A line in the output will have the following format:
@@ -10,6 +10,7 @@
 #
 # Usage:
 #   cloc-all-repos.sh
+#   cloc-all-repos.sh <reposet>
 #   cloc-all-repos.sh 1>loc.csv 2>/dev/null
 #
 # author: andreasl
@@ -17,10 +18,11 @@
 set -e
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-. "$HOME/.gitprojectsrc"
+reposet="$1"
+source "${HOME}/.reposets/reposets.inc.sh" "$reposet"
 
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
-    cd "${repo_path}"
+    cd "$repo_path"
     cloc --csv --quiet --vcs=git  | \
-    sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date '+%Y-%m-%d'),$(basename "${repo_path}"),${repo_path},:g"
+    sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date '+%Y-%m-%d'),$(basename "$repo_path"),${repo_path},:g"
 done

@@ -34,13 +34,13 @@ function show_usage {
     output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
     output="${output} into single quotation marks so that they will not be expanded ''"
     output="${output} immediately.\n"
-    printf -- "${output}"
+    printf -- "$output"
 }
 
 reposet=
 while [ $# -gt 0 ] ; do
     key="$1"
-    case ${key} in
+    case $key in
     -f|--file)
         reposet="$2"
         shift # past argument
@@ -64,14 +64,14 @@ while [ $# -gt 0 ] ; do
 done
 
 # Source a list named repo_paths2default_branch_names of all repos that will be worked with
-source "$HOME/.reposets/reposets.inc.sh" "$reposet"
+source "${HOME}/.reposets/reposets.inc.sh" "$reposet"
 
 n_all_repos=${#repo_paths2default_branch_names[@]}
 n_current_repo=0
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     (( n_current_repo += 1 ))
 
-    cd "${repo_path}" || exit 1
-    [ -n "${quiet}" ] || printf "\e[1m(${n_current_repo}/${n_all_repos}) ${repo_path}\e[0m...\n"
-    eval "${command}"
+    cd "$repo_path" || exit 1
+    [ -n "$quiet" ] || printf "\e[1m(${n_current_repo}/${n_all_repos}) ${repo_path}\e[0m...\n"
+    eval "$command"
 done
