@@ -14,7 +14,7 @@ function show_usage {
     # Usage:
     #   ${FUNCNAME[0]}
 
-    script_name="$(basename "$0")"
+    script_name="${0##*/}"
 
     output='Usage:\n'
     output="${output} ${script_name} [-f|--file] [-q|--quiet] [-- <command>]\n"

@@ -24,5 +24,5 @@ source "${HOME}/.reposets/reposets.inc.sh" "$reposet"
 for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     cd "$repo_path"
     cloc --csv --quiet --vcs=git  | \
-    sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date '+%Y-%m-%d'),$(basename "$repo_path"),${repo_path},:g"
+    sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date '+%Y-%m-%d'),${repo_path##*/},${repo_path},:g"
 done
