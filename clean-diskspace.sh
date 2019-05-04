@@ -65,7 +65,7 @@ command -v docker >/dev/null && docker system prune --all --force;
 find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd;" \;
 if [[ "$1" == '--wholesome' ]]; then
    printf "${b}Do a  git gq --aggressive  on all git repos on the machine${n}\n";
-   find / -type d -name '.git' -exec bash -c "pushd '{}'; sudo git gc --aggressive; popd;" \;
+   find / -type d -name '.git' -exec bash -c "pushd '{}'; git gc --aggressive; popd;" \;
 fi
 
 # Python
