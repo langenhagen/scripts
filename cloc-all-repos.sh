@@ -6,23 +6,12 @@
 # A line in the output will have the following format:
 #   date,folder_name,folder_path,files,language,blank,comment,code
 #
-# Exits immediately in case of any error.
-#
 # Usage:
 #   cloc-all-repos.sh
-#   cloc-all-repos.sh <reposet>
+#   cloc-all-repos.sh <reposet>...
 #   cloc-all-repos.sh 1>loc.csv 2>/dev/null
 #
 # author: andreasl
 
-set -e
+reposet apply -q "$@" -- 'cloc --csv --quiet --vcs=git | sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date +%Y-%m-%d),${repo_path##*/},${repo_path},:g"'
 
-# Source a list named repo_paths2default_branch_names of all repos that will be worked with
-reposet="$1"
-source "${HOME}/.reposets/reposets.inc.sh" "$reposet"
-
-for repo_path in "${!repo_paths2default_branch_names[@]}"; do
-    cd "$repo_path"
-    cloc --csv --quiet --vcs=git  | \
-    sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date '+%Y-%m-%d'),${repo_path##*/},${repo_path},:g"
-done
