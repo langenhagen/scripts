@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # Downloads an apk file from the web and
 # installs it on the first attached Android device.
 #

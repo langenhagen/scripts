@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # Takes an Android device id or uses the first found device,
 # determines the device's architecture,
 # creates a temporary directory,

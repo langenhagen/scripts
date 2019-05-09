@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 # Calls dmenu
 # and uses the selected item to open the item with xdg-open.
 #

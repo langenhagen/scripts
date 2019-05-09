@@ -1,5 +1,5 @@
 #!/bin/sh
-
+#
 # Executes the input arguments as a command or
 # pipes the input stream and
 # prints the output with every second column colored differently.
