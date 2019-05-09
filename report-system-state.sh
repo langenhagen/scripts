@@ -4,6 +4,11 @@
 #
 # author: andreasl
 
-printf "$ conda env list:\n"
+printf '$ conda env list:\n'
 conda env list;
-printf "\n"
+printf '\n'
+
+printf '$ reposet all:\n'
+reposet all;
+printf '\n'
+
