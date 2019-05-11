@@ -10,7 +10,7 @@ function show_usage {
 
     msg="${script_name}\n"
     msg="${msg}Greps a given pattern on files with given file masks below the cwd and replaces it"
-    msg="${msg} with a given string after asking for confirmation."
+    msg="${msg} with a given string after asking for confirmation.\n"
     msg="${msg}\n"
     msg="${msg}Usage:\n"
     msg="${msg}  ${script_name} <search-pattern> <replace-string> <file-pattern>...\n"
@@ -18,14 +18,19 @@ function show_usage {
     msg="${msg}Examples:\n"
     msg="${msg}  ${script_name} 'echo' 'printf' *.sh            # replaces 'echo' with 'printf' in all *.sh files below the cwd\n"
     msg="${msg}  ${script_name} '2018' '2019' *.txt *.md        # replaces '2018' with '2019' in all *.txt and *.md files below the cwd\n"
-    msg="${msg}  ${script_name} 'wind|rain' sun vacation.txt    # replaces all matching text passages with 'sun' in files called "vacation.txt"\n"
+    msg="${msg}  ${script_name} 'wind|rain' sun vacation.txt    # replaces all matching text passages with 'sun' in files called \"vacation.txt\"\n"
     msg="${msg}  ${script_name} -h                              # prints the usage message\n"
     msg="${msg}  ${script_name} --help                          # prints the usage message\n"
     printf "$msg"
 }
 
-if [ "$#" -lt 3 ] || [[ "$1" =~ ^(-h|--help)$ ]] ; then
+if [[ "$1" =~ ^(-h|--help)$ ]] ; then
     show_usage
+    exit 1
+elif [ "$#" -lt 3 ] ; then
+    printf 'Usage:\n'
+    printf -- "  ${0##*/} -h|--help\n"
+    printf -- "  ${0##*/} <search-pattern> <replace-string> <file-pattern>...\n"
     exit 1
 fi
 
@@ -34,41 +39,52 @@ shift
 to_replace_with="$1"
 shift
 
-for file in "$@" ; do
+found_any_matches=false
+for file_pattern in "$@" ; do
     # preview
-    grep -HRn --color --include "$file" "$to_look_for" .
+    grep -HRn --color --include "$file_pattern" "$to_look_for" .
+    [ "$?" -eq 0 ] && found_any_matches=true
 done
+if [ "$found_any_matches" == 'false' ] ; then
+    printf 'Found no matches.\n'
+    exit 2
+fi
 
-read -r -e -n1 -p 'Do you want to continue? (y)es, (n)o, (i)nteractive [yY/nN/iI]: ' yes_no_i
+read -r -e -n1 -p 'Do you want to continue? (y)es, (n)o, (i)nteractive: ' yes_no_i
 if [[ "$yes_no_i" == [iI] ]] ; then
     interactive=true
 elif [[ "$yes_no_i" != [yY] ]] ; then
     exit 0
 fi
 
-files=()
-files_lines=($(grep -HRl "$to_look_for" .))
-while IFS= read -r line; do
-    files+=("$line")
-done <<< "$files_lines"
+b='\e[1m'
+n='\e[m'
 
+files=()
+for file_pattern in "$@" ; do
+    files_lines="$(grep -Rl --include "$file_pattern" "$to_look_for" .)"
+    while IFS= read -r line; do
+        files+=("$line")
+    done <<< "$files_lines"
+done
 
 for file in "${files[@]}" ; do
     # replace
-
     if [ "$interactive" == true ] ; then
-        printf 'In file %s:\n' "$file"
+        printf "In file ${file}:\n"
         grep -Hn --color "$to_look_for" "$file"
-        read -r -e -n1 -p 'Change occurences in this file? [yY/nN]: ' yes_no
+        printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
+        read -r -e -n1 yes_no
         if [[ "$yes_no" != [yY] ]] ; then
             continue
         fi
+    fi
 
-    sed -i "s@$to_look_for@$to_replace_with@g" "$file" \;  # Gnu sed version
-    #sed -i '' "s@$to_look_for@$to_replace_with@g" "$file" \;  # Mac sed version
+    sed -i "s@$to_look_for@$to_replace_with@g" "$file"  # Gnu sed version
+    #sed -i '' "s@$to_look_for@$to_replace_with@g" "$file"  # Mac sed version
 done
 
-for file in "$@" ; do
+for file_pattern in "$@" ; do
     # review
-    grep -Hrn --color --include "$file" "$to_replace_with" .
+    grep -Hrn --color --include "$file_pattern" "$to_replace_with" .
 done
