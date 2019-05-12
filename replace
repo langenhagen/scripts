@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Greps a given pattern on files with given file masks below the cwd and replaces it  with a given
+# Greps a given pattern on files with given file masks below the cwd and replaces it with a given
 # string after asking for confirmation.
 #
 # author: andreasl
@@ -35,8 +35,8 @@ elif [ "$#" -lt 3 ] ; then
 fi
 
 to_look_for="$1"
+to_replace_with="$2"
 shift
-to_replace_with="$1"
 shift
 
 found_any_matches=false
@@ -71,20 +71,21 @@ done
 for file in "${files[@]}" ; do
     # replace
     if [ "$interactive" == true ] ; then
-        printf "In file ${file}:\n"
-        grep -Hn --color "$to_look_for" "$file"
-        printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
-        read -r -e -n1 yes_no
-        if [[ "$yes_no" != [yY] ]] ; then
+        printf "Change occurences in ${b}${file}${n}? (y)es, (n)o, (s)how: "
+        read -r -e -n1 yes_no_show
+        if [[ "$yes_no_show" == [sS] ]] ; then
+            grep -Hn --color "$to_look_for" "$file"
+            printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
+            read -r -e -n1 yes_no
+            if [[ "$yes_no" != [yY] ]] ; then
+                continue
+            fi
+        elif [[ "$yes_no_show" != [yY] ]] ; then
             continue
         fi
     fi
 
-    sed -i "s@$to_look_for@$to_replace_with@g" "$file"  # Gnu sed version
+    sed --follow-symlinks -i "s@$to_look_for@$to_replace_with@g" "$file"  # Gnu sed version
     #sed -i '' "s@$to_look_for@$to_replace_with@g" "$file"  # Mac sed version
-done
-
-for file_pattern in "$@" ; do
-    # review
-    grep -Hrn --color --include "$file_pattern" "$to_replace_with" .
+    grep -Hn --color --include "$file_pattern" "$to_replace_with" "$file"
 done
