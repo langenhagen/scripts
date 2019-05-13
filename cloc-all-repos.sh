@@ -6,6 +6,10 @@
 # A line in the output will have the following format:
 #   date,folder_name,folder_path,files,language,blank,comment,code
 #
+# Note:
+#  If a repo is defined several times in the reposets, it will consequently also checked several
+#  times.
+#
 # Usage:
 #   cloc-all-repos.sh
 #   cloc-all-repos.sh <reposet>...
