@@ -7,35 +7,24 @@
 #
 # author: andreasl
 
-function show_usage {
-    # Given the name of the script, prints the usage string.
-    #
-    # Usage:
-    #   ${FUNCNAME[0]}
+script_name="${0##*/}"
+IFS= read -r -d '' script_description << HELP_EOF
+Usage:
+  ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]
 
-    script_name="${0##*/}"
+Examples:
+  ${script_name}                      # lists the found git repositories
+  ${script_name} -d 2 -- ls           # lists the found git repositories and calls \`ls\`" from all git repos in this file level and one level below
+  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file level and one level below but does not list the found git repos
+  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given path
+  ${script_name} -q -- realpath .     # prints the paths of all git repos below the current path
+  ${script_name} -h                   # prints the usage message
+  ${script_name} --help               # prints the usage message
 
-    msg='Usage:\n'
-    msg+=" ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]\n"
-    msg+="\n"
-    msg+="Examples:\n"
-    msg+="  ${script_name}                      # lists the found git repositories\n"
-    msg+="  ${script_name} -d 2 -- ls           # lists the found git repositories and calls \`ls\`"
-    msg+=" from all git repos in this file level and one level below\n"
-    msg+="  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file"
-    msg+=" level and one level below but does not list the found git repos\n"
-    msg+="  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given"
-    msg+=" path\n"
-    msg+="  ${script_name} -q -- realpath .     # prints the paths of all git repos below the"
-    msg+=" current path\n"
-    msg+="  ${script_name} -h                   # prints the usage message\n"
-    msg+="  ${script_name} --help               # prints the usage message\n"
-    msg+="\n"
-    msg+="Note:\n"
-    msg+="  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into single"
-    msg+=" quotation marks so that they will not be expanded '' immediately.\n"
-    printf "$msg"
-}
+Note:
+  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into single quotation
+  marks so that they will not be expanded '' immediately.
+HELP_EOF
 
 use_maxdepth=false
 search_dir='.'
@@ -61,7 +50,7 @@ while [ $# -gt 0 ] ; do
         break
         ;;
     -h|--help)
-        show_usage
+        printf -- "$script_description"
         exit 0
         ;;
     *) # unknown option
