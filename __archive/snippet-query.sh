@@ -8,14 +8,14 @@
 # author: andreasl
 
 file="${HOME}/Work/2018-CeleraOne/day-notes.md"
-results=$(grep -i '#snippet' "${file}")
+results=$(grep -i '#snippet' "$file")
 for searchterm in "${@}" ; do
-    results="$(printf '%s' "${results}" | grep -i "${searchterm}")"
+    results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 
-if [ -z "${results}" ] ; then
+if [ -z "$results" ] ; then
     exit 1
 fi
 
-printf "${results}" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard
-printf '%s\n' "${results}"
+printf "$results" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard
+printf '%s\n' "$results"

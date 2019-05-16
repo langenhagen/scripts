@@ -20,10 +20,10 @@ n='\e[0m'
 
 function die {
     # Will be called on failure
-    printf "${1}"
+    printf "$1"
     printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
     printf "Command 'cd ${repo_path}' written to system clipboard\n"
-    exit "${2}"
+    exit "$2"
 }
 
 n_current_repo=0
@@ -40,32 +40,32 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     fi
 
     if ! git rev-parse --verify "$local_branch_name" 1>/dev/null 2>&1; then
-        output="${r}Error: The repo ${rb}${repo_path}${r} does not contain a branch called"
-        output="${output} ${rb}${local_branch_name}${n}\n"
-        die "$output" 2
+        msg="${r}Error: The repo ${rb}${repo_path}${r} does not contain a branch called"
+        msg+=" ${rb}${local_branch_name}${n}\n"
+        die "$msg" 2
     fi
 
     if ! git checkout "$local_branch_name"; then
-        output="${r}Error: Could not git checkout ${rb}${local_branch_name}${r} on"
-        output="${output} ${rb}${repo_path}${n}\n"
-        die "$output" 3
+        msg="${r}Error: Could not git checkout ${rb}${local_branch_name}${r} on"
+        msg+="${rb}${repo_path}${n}\n"
+        die "$msg" 3
     fi
 
     git fetch --prune
     git pull --rebase origin "$local_branch_name"
     code="$?"
     if [ "$code" != 0 ] ; then
-        output="${r}Error: git pull --rebase origin ${local_branch_name} on the repo"
-        output="${output} ${rb}${repo_path}${r}"
+        msg="${r}Error: git pull --rebase origin ${local_branch_name} on the repo"
+        msg+=" ${rb}${repo_path}${r}"
         if [ "$code" == 1 ] ; then
-            output="${output} did not find this remote branch${n}\n"
-            die "$output" 4
+            msg+=" did not find this remote branch${n}\n"
+            die "$msg" 4
         elif [ "$code" == 128 ] ; then
-            output="${output} caused a merge conflict${n}\n"
-            die "$output" 5
+            msg+=" caused a merge conflict${n}\n"
+            die "$msg" 5
         else
-            output="${output} caused an unknown error${n}\n"
-            die "$output" 6
+            msg+=" caused an unknown error${n}\n"
+            die "$msg" 6
         fi
     fi
 done

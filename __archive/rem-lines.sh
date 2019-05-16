@@ -22,13 +22,13 @@ files=`git diff --name-only HEAD`
 printf 'These lines are to be deleted:\n\n'
 for file in ${files}; do
     # TODO maybe use pygmentize to get colorized output
-    grep -Hn --color ' /rm' "${file}"
+    grep -Hn --color ' /rm' "$file"
 done
 
 echo
 read -n1 -s -p 'Press any key to continue or ctr+c to abort' throwawaywar; echo
 
 for file in ${files}; do
-    sed -i '/ \/rm/d' "${file}"
+    sed -i '/ \/rm/d' "$file"
 done
 

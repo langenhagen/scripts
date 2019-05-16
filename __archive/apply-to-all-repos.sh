@@ -16,25 +16,24 @@ function show_usage {
 
     script_name="${0##*/}"
 
-    output='Usage:\n'
-    output="${output} ${script_name} [-f|--file] [-q|--quiet] [-- <command>]\n"
-    output="${output}\n"
-    output="${output}Examples:\n"
-    output="${output}  ${script_name}                      # lists all git repositories\n"
-    output="${output}  ${script_name} -f my                # source my.reposet instead .reposet\n"
-    output="${output}  ${script_name} -- ls                # lists all git repositories and"
-    output="${output} calls \`ls\` on the path of all git repos\n"
-    output="${output}  ${script_name} -q -- ls             # calls \`ls\` on the path of all git"
-    output="${output} repos but does not list the git repos\n"
-    output="${output}  ${script_name} -q -- realpath .     # prints the paths of all git repos\n"
-    output="${output}  ${script_name} -h                   # prints the usage message\n"
-    output="${output}  ${script_name} --help               # prints the usage message\n"
-    output="${output}\n"
-    output="${output}Note:\n"
-    output="${output}  If you want to use subshell related-variables, like e.g. \$PWD, wrap them"
-    output="${output} into single quotation marks so that they will not be expanded ''"
-    output="${output} immediately.\n"
-    printf -- "$output"
+    msg='Usage:\n'
+    msg+=" ${script_name} [-f|--file] [-q|--quiet] [-- <command>]\n"
+    msg+="\n"
+    msg+="Examples:\n"
+    msg+="  ${script_name}                      # lists all git repositories\n"
+    msg+="  ${script_name} -f my                # source my.reposet instead .reposet\n"
+    msg+="  ${script_name} -- ls                # lists all git repositories and calls \`ls\` on"
+    msg+=" the path of all git repos\n"
+    msg+="  ${script_name} -q -- ls             # calls \`ls\` on the path of all git repos but"
+    msg+=" does not list the git repos\n"
+    msg+="  ${script_name} -q -- realpath .     # prints the paths of all git repos\n"
+    msg+="  ${script_name} -h                   # prints the usage message\n"
+    msg+="  ${script_name} --help               # prints the usage message\n"
+    msg+="\n"
+    msg+="Note:\n"
+    msg+="  If you want to use subshell related-variables, like e.g. \$PWD, wrap them into single"
+    msg+=" quotation marks so that they will not be expanded '' immediately."
+    printf "$msg"
 }
 
 reposet=

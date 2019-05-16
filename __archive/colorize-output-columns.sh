@@ -31,7 +31,7 @@ EOF
 regex_var='[\\\\|/|\:|\||\.|[:space:]]*'
 # TODO how to print the CURRENT delimeter?
 echo "This/is/a:test.txt\yeah..yes\\wtf|what       it      this works\\\\\\I tell you"
-echo "This/is/a:test.txt\yeah..yes\\wtf|what       it      this works\\\\\\I tell you" | awk -F ${regex_var} "${scriptVariable}"
+echo "This/is/a:test.txt\yeah..yes\\wtf|what       it      this works\\\\\\I tell you" | awk -F ${regex_var} "$scriptVariable"
 
 
 # TODO:

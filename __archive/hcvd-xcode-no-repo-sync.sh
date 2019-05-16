@@ -5,7 +5,7 @@ cd prime
 WORKSPACE=$(pwd)
 
 # if [ -z "$REPO_USER" ]; then
-#     export REPO_USER="${USER}"
+#     export REPO_USER="$USER"
 # fi
 
 # repo init \
@@ -45,5 +45,5 @@ echo "---- Postprocessing project ----"
 sed -i '' -e '/SYMROOT = /d' "hcvd.xcodeproj/project.pbxproj"
 # remove warnings that are not in our control
 sed -i -e 's/-Wall//g' hcvd.xcodeproj/project.pbxproj
-sed -i -e 's/\"-Wno-four-char-constants\"/\"-Wno-four-char-constants\",\"-Wno-unused-local-typedefs\",\"-Wno-tautological-undefined-compare\",\"-Wno-unused-private-field\"/g' hcvd.xcodeproj/project.pbxproj 
+sed -i -e 's/\"-Wno-four-char-constants\"/\"-Wno-four-char-constants\",\"-Wno-unused-local-typedefs\",\"-Wno-tautological-undefined-compare\",\"-Wno-unused-private-field\"/g' hcvd.xcodeproj/project.pbxproj
 sed -i -e 's/ENABLE_BITCODE = NO;/ENABLE_BITCODE = NO; GCC_WARN_64_TO_32_BIT_CONVERSION = NO;/g' hcvd.xcodeproj/project.pbxproj

@@ -37,18 +37,18 @@ function add_file_header {
     # usage:
     #   add_file_header <HEADER> <HEADER-REGEX> [--update] <file>
 
-    header_string="${1}"
-    header_regexes="${2}"                                      # TODO: how to pass an array to a function in bash?
+    header_string="$1"
+    header_regexes="$2"                                      # TODO: how to pass an array to a function in bash?
     file="${4:-${3}}"
 
     # determine whether file has old_header, i.e. if it contains all regexes on consecutive lines
 
-    if [ -z "${old_header}" ] ; then
+    if [ -z "$old_header" ] ; then
         # add header
         :
-    elif [ "${3}" == '--update' ] ; then
+    elif [ "$3" == '--update' ] ; then
         for line in "${header_regexes[@]}" ; do  # iterates safely over an array and retains whitespaces
-            sed -i "0,/${line}/d" "${file}"
+            sed -i "0,/${line}/d" "$file"
         done
         # add header
     fi

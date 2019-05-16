@@ -7,7 +7,7 @@ WORKSPACE=$(pwd)
 # You likely don't need that if You are using Your repo sources
 ###################################################################################################
 # if [ -z "$REPO_USER" ]; then
-#     export REPO_USER="${USER}"
+#     export REPO_USER="$USER"
 # fi
 #
 # repo init \

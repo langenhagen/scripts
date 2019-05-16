@@ -24,9 +24,9 @@ define_standard_settings
 source "${HOME}/.edmrc" 2>/dev/null
 
 search_history_file="${HOME}/.fwdm_history"
-historic_searches="$(tac "${search_history_file}")"
+historic_searches="$(tac "$search_history_file")"
 
-search_query="$(printf -- "${historic_searches}" | dmenu -i -l 3 -p "search for?:" )"
+search_query="$(printf -- "$historic_searches" | dmenu -i -l 3 -p "search for?:" )"
 if [ $? != 0 ] ; then
     exit 1
 fi

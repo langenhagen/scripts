@@ -19,7 +19,7 @@ while [ $# -gt 1 ] ; do
     case ${key} in
     -d|--depth)
         use_maxdepth=true
-        depth="${2}"
+        depth="$2"
         shift # past argument
         ;;
     *) # unknown option
@@ -29,15 +29,15 @@ while [ $# -gt 1 ] ; do
 done
 
 if [ $# -gt 0 ]; then
-    search_dir="${1}"
+    search_dir="$1"
 else
     search_dir='.'
 fi
 
 if [ ${use_maxdepth} == true ]; then
-    find "${search_dir}" -maxdepth ${depth} -type d -iname "*.git" -execdir \
+    find "$search_dir" -maxdepth ${depth} -type d -iname "*.git" -execdir \
         bash -c 'printf "\e[1m${PWD}\e[0m\n"; git pull --rebase; ' '{}' \;
 else
-    find "${search_dir}" -type d -iname "*.git" -execdir \
+    find "$search_dir" -type d -iname "*.git" -execdir \
         bash -c 'printf "\e[1m${PWD}\e[0m\n"; git pull --rebase; ' '{}' \;
 fi
