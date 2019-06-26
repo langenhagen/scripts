@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Replace strings in files in a directory tree.
+#
 # Greps a given pattern on files with given file masks below the cwd and replaces it with a given
 # string after asking for confirmation.
 #
