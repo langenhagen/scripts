@@ -7,4 +7,4 @@
 # author: andreasl
 
 flake8 "$*"
-pylint3 "$*"
+pylint3 --msg-template='{msg_id} {path}:{line}: {msg}' "$*"
