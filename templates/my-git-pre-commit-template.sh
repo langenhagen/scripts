@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Git pre commit hook template
+# Git pre commit hook template.
 # It can be used for hook logic that should be called on your behalf but can be omitted if needed,
 # e.g. long running operations.
 #

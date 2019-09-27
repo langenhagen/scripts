@@ -1,6 +1,9 @@
 #!/bin/bash
 #
-# Gives a system overview over things that I check from time to time.
+# Retrieve a system overview over things that I check from time to time.
+#
+# In future:
+#  - check maybe Docker
 #
 # author: andreasl
 

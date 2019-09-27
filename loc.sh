@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Counts the lines of code in my directories
+# Count the lines of code in my directories und $HOME/Dev.
 #
 # author: andreasl
 

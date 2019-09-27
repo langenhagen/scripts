@@ -7,8 +7,7 @@
 #   date,folder_name,folder_path,files,language,blank,comment,code
 #
 # Note:
-#  If a repo is defined several times in the reposets, it will consequently also checked several
-#  times.
+#  If a repo is defined several times in the reposets, it will also be checked several times.
 #
 # Usage:
 #   cloc-all-repos.sh
@@ -18,4 +17,3 @@
 # author: andreasl
 
 reposet apply -q "$@" -- 'cloc --csv --quiet --vcs=git | sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date +%Y-%m-%d),${repo_path##*/},${repo_path},:g"'
-

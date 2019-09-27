@@ -1,5 +1,7 @@
 #!/bin/bash
 #
+# Remove all docker containers and images from the docker system.
+#
 # author: andreasl
 
 sudo docker kill "$(docker ps -q)"

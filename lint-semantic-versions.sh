@@ -1,6 +1,7 @@
 #!/bin/bash
 #
-# Retrieve the semantic version specifiactions that are under- or overspecified specified.
+# Retrieve the semantic version specifiactions from given files
+# that are underspecified or overspecified.
 #
 # author: andreasl
 
