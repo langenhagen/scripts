@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Print your local network IP address
+# and write it to the system clipboard.
+#
+# author: andreasl
+
+ip_addr="$(ip addr show | \
+    grep 'inet .*scope global' | \
+    grep -Eo '[1-9]{1,3}\.[1-9]{1,3}\.[1-9]{1,3}.[1-9]{1,3}' | \
+    head -1)"
+
+printf '%s\n' "$ip_addr"
+
+if command -v xclip >/dev/null && [ -n "$DISPLAY" ] ; then
+    printf '%s' "$ip_addr" | xclip -i -f -selection primary | xclip -i -selection clipboard
+fi
