@@ -18,11 +18,11 @@ function show_usage {
     msg+="  ${script_name} <search-pattern> <replace-string> <file-pattern>...\n"
     msg+="\n"
     msg+="Examples:\n"
-    msg+="  ${script_name} 'echo' 'printf' *.sh            # replaces 'echo' with 'printf' in all *.sh files below the cwd\n"
-    msg+="  ${script_name} '2018' '2019' *.txt *.md        # replaces '2018' with '2019' in all *.txt and *.md files below the cwd\n"
-    msg+="  ${script_name} 'wind|rain' sun vacation.txt    # replaces all matching text passages with 'sun' in files called \"vacation.txt\"\n"
-    msg+="  ${script_name} -h                              # prints the usage message\n"
-    msg+="  ${script_name} --help                          # prints the usage message\n"
+    msg+="  ${script_name} 'echo' 'printf' *.sh            # replace 'echo' with 'printf' in all *.sh files below the cwd\n"
+    msg+="  ${script_name} '2018' '2019' *.txt *.md        # replace '2018' with '2019' in all *.txt and *.md files below the cwd\n"
+    msg+="  ${script_name} 'wind|rain' sun vacation.txt    # replace all matching text passages with 'sun' in files called \"vacation.txt\"\n"
+    msg+="  ${script_name} -h                              # print the usage message\n"
+    msg+="  ${script_name} --help                          # print the usage message\n"
     printf "$msg"
 }
 
@@ -36,18 +36,17 @@ elif [ "$#" -lt 3 ] ; then
     exit 1
 fi
 
-to_look_for="$1"
-to_replace_with="$2"
+pattern_to_look_for="$1"
 shift
+string_to_replace_with="$1"
 shift
 
-found_any_matches=false
 for file_pattern in "$@" ; do
     # preview
-    grep -HRn --color --include "$file_pattern" "$to_look_for" .
+    grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .
     [ "$?" -eq 0 ] && found_any_matches=true
 done
-if [ "$found_any_matches" == 'false' ] ; then
+if [ "$found_any_matches" != true ] ; then
     printf 'Found no matches.\n'
     exit 2
 fi
@@ -64,19 +63,19 @@ n='\e[m'
 
 files=()
 for file_pattern in "$@" ; do
-    files_lines="$(grep -Rl --include "$file_pattern" "$to_look_for" .)"
+    files_lines="$(grep -Rl --include "$file_pattern" "$pattern_to_look_for" .)"
     while IFS= read -r line; do
         files+=("$line")
     done <<< "$files_lines"
 done
 
 for file in "${files[@]}" ; do
-    # replace
+    # do replace
     if [ "$interactive" == true ] ; then
         printf "Change occurences in ${b}${file}${n}? (y)es, (n)o, (s)how: "
         read -r -e -n1 yes_no_show
         if [[ "$yes_no_show" == [sS] ]] ; then
-            grep -Hn --color "$to_look_for" "$file"
+            grep -Hn --color "$pattern_to_look_for" "$file"
             printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
             read -r -e -n1 yes_no
             if [[ "$yes_no" != [yY] ]] ; then
@@ -87,7 +86,7 @@ for file in "${files[@]}" ; do
         fi
     fi
 
-    sed --follow-symlinks -i "s@$to_look_for@$to_replace_with@g" "$file"  # Gnu sed version
-    #sed -i '' "s@$to_look_for@$to_replace_with@g" "$file"  # Mac sed version
-    grep -Hn --color --include "$file_pattern" "$to_replace_with" "$file"
+    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # GNU
+    #sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # Mac BSD sed
+    grep -Hn --color --include "$file_pattern" "$string_to_replace_with" "$file"
 done
