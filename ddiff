@@ -11,8 +11,8 @@ Note:
 Might work incorrectly with directories and files whose names start with whitespaces.
 
 Usage:
-  compare-file-trees.sh [OPTIONS] <dir1> <dir2>
-  compare-file-trees.sh <dir1> <dir2> [OPTIONS]
+  ${script_name} [OPTIONS] <dir1> <dir2>
+  ${script_name} <dir1> <dir2> [OPTIONS]
 
 Options:
   -1, --in-1:               only show lines that are in dir1.
