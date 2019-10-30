@@ -17,7 +17,7 @@ Usage:
 Options:
   -1, --in-1:               only show lines that are in dir1.
   -2, --in-2:               only show lines that are in dir2.
-  -c, --color:              print colored output.
+  -C, --no-color:           disable colored output.
   -d --only-different:      show only directories/files that exist only in dir1 or only in di2.
   -e --exclude:             exclude glob pattern, e.g. "*.git".
   -h, --help:               print the the help message.
@@ -25,7 +25,7 @@ Options:
                             Same as -1 -2.
 
 Examples:
-  ${script_name} -e "*.git" -c -d dev dev_backup
+  ${script_name} -e "*.git" -C -d dev dev_backup
   ${script_name} ~/Photos ~/Media -s
   ${script_name} --help
 HELP_EOF
@@ -38,7 +38,7 @@ only_different=false
 only_same=false
 source_dir=.
 target_dir=.
-use_colors=false
+use_colors=true
 while [ "$#" -gt 0 ] ; do
     case "$1" in
     -1|--in-1)
@@ -47,8 +47,8 @@ while [ "$#" -gt 0 ] ; do
     -2|--in-2)
         must_be_in_2=true
         ;;
-    -c|--color)
-        use_colors=true
+    -C|--no-color)
+        use_colors=false
         ;;
     -d|--only-different)
         only_different=true
@@ -79,31 +79,31 @@ tree2="$(find "$target_dir" $excludes -printf "%P\n" | sort)"
 output="$(comm <(printf '%s\n' "$tree1") <(printf '%s\n' "$tree2"))"
 
 # postprocess the output from comm
-output="$(sed -E  "s:(^[^\t].*):1   \1:g" <<< "$output")"
-output="$(sed -E  "s:^\t{2}(.*):1 2 \1:g" <<< "$output")"
-output="$(sed -E  "s:^\t{1}(.*):  2 \1:g" <<< "$output")"
+output="$(sed -E  "s:(^[^\t].*):1 \1:g" <<< "$output")"
+output="$(sed -E  "s:^\t{2}(.*):3 \1:g" <<< "$output")"
+output="$(sed -E  "s:^\t{1}(.*):2 \1:g" <<< "$output")"
 
 # filter the output
-if [ "$must_be_in_1" == 'true' ] || [ "$only_same" == 'true' ]; then
-    output="$(sed '/^ /d' <<< "$output")"
+if [ "$must_be_in_1" == true ] || [ "$only_same" == true ]; then
+    output="$(sed '/^2 /d' <<< "$output")"
 fi
-if [ "$must_be_in_2" == 'true' ] || [ "$only_same" == 'true' ]; then
-    output="$(sed '/^.. /d' <<< "$output")"
+if [ "$must_be_in_2" == true ] || [ "$only_same" == true ]; then
+    output="$(sed '/^1 /d' <<< "$output")"
 fi
-if [ "$only_different" == 'true' ]; then
-    output="$(sed '/^1 2/d' <<< "$output")"
+if [ "$only_different" == true ]; then
+    output="$(sed '/^3 /d' <<< "$output")"
 fi
 
 # colorize output
-if [ "$use_colors" == 'true' ]; then
+if [ "$use_colors" == true ]; then
     red='\\e[31m'
     green='\\e[32m'
     orange='\\e[33m'
     nc='\\e[0m'
 
-    output="$(sed -E  "s:^1 2 (.*):${orange}1 2 \1${nc}:g" <<< "$output")"
-    output="$(sed -E  "s:^1   (.*):${red}1   \1${nc}:g" <<< "$output")"
-    output="$(sed -E  "s:^  2 (.*):${green}  2 \1${nc}:g" <<< "$output")"
+    output="$(sed -E  "s:^1 (.*):${red}1 \1${nc}:g" <<< "$output")"
+    output="$(sed -E  "s:^2 (.*):${green}2 \1${nc}:g" <<< "$output")"
+    output="$(sed -E  "s:^3 (.*):${orange}3 \1${nc}:g" <<< "$output")"
 fi
 
 printf '%b\n' "$output"
