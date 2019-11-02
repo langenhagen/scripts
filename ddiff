@@ -79,9 +79,9 @@ tree2="$(find "$target_dir" $excludes -printf "%P\n" | sort)"
 output="$(comm <(printf '%s\n' "$tree1") <(printf '%s\n' "$tree2"))"
 
 # postprocess the output from comm
-output="$(sed -E  "s:(^[^\t].*):1 \1:g" <<< "$output")"
-output="$(sed -E  "s:^\t{2}(.*):3 \1:g" <<< "$output")"
-output="$(sed -E  "s:^\t{1}(.*):2 \1:g" <<< "$output")"
+output="$(sed -E "s:(^[^\t].*):1 \1:g" <<< "$output")"
+output="$(sed -E "s:^\t{2}(.*):3 \1:g" <<< "$output")"
+output="$(sed -E "s:^\t{1}(.*):2 \1:g" <<< "$output")"
 
 # filter the output
 if [ "$must_be_in_1" == true ] || [ "$only_same" == true ]; then
@@ -101,9 +101,9 @@ if [ "$use_colors" == true ]; then
     orange='\\e[33m'
     nc='\\e[0m'
 
-    output="$(sed -E  "s:^1 (.*):${red}1 \1${nc}:g" <<< "$output")"
-    output="$(sed -E  "s:^2 (.*):${green}2 \1${nc}:g" <<< "$output")"
-    output="$(sed -E  "s:^3 (.*):${orange}3 \1${nc}:g" <<< "$output")"
+    output="$(sed -E "s:^1 (.*):${red}1 \1${nc}:g" <<< "$output")"
+    output="$(sed -E "s:^2 (.*):${green}2 \1${nc}:g" <<< "$output")"
+    output="$(sed -E "s:^3 (.*):${orange}3 \1${nc}:g" <<< "$output")"
 fi
 
 printf '%b\n' "$output"
