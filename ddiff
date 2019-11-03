@@ -50,7 +50,7 @@ while [ "$#" -gt 0 ] ; do
         only_different=true
         ;;
     -e|--exclude)
-        excludes+=(-path "${2}" -prune -o)
+        excludes+=(-path "$2" -prune -o)
         shift
         ;;
     -h|--help)
