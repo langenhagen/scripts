@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # author: andreasl
 
 script_name="${0##*/}"
@@ -31,7 +30,7 @@ Examples:
 HELP_EOF
 
 # parse command line arguments
-excludes=
+excludes=()
 must_be_in_1=false
 must_be_in_2=false
 only_different=false
@@ -54,7 +53,7 @@ while [ "$#" -gt 0 ] ; do
         only_different=true
         ;;
     -e|--exclude)
-        excludes+="-path ${2} -prune -o "
+        excludes+=(-path "${2}" -prune -o)
         shift
         ;;
     -h|--help)
@@ -74,8 +73,8 @@ while [ "$#" -gt 0 ] ; do
 done
 
 # get the file trees and do the comparisons
-tree1="$(find "$source_dir" $excludes -printf "%P\n" | sort)"
-tree2="$(find "$target_dir" $excludes -printf "%P\n" | sort)"
+tree1="$(find "$source_dir" "${excludes[@]}" -printf "%P\n" | sort)"
+tree2="$(find "$target_dir" "${excludes[@]}" -printf "%P\n" | sort)"
 output="$(comm <(printf '%s\n' "$tree1") <(printf '%s\n' "$tree2"))"
 
 # postprocess the output from comm
