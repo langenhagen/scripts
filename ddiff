@@ -4,10 +4,7 @@
 script_name="${0##*/}"
 IFS= read -r -d '' script_description << HELP_EOF
 ${script_name}
-Compare file trees in a readable format using find, sort, and comm.
-
-Note:
-Might work incorrectly with directories and files whose names start with whitespaces.
+Compare file trees in a readable format using find, sort, comm and sed.
 
 Usage:
   ${script_name} [OPTIONS] <dir1> <dir2>
