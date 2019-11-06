@@ -88,5 +88,5 @@ for file in "${files[@]}" ; do
 
     sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # GNU
     #sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # Mac BSD sed
-    grep -Hn --color --include "$file_pattern" "$string_to_replace_with" "$file"
+    grep -FHn --color --include "$file_pattern" "$string_to_replace_with" "$file"
 done
