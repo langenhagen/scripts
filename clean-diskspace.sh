@@ -46,7 +46,7 @@ rm -rfv "$HOME/.buildout/eggs";
 command -v brew >/dev/null && brew cleanup -s;
 
 # Apt
-if [ "$(command -v apt)" ] ; then
+if [ "$(command -v apt)" ]; then
     sudo du -sh '/var/cache/apt/archives';
     sudo apt clean;
     sudo apt autoremove --purge;
@@ -54,7 +54,7 @@ if [ "$(command -v apt)" ] ; then
 fi
 
 # dpkg
-if [ "$(command -v dpkg)" ] ; then
+if [ "$(command -v dpkg)" ]; then
     sudo dpkg --purge --pending;
 fi
 

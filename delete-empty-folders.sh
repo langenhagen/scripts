@@ -15,7 +15,7 @@ while IFS=  read -r -d $'\0'; do
 done < <(find "$root_folder" -type d -print0)
 
 for dir in "${directory_array[@]}" ; do
-    if [[ "$dir" =~ .*\.git/.* ]] ; then
+    if [[ "$dir" =~ .*\.git/.* ]]; then
         continue
     fi
     is_empty=$(ls -A "$dir")

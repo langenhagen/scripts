@@ -13,7 +13,7 @@ query_history_file="${HOME}/.stq_history"
 historic_queries="$(tac "$query_history_file")"
 
 query="$(printf "$historic_queries" | dmenu -i -l 5 -p "tricks query?:" )"
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     exit 1
 fi
 
@@ -23,12 +23,12 @@ for searchterm in ${query} ; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 
-if [ -z "$results" ] ; then
+if [ -z "$results" ]; then
     exit 1
 fi
 
 selected_result="$(printf '%s\n' "${results[@]}" | dmenu -i -p "select:" -l 30)"
-if [ -z "$selected_result" ] ; then
+if [ -z "$selected_result" ]; then
     exit 1
 fi
 
