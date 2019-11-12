@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Deletes superfluous storage-consuming directories and files and removes old packages.
 #
 # Input Parameters:

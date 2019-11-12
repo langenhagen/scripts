@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Retrieve the semantic version specifiactions from given files
 # that are underspecified or overspecified.
 #

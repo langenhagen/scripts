@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Counts the lines of code on a set of git repositories using cloc and
 # prepends the results with the current date, repository name, directory path and
 # writes the results in csv-format to stdout.

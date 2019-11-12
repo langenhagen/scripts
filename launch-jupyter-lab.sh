@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Launches a Jupyter Lab instance at the given path.
 # If this is the first instance, also shows a dialog window.
 # When the Button 'OK' on this dialog is pressed, all running jupyter-lab instances will be killed.

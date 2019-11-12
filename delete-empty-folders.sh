@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Find all empty subfolders in a hardcoded directory
 # and prompt the user whether to delete every individual empty folder,
 # and act accordingly.
