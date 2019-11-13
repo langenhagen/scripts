@@ -11,7 +11,7 @@ echo
 
 ninja carlo_sdl_integration_tests
 BUILD_EXIT_CODE=$?
-if [ $BUILD_EXIT_CODE != 0 ] ; then
+if [ $BUILD_EXIT_CODE != 0 ]; then
     echo-error 'Building carlo_sdl_integration_tests FAILED!'
 else
     echo-ok 'BUILDING carlo_sdl_integration_tests DONE.'

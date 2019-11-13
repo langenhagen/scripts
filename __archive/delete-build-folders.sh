@@ -5,7 +5,7 @@
 #
 # author: andreasl
 
-if [ $# != 1 ] ; then
+if [ $# != 1 ]; then
     printf "Usage:\n\t$0 <BUILD-PATH>\n\nExample:\n\t$0 path/to/build/folder\n\n"
     exit
 fi
@@ -24,13 +24,13 @@ build_and_lib_dirs=(
     )
 additional_dirs=( )
 
-if [ $impact_level == 1 ] ; then
+if [ $impact_level == 1 ]; then
     : # colon means a noop in if-clauses in bash
-elif [ $impact_level == 2 ] ; then
+elif [ $impact_level == 2 ]; then
     additional_dirs+=("$1/corenav/sdk")
-elif [ $impact_level == 3 ] ; then
+elif [ $impact_level == 3 ]; then
     additional_dirs+=("$1")
-elif [ $impact_level == 4 ] ; then
+elif [ $impact_level == 4 ]; then
     additional_dirs+=("$1/preinstall-image")
 else
     echo "I do not know the option $impact_level lol bye!"

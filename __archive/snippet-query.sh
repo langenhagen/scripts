@@ -13,7 +13,7 @@ for searchterm in "${@}"; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 
-if [ -z "$results" ] ; then
+if [ -z "$results" ]; then
     exit 1
 fi
 

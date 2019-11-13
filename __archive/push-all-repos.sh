@@ -52,17 +52,17 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     fi
 
     git remote update
-    if [ "$(git rev-list --count origin/${local_branch_name}..${local_branch_name})" == '0' ] ; then
+    if [ "$(git rev-list --count origin/${local_branch_name}..${local_branch_name})" == '0' ]; then
         continue
     fi
     git push origin HEAD:"$(remote_push_branch "$repo_path")"
     code="$?"
-    if [ "$code" == 0 ] ; then
+    if [ "$code" == 0 ]; then
         remote_branch="origin $(remote_push_branch "$repo_path")"
         printf "${g}Pushed changes from ${gb}${repo_path}${g} to ${gb}${remote_branch}${n}\n"
-    elif [ "$code" != 0 ] && [ "$code" != 1 ] ; then  # 1 is "no new changes" on gerrit
+    elif [ "$code" != 0 ] && [ "$code" != 1 ]; then  # 1 is "no new changes" on gerrit
         output="${r}Error: git push on the repo ${rb}${repo_path}${r} failed."
-        if [ "$code" == 128 ] ; then
+        if [ "$code" == 128 ]; then
             output+=" Do you have access rights?${n}\n"
             printf "$output"
             error_output+="$output"

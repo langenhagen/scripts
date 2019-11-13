@@ -24,7 +24,7 @@ function check_file_headers {
         for pattern_line in "${header_patterns[@]}"; do
             file_contents="$(git show $git_rev:$file)"
             line_no="$(grep --max-count=1 -Ens "$pattern_line" <<< "$file_contents" | cut -d: -f1)"
-            if [ "$line_no" != "$i" ] ; then
+            if [ "$line_no" != "$i" ]; then
                 printf 'File "%s" lacks a correct header.\n' "$file"
                 n_wrong_headers=$((n_wrong_headers + 1))
                 break

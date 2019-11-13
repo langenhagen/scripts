@@ -16,20 +16,20 @@ echo "Olymp Main Dir:   $ACS_MAIN_DIR/.."
 ### INPUT VARS #####################################################################################
 
 BACKUP_AND_RESET_BUILD_FOLDER=false
-if echo $* | grep -we '--new' -q ; then BACKUP_AND_RESET_BUILD_FOLDER=true; fi
+if echo $* | grep -we '--new' -q; then BACKUP_AND_RESET_BUILD_FOLDER=true; fi
 
 NO_BACKUP_AND_RESET_BUILD_FOLDER=false
-if echo $* | grep -we '--allnew' -q ; then NO_BACKUP_AND_RESET_BUILD_FOLDER=true; fi
+if echo $* | grep -we '--allnew' -q; then NO_BACKUP_AND_RESET_BUILD_FOLDER=true; fi
 
 ### PROGRAM VARS ###################################################################################
 
 BACKUP_BUILD_FOLDER=false
-if [ $BACKUP_AND_RESET_BUILD_FOLDER = true ] ; then
+if [ $BACKUP_AND_RESET_BUILD_FOLDER = true ]; then
     BACKUP_BUILD_FOLDER=true
 fi
 
 RESET_BUILD_FOLDER=false
-if [ $BACKUP_AND_RESET_BUILD_FOLDER = true ] || [ $NO_BACKUP_AND_RESET_BUILD_FOLDER = true ] ; then
+if [ $BACKUP_AND_RESET_BUILD_FOLDER = true ] || [ $NO_BACKUP_AND_RESET_BUILD_FOLDER = true ]; then
     RESET_BUILD_FOLDER=true
 fi
 
@@ -37,12 +37,12 @@ fi
 
 mkdir -p $ACS_BUILD_DIR
 
-if [ $BACKUP_BUILD_FOLDER = true ] ; then
+if [ $BACKUP_BUILD_FOLDER = true ]; then
     echo 'Backing up build folder...'
     cp -r $ACS_BUILD_DIR $ACS_BUILD_DIR"_bak-"$(date +%Y%m%d-%H%M%S)
 fi
 
-if [ $RESET_BUILD_FOLDER = true ] ; then
+if [ $RESET_BUILD_FOLDER = true ]; then
     echo 'Removing old build folder...'
     rm -r $ACS_BUILD_DIR
     echo 'Re-creating new build folder...'
@@ -55,11 +55,11 @@ rm -f **/*.i
 rm -f **/*.cxx
 
 
-if [ "$ACS_ENVIRONMENT" = "ACS Xcode Xcode" ] ; then
+if [ "$ACS_ENVIRONMENT" = "ACS Xcode Xcode" ]; then
     echo ' ACS Environment is Xcode with Xcode build system. Using the Xcode build script from the repo...'
     cd $ACS_MAIN_DIR/../..
     bash ./scripts/hcvd-xcode.sh
-elif [ "$ACS_ENVIRONMENT" = "ACS Xcode Ninja" ] ; then
+elif [ "$ACS_ENVIRONMENT" = "ACS Xcode Ninja" ]; then
     echo ' ACS Environment is Xcode with Ninja build system. Using the Xcode build script from the repo...'
     cd $ACS_MAIN_DIR/../..
     bash ./scripts/hcvd-ninja.sh

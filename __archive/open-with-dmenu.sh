@@ -19,6 +19,6 @@ choices=(
 
 dmenu_result="$(printf '%s\n' "${choices[@]}" | dmenu -i -l 30)"  # -i: ignore case
 
-if [ $? == 0 ] ; then
+if [ $? == 0 ]; then
     xdg-open /home/barn/${dmenu_result}  # opens nautilus at given point
 fi

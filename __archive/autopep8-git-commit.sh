@@ -76,7 +76,7 @@ done
 if error code
 
 read -e -n1 -p 'Continue? [yY/nN]: ' key
-if [ "$key" != 'y' ] && [ "$key" != 'Y' ] ; then
+if [ "$key" != 'y' ] && [ "$key" != 'Y' ]; then
     echo 'Bye!'
     exit 1
 fi

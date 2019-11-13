@@ -8,7 +8,7 @@
 ### INPUT VARIABLES ################################################################################
 
 VEROSE=false
-if echo $* | grep -we '--verbose' -q ; then VEROSE=true; fi
+if echo $* | grep -we '--verbose' -q; then VEROSE=true; fi
 
 ### PROGRAM ########################################################################################
 
@@ -32,7 +32,7 @@ QHELPGENERATOR_BIN=`locate bin/qhelpgenerator | head -n 1`
 
 # generate sequence diagrams etc. with PlantUML
 export PLANTUML_JAR=`pwd`/plantuml.jar
-if [ $VERBOSE ] ; then
+if [ $VERBOSE ]; then
     java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)"
 else
     java -Djava.awt.headless=true -jar $PLANTUML_JAR -v -failonerror -o $PWD/images_generated "../**.(qml|cpp|dox)" > plantuml_output.txt
@@ -46,7 +46,7 @@ python doxy-coverage.py --ignoredir ../../locationsdk/carlo/ xml > $DOC_COVERAGE
 
 
 # general coverage check
-if [ $VERBOSE ] ; then
+if [ $VERBOSE ]; then
     ! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
 else
     ! grep '100% API documentation coverage' $DOC_COVERAGE && false

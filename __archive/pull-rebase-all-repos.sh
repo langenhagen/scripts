@@ -54,13 +54,13 @@ for repo_path in "${!repo_paths2default_branch_names[@]}"; do
     git fetch --prune
     git pull --rebase origin "$local_branch_name"
     code="$?"
-    if [ "$code" != 0 ] ; then
+    if [ "$code" != 0 ]; then
         msg="${r}Error: git pull --rebase origin ${local_branch_name} on the repo"
         msg+=" ${rb}${repo_path}${r}"
-        if [ "$code" == 1 ] ; then
+        if [ "$code" == 1 ]; then
             msg+=" did not find this remote branch${n}\n"
             die "$msg" 4
-        elif [ "$code" == 128 ] ; then
+        elif [ "$code" == 128 ]; then
             msg+=" caused a merge conflict${n}\n"
             die "$msg" 5
         else

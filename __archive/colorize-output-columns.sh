@@ -8,7 +8,7 @@
 # version 18-07-07
 
 # decide whether we take input from pipe | or from input parameter list
-if [ $# -eq 0 ] ; then
+if [ $# -eq 0 ]; then
     command_output=`cat`
 else
     command_output=`$@`

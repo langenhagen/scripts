@@ -13,7 +13,7 @@ echo 'Do you want to execute the git pre-commit hook? [Yy/Nn]'
 exec < /dev/tty     # Allows us to read user input below, assigns stdin to keyboard
 
 read -n 1 key
-if [ "$key" != "y" ] && [ "$key" != "Y" ] ; then
+if [ "$key" != "y" ] && [ "$key" != "Y" ]; then
     echo "You do not want to execute the pre-commit hook."
     exit 1
 fi

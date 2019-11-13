@@ -12,7 +12,7 @@ wget https://corenav.cci.in.here.com/job/sparta/job/sv/job/build/job/sv-android-
 
 device_id=`adb devices | awk 'FNR == 2 {print $1}'`
 adb -s $device_id install -r $file_name
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     # sometimes, normal reinstall does not work, then, it seems, uninstalling completely and
     # installing fresh is a solution, but it removes the config settings.
     adb -s $device_id uninstall "com.here.ivi.reference.debug"

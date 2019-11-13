@@ -35,7 +35,7 @@ function echo-warn {
 }
 
 function check_if_this_computer_is_a_mac {
-    if echo "$HOME" | grep -v -q "/Users/" ; then
+    if echo "$HOME" | grep -v -q "/Users/"; then
         echo 'client is not a mac'
     else
         echo 'client is a mac'

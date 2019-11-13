@@ -17,7 +17,7 @@ fi
 ### PROGRAM VARS
 
 GOOGLETEST_ARGUMENTS=--gtest_filter='*'
-if [ $FAST_FAIL = true ] ; then
+if [ $FAST_FAIL = true ]; then
     GOOGLETEST_ARGUMENTS="$GOOGLETEST_ARGUMENTS --gtest_break_on_failure"
 fi
 
@@ -27,7 +27,7 @@ fi
 echo
 echo-ok 'Building and running the unit tests...'
 bash $SCRIPTS_DIR/build-and-run-unit-tests.sh $GOOGLETEST_ARGUMENTS
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     echo-error 'Build-And-Run-Unit Tests failed on Unit Tests! Aborting.'
     exit 1
 fi
@@ -36,7 +36,7 @@ fi
 echo
 echo-ok 'Building integration tests...'
 bash $SCRIPTS_DIR/build-integration-tests.sh
-if [ $? != 0 ] ; then
+if [ $? != 0 ]; then
     echo-error 'Building Integration Tests failed on building Integration Tests! Aborting.'
     exit 2
 fi
