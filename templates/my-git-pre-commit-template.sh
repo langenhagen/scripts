@@ -21,7 +21,7 @@ fi
 # TODO add your custom git pre commit logic here, e.g.:
 #
 # staged_file_paths=$(git diff --name-only --cached)
-# for file in ${staged_file_paths} ; do
+# for file in ${staged_file_paths}; do
 #     echo "${file} will be committed."
 # done
 

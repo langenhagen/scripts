@@ -53,10 +53,10 @@ sed -i "s/$line/$new_line/" "$script_path"
 
 # do the delete process
 set -x
-for dir in ${additional_dirs[@]} ; do
+for dir in ${additional_dirs[@]}; do
     rm -rf $dir
 done
-for dir in ${build_and_lib_dirs[@]} ; do
+for dir in ${build_and_lib_dirs[@]}; do
     pushd ${dir}
     git clean -dxf
     popd

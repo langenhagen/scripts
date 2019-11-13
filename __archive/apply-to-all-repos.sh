@@ -37,7 +37,7 @@ function show_usage {
 }
 
 reposet=
-while [ $# -gt 0 ] ; do
+while [ $# -gt 0 ]; do
     key="$1"
     case $key in
     -f|--file)

@@ -18,10 +18,10 @@ function check_file_headers {
 
     n_wrong_headers=0
 
-    for file in "${files[@]}" ; do
+    for file in "${files[@]}"; do
 
         i=1
-        for pattern_line in "${header_patterns[@]}" ; do
+        for pattern_line in "${header_patterns[@]}"; do
             file_contents="$(git show $git_rev:$file)"
             line_no="$(grep --max-count=1 -Ens "$pattern_line" <<< "$file_contents" | cut -d: -f1)"
             if [ "$line_no" != "$i" ] ; then

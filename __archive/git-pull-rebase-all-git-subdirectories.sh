@@ -14,7 +14,7 @@
 # author: andreasl
 
 use_maxdepth=false
-while [ $# -gt 1 ] ; do
+while [ $# -gt 1 ]; do
     key="$1"
     case ${key} in
     -d|--depth)

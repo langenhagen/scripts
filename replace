@@ -41,7 +41,7 @@ shift
 string_to_replace_with="$1"
 shift
 
-for file_pattern in "$@" ; do
+for file_pattern in "$@"; do
     # preview
     grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .
     [ "$?" -eq 0 ] && found_any_matches=true
@@ -62,14 +62,14 @@ b='\e[1m'
 n='\e[m'
 
 files=()
-for file_pattern in "$@" ; do
+for file_pattern in "$@"; do
     files_lines="$(grep -Rl --include "$file_pattern" "$pattern_to_look_for" .)"
     while IFS= read -r line; do
         files+=("$line")
     done <<< "$files_lines"
 done
 
-for file in "${files[@]}" ; do
+for file in "${files[@]}"; do
     # do replace
     if [ "$interactive" == true ] ; then
         printf "Change occurences in ${b}${file}${n}? (y)es, (n)o, (s)how: "

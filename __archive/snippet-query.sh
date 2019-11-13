@@ -9,7 +9,7 @@
 
 file="${HOME}/Work/2018-CeleraOne/day-notes.md"
 results=$(grep -i '#snippet' "$file")
-for searchterm in "${@}" ; do
+for searchterm in "${@}"; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 

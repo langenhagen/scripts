@@ -65,7 +65,7 @@ ignore = E501
 EOF
 
 num_issues_found_by_autopep8=0
-for patch in ${diffs[@]} ; do
+for patch in ${diffs[@]}; do
     get patch_start_line
     get patch_end_line
     get patch_filename
@@ -82,7 +82,7 @@ if [ "$key" != 'y' ] && [ "$key" != 'Y' ] ; then
 fi
 
 
-for patch in ${diffs[@]} ; do
+for patch in ${diffs[@]}; do
     get patch_start_line
     get patch_end_line
     get patch_filename

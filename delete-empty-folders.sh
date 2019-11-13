@@ -13,7 +13,7 @@ while IFS=  read -r -d $'\0'; do
     directory_array+=("$REPLY")
 done < <(find "$root_folder" -type d -print0)
 
-for dir in "${directory_array[@]}" ; do
+for dir in "${directory_array[@]}"; do
     if [[ "$dir" =~ .*\.git/.* ]]; then
         continue
     fi

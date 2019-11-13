@@ -47,7 +47,7 @@ function add_file_header {
         # add header
         :
     elif [ "$3" == '--update' ] ; then
-        for line in "${header_regexes[@]}" ; do  # iterates safely over an array and retains whitespaces
+        for line in "${header_regexes[@]}"; do  # iterates safely over an array and retains whitespaces
             sed -i "0,/${line}/d" "$file"
         done
         # add header
@@ -55,7 +55,7 @@ function add_file_header {
 }
 
 mapfile -t staged_files_array <<< "$(git diff --name-only --cached)"
-for file in "${staged_files_array[@]}" ; do
+for file in "${staged_files_array[@]}"; do
     # TODO for all files determine filetype and dispatch to add header / else pass
     echo $file
 done

@@ -35,7 +35,7 @@ only_same=false
 source_dir=.
 target_dir=.
 use_colors=true
-while [ "$#" -gt 0 ] ; do
+while [ "$#" -gt 0 ]; do
     case "$1" in
     -1|--in-1)
         must_be_in_1=true

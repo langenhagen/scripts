@@ -19,7 +19,7 @@ fi
 
 file="${HOME}/Dev/Zeugs/tricks.sh"
 results=$(cat "$file")
-for searchterm in ${query} ; do
+for searchterm in ${query}; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
 

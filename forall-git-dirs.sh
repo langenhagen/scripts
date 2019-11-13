@@ -28,7 +28,7 @@ HELP_EOF
 use_maxdepth=false
 search_dir='.'
 
-while [ $# -gt 0 ] ; do
+while [ $# -gt 0 ]; do
     key="$1"
     case $key in
     -q|--quiet)
