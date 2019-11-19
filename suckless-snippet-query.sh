@@ -1,8 +1,7 @@
 #!/bin/bash
-#
-# Opens a dmenu which prompts for any number of whitespace-separated search terms and suggests old
+# Open a dmenu which prompts for any number of whitespace-separated search terms and suggests old
 # queries.
-# Greps iteratively in a certain hard coded file for lines that contain all of the given search
+# Grep iteratively in a certain hard coded file for lines that contain all of the given search
 # terms and the special term '#snippet'.
 # From these lines, the trimmed parts before the '#snippet' are presented in a second dmenu pass
 # from which the user can select one.

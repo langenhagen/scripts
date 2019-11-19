@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Retrieve a system overview over things that I check from time to time.
 #
 # In future:

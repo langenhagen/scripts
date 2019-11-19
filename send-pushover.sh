@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Echo the given input
 # and send the input as a string as a push notification via pushover.
 #

@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Log when the screen is locked or unlocked on gnome 3.
 # Works with screen locking (e.g. super + l) and going to hibernation.
 #

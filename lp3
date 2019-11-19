@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # lp3 - lint python 3 files
 #
 # Shortcut calling flake8 and pylint3 one after another.

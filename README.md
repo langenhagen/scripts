@@ -1,5 +1,5 @@
 # Scripts
-Scrict that can do some stuff.
+Scripts that can do some stuff.
 
 - author: andreasl
 

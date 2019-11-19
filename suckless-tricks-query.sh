@@ -1,8 +1,7 @@
 #!/bin/bash
-#
-# Opens a dmenu which prompts for any number of whitespace-separated search terms and suggests old
+# Open a dmenu which prompts for any number of whitespace-separated search terms and suggest old
 # queries.
-# Greps iteratively the tricks.sh file for lines that contain all of the given search terms.
+# Grep iteratively the tricks.sh file for lines that contain all of the given search terms.
 # These lines are presented in a second dmenu pass from which the user can select one.
 # The raw selected item will be written to the system clipboard.
 # This is a neat way of querying and retrieving snippets from the tricks.sh file.

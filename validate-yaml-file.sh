@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Validate the given yaml file via python.
 # Requires Python and the Python package pyyaml to be available.
 #

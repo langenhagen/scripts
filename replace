@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Replace strings in files in a directory tree.
 #
 # Grep a given pattern on files with given file masks below the cwd and replace it with a given

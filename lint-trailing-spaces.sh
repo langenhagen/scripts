@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Check if a the given input has trailing spaces.
 #
 # author: andreasl

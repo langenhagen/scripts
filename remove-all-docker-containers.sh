@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # Remove all docker containers and images from the docker system.
 #
 # author: andreasl
