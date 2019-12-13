@@ -1,9 +1,7 @@
 #!/bin/bash -ex
-#
 # Check the documentation coverage.
 #
 # Note: This must be run from the sdk_extensions directory: scripts/check-doc.sh
-
 
 ### INPUT VARIABLES ################################################################################
 
@@ -44,7 +42,6 @@ doxygen Doxyfile > doxylog.txt 2>&1
 
 python doxy-coverage.py --ignoredir ../../locationsdk/carlo/ xml > $DOC_COVERAGE
 
-
 # general coverage check
 if [ $VERBOSE ]; then
     ! grep '100% API documentation coverage' $DOC_COVERAGE && cat $DOC_COVERAGE && false
@@ -52,11 +49,9 @@ else
     ! grep '100% API documentation coverage' $DOC_COVERAGE && false
 fi
 
-
 # ignore missing Tag file warning in Doxygen warnings file
 sed -i.bak '/error: Tag file.*/d' $WARN_LOGFILE
 
 # fail if any errors in Doxygen warnings file
 cat $WARN_LOGFILE
 ! [ -s $WARN_LOGFILE ]
-
