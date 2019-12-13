@@ -1,0 +1,8 @@
+#!/bin/bash
+# find - find and select
+# Select some of the output of find with the given parameters
+# and open the according files in vim.
+#
+# author: andreasl
+
+vim -p $(find -L . -iname "*${*}*" | fzf -m)

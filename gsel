@@ -1,0 +1,8 @@
+#!/bin/bash
+# gsel - grep and select
+# Select some of the output of grep with the given parameters
+# and open the according files in vim.
+#
+# author: andreasl
+
+vim -p $(grep -HiRns "$*" | fzf -m | awk -F ':' '{printf "%s ",$1 }')
