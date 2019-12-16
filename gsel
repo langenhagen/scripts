@@ -5,4 +5,29 @@
 #
 # author: andreasl
 
-vim -p $(grep -HiRns "$*" | fzf -m | awk -F ':' '{printf "%s ",$1 }')
+show_usage() {
+    script_name="${0##*/}"
+
+    msg="${script_name}\n"
+    msg+="Select some of the output of grep with the given parameters and open the according files"
+    msg+=" in vim.\n"
+    msg+="\n"
+    msg+="Usage:\n"
+    msg+="  ${script_name} <search-pattern>\n"
+    msg+="\n"
+    msg+="Examples:\n"
+    msg+="  ${script_name} '2019'       # find & select files that contain '2019'\n"
+    msg+="  ${script_name} '# TODO'     # find & select files that contain '# TODO'\n"
+    msg+="  ${script_name} -h           # print the usage message\n"
+    msg+="  ${script_name} --help       # print the usage message\n"
+    printf "$msg"
+}
+if [[ "$1" =~ ^(-h|--help)$ ]] ; then
+    show_usage
+    exit 0
+fi
+
+selection="$(grep -HiRns "$*" | fzf -m | awk -F ':' '{printf "%s ",$1 }')"
+if [ -n "$selection" ]; then
+    vim -p "$selection"
+fi
