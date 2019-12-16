@@ -12,13 +12,13 @@ Usage:
   ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]
 
 Examples:
-  ${script_name}                      # lists the found git repositories
-  ${script_name} -d 2 -- ls           # lists the found git repositories and calls \`ls\`" from all git repos in this file level and one level below
-  ${script_name} -q -d 2 -- ls        # calls \`ls\` from all git repos in this file level and one level below but does not list the found git repos
-  ${script_name} -p path/to/dir -- ls # calls \`ls\` from all git repos below the given path
-  ${script_name} -q -- realpath .     # prints the paths of all git repos below the current path
-  ${script_name} -h                   # prints the usage message
-  ${script_name} --help               # prints the usage message
+  ${script_name}                      # list the found git repositories
+  ${script_name} -d 2 -- ls           # list the found git repositories and call \`ls\` from all git repos in this file level and one level below
+  ${script_name} -q -d 2 -- ls        # call \`ls\` from all git repos in this file level and one level below but do not list the found git repos
+  ${script_name} -p path/to/dir -- ls # call \`ls\` from all git repos below the given path
+  ${script_name} -q -- realpath .     # print the paths of all git repos below the current path
+  ${script_name} -h                   # print the usage message
+  ${script_name} --help               # print the usage message
 
 Note:
   If you want to use subshell related-variables, like e.g. \$PWD, wrap them into single quotation
