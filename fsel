@@ -28,5 +28,5 @@ fi
 
 selection="$(find -L . -iname "*${*}*" | fzf -m)"
 if [ -n "$selection" ]; then
-    vim -p "$selection"
+    vim -p $(printf "$selection")
 fi

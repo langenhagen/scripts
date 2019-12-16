@@ -29,5 +29,5 @@ fi
 
 selection="$(grep -HiRns "$*" | fzf -m | awk -F ':' '{printf "%s ",$1 }')"
 if [ -n "$selection" ]; then
-    vim -p "$selection"
+    vim -p $(printf "$selection")
 fi
