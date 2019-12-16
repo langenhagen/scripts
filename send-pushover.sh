@@ -4,7 +4,7 @@
 #
 # author: andreasl
 
-function pushover() {
+pushover() {
     # echo the given input
     # and send the input as a string as a push notification via pushover.
     pushover_app_token=agna4fob6wu7e7t2ofhz1drt7ptngq  # change according to app/platform

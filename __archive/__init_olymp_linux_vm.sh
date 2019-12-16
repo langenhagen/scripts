@@ -15,8 +15,7 @@ HERE_MAILADDR=andreas.langenhagen@here.com
 USER=barn
 
 
-function main {
-
+main() {
     read -n1 -r -p "Which script stage do you want to enter? (1 or 2): " stage
     echo
 
@@ -34,14 +33,11 @@ function main {
 }
 
 
-function stage_one {
-
+stage_one() {
     sudo passwd $USER
-
 
     gpg --keyserver keyserver.ubuntu.com --recv 3E5C1192
     gpg --export --armor 3E5C1192 | sudo apt-key add -
-
 
     sudo apt-get update
     sudo apt-get install -y --force-yes software-properties-common
@@ -70,7 +66,6 @@ function stage_one {
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 10
     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 10
 
-
     wget http://de.archive.ubuntu.com/ubuntu/pool/universe/s/swig/swig3.0_3.0.2-1ubuntu1_amd64.deb
     sudo dpkg -i swig3.0_3.0.2-1ubuntu1_amd64.deb
 
@@ -84,9 +79,7 @@ function stage_one {
     curl https://storage.googleapis.com/git-repo-downloads/repo > /home/$USER/bin/repo
     chmod a+x /home/$USER/bin/repo
 
-
     ccache -M 64G
-
 
     sudo rm -rf /media/sf_Data 2> /dev/null
     sudo rm -rf /home/$USER/olympia/repo 2> /dev/null
@@ -94,7 +87,6 @@ function stage_one {
     ssh-keygen -C $HERE_MAILADDR
     echo >> ~/.bashrc
     echo "eval \`keychain --eval ~/.ssh/id_rsa\`" >> /home/$USER/.bashrc
-
 
     cmake --version # just for curiosity for info
 
@@ -123,7 +115,7 @@ function stage_one {
 }
 
 
-function stage_two {
+stage_two() {
 
     echo 'Checking gerrit connection:'
     ssh -p 29418 $HERE_USER@gerrit.it.here.com

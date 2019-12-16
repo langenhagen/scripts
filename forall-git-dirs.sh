@@ -58,7 +58,7 @@ while [ $# -gt 0 ]; do
     shift # past argument or value
 done
 
-function function_called_by_find {
+function_called_by_find() {
     [ -n "$quiet" ] || printf "\e[1m${PWD}\e[0m\n"
     eval "$command"
 }

@@ -1,14 +1,13 @@
 #!/bin/bash
-#
-# Checks if the files touched in a given git revision contain the headers and
-# prints an error message if any of the files misses the correct header.
-# Returns the number of files with incorrect header.
+# Check if the files touched in a given git revision contain the headers
+# and print an error message if any of the files misses the correct header.
+# Return the number of files with incorrect header.
 #
 # author: andreasl
 
 git_rev="$1"
 
-function check_file_headers {
+check_file_headers() {
     # Checks the first lines of the given files to match the according lines of a pattern array.
     # Prints the number of mismatches.
     # Usage:

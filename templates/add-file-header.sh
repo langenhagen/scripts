@@ -28,7 +28,7 @@ c1_lua_regexes=(
 '\-\- \(c\).*CeleraOne GmbH'
 )
 
-function add_file_header {
+add_file_header() {
     # If a file header is missing, adds, or, if specified, updates a file's header.
     # It is given a string that will be added to the top of the file and an array of regexes
     # that will be used to check if possibly already existing headers exist and to delete them if

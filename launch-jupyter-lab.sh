@@ -7,7 +7,7 @@
 
 cd "${*:-.}" || exit 1
 
-function on_exit {
+on_exit() {
     # start s sentinel if a sentinel is yet missing
     message="Press OK to shutdown all Jupyter Lab instances."
     sentinel_pid="$(pgrep -f "zenity --info --width 350 --text=$message")"

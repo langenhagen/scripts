@@ -8,8 +8,7 @@
 #
 # author: andreasl
 
-function define_standard_settings {
-
+define_standard_settings() {
     root_path="$HOME"
 
     if [ "$(uname)" == "Darwin" ]; then

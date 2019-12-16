@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 # For each repo in a collection of git repo paths,
 # call a given command in bash on all its git subdirectories recursively or
 # down to a given number of directory levels.
@@ -8,7 +7,7 @@
 #
 # author: andreasl
 
-function show_usage {
+show_usage() {
     # Given the name of the script, prints the usage string.
     #
     # Usage:

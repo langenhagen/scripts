@@ -18,23 +18,23 @@ GREEN='\e[1;32m'
 YELLOW='\e[1;33m'
 NC='\e[0m' # No Color
 
-function echo-error {
+echo-error() {
     printf "${RED}${*}${NC}\n"
 }
 
-function echo-head {
+echo-head() {
     printf "${CYAN}${*}${NC}\n"
 }
 
-function echo-ok {
+echo-ok() {
     printf "${GREEN}${*}${NC}\n"
 }
 
-function echo-warn {
+echo-warn() {
     printf "${YELLOW}${*}${NC}\n"
 }
 
-function check_if_this_computer_is_a_mac {
+check_if_this_computer_is_a_mac() {
     if echo "$HOME" | grep -v -q "/Users/"; then
         echo 'client is not a mac'
     else
@@ -42,14 +42,14 @@ function check_if_this_computer_is_a_mac {
     fi
 }
 
-function gitup {
+gitup() {
     # if you are in a git repo, move up to its top level
 
     git_dir="$(git rev-parse --show-toplevel 2> /dev/null)"
     cd "$git_dir" || cd .. || exit 1
 }
 
-function increment_count {
+increment_count() {
     # Given a file path and a grep pattern,
     # finds corresponding line in the given file and applies an +1 increment
     # to the last column in the line.
@@ -86,7 +86,7 @@ function increment_count {
     sed -i "s/${line}/${new_line}/" "$2"
 }
 
-function is_folder_empty {
+is_folder_empty() {
     if [ -z "$(ls -A "$1")" ]; then
         echo 'given folder is empty'
     else

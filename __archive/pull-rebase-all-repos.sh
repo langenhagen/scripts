@@ -18,7 +18,7 @@ b='\e[1m'
 rb='\e[1;31m'
 n='\e[0m'
 
-function die {
+die() {
     # Will be called on failure
     printf "$1"
     printf "cd ${repo_path}" | xclip -i -f -selection primary | xclip -i -selection clipboard
