@@ -1,5 +1,5 @@
 #!/bin/bash
-# Searches for Makefiles throughout the given directory path
+# Search for Makefiles throughout the given directory path
 # and interactively asks for every Makefile target to make it depend on the special target .PYONY.
 # If the user decides to make the target phony, the script adds a line stating
 # .PHONY: <target> to the Makefile target.
