@@ -1,6 +1,6 @@
 #!/bin/bash
-# Given a directory, will call a given command in bash on all its git subdirectories recursively or
-# down to a given number of directory levels.
+# Given a directory, call a given command in bash on all its git subdirectories recursively
+# or down to a given number of directory levels.
 #
 # For usage type: $0 --help
 #

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Deletes superfluous storage-consuming directories and files and removes old packages.
+# Delete superfluous storage-consuming directories and files and removes old packages.
 #
 # Input Parameters:
 #   --wholesome (optional): calls `git gq --aggressive` on all .git folders (indirectly) under "/".

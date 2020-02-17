@@ -1,7 +1,7 @@
 #!/bin/bash
-# Launches a Jupyter Lab instance at the given path.
-# If this is the first instance, also shows a dialog window.
-# When the Button 'OK' on this dialog is pressed, all running jupyter-lab instances will be killed.
+# Launch a Jupyter Lab instance at the given path.
+# If this is the first instance, also show a dialog window.
+# When the user presses the Button 'OK' on this dialog, kill all running jupyter-lab instances.
 #
 # author: andreasl
 
