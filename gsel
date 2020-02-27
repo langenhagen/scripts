@@ -1,11 +1,9 @@
 #!/bin/bash
 # gsel - grep and select
-# Select some of the output of grep with the given parameters
-# and open the according files in vim.
 #
 # author: andreasl
 
-show_usage() {
+show_help() {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
@@ -23,7 +21,7 @@ show_usage() {
     printf "$msg"
 }
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_usage
+    show_help
     exit 0
 fi
 

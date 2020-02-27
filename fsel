@@ -1,11 +1,9 @@
 #!/bin/bash
-# find - find and select
-# Select some of the output of find
-# and open the according files in vim.
+# fsel - find and select
 #
 # author: andreasl
 
-show_usage() {
+show_help() {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
@@ -22,7 +20,7 @@ show_usage() {
     printf "$msg"
 }
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_usage
+    show_help
     exit 0
 fi
 

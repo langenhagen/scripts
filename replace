@@ -1,16 +1,12 @@
 #!/bin/bash
-# Replace strings in files in a directory tree.
-#
-# Grep a given pattern on files with given file masks below the cwd and replace it with a given
-# string after asking for confirmation.
-#
 # author: andreasl
 
-function show_usage {
+function show_help {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
-    msg+="Greps a given pattern on files with given file masks below the cwd and replaces it with a"
+    msg+="Replace strings in files in a directory tree."
+    msg+="Grep a given pattern on files with given file masks below the cwd and replace it with a"
     msg+=" given string after asking for confirmation.\n"
     msg+="\n"
     msg+="Usage:\n"
@@ -26,7 +22,7 @@ function show_usage {
 }
 
 if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_usage
+    show_help
     exit 1
 elif [ "$#" -lt 3 ] ; then
     printf 'Usage:\n'

@@ -1,21 +1,19 @@
 #!/bin/bash
-# For each repo in a collection of git repo paths,
-# call a given command in bash on all its git subdirectories recursively or
-# down to a given number of directory levels.
-#
-# For usage type: $0 --help
-#
 # author: andreasl
 
-show_usage() {
+show_help() {
     # Given the name of the script, prints the usage string.
-    #
     # Usage:
     #   ${FUNCNAME[0]}
 
     script_name="${0##*/}"
 
-    msg='Usage:\n'
+    msg="${script_name}"
+    msg+="For each repo in a collection of git repo paths,\n"
+    msg+="call a given command in bash on all its git subdirectories recursively or\n"
+    msg+="down to a given number of directory levels.\n"
+    msg+="\n"
+    msg+="Usage:\n"
     msg+=" ${script_name} [-f|--file] [-q|--quiet] [-- <command>]\n"
     msg+="\n"
     msg+="Examples:\n"
@@ -52,7 +50,7 @@ while [ $# -gt 0 ]; do
         break
         ;;
     -h|--help)
-        show_usage
+        show_help
         exit 0
         ;;
     *) # unknown option
