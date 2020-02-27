@@ -31,7 +31,7 @@ f.e. target
 
 I want the make target + body one by one. how?
 
-makefile_string="$(cat ${file_path})"
+makefile_string="$(<${file_path})"
 
 cat Makefile | sed -n "/\n.*:/p"  # apparently, sed cannot easily match across several lines.
 

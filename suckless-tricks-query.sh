@@ -17,7 +17,7 @@ if [ $? != 0 ]; then
 fi
 
 file="${HOME}/Dev/Zeugs/tricks.sh"
-results=$(cat "$file")
+results=$(<"$file")
 for searchterm in ${query}; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
 done
