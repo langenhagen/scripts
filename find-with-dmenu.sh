@@ -10,7 +10,6 @@
 
 define_standard_settings() {
     root_path="$HOME"
-
     if [ "$(uname)" == "Darwin" ]; then
         open_command='open'
     else
