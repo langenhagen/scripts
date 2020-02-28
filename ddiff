@@ -11,14 +11,14 @@ Usage:
   ${script_name} <dir1> <dir2> [OPTIONS]
 
 Options:
-  -1, --in-1:               only show lines that are in dir1.
-  -2, --in-2:               only show lines that are in dir2.
-  -C, --no-color:           disable colored output.
-  -d --only-different:      show only directories/files that exist only in dir1 or only in di2.
-  -e --exclude:             exclude glob pattern, e.g. "*.git".
-  -h, --help:               print the the help message.
-  -s --only-same:           show only directories/files that exist in both dir1 and dir2.
-                            Same as -1 -2.
+  -1, --in-1:                          Only show lines that are in dir1.
+  -2, --in-2:                          Only show lines that are in dir2.
+  -C, --no-color:                      Disable colored output.
+  -d, --only-different:                Show only directories/files that exist only in dir1 or only in dir2.
+  -e <pattern>, --exclude <pattern>:   Exclude glob pattern <pattern>, e.g. "*.git".
+  -h, --help:                          Print the help message.
+  -s --only-same:                      Show only directories/files that exist in both dir1 and dir2.
+                                       Same as -1 -2.
 
 Examples:
   ${script_name} -e "*.git" -C -d dev dev_backup
