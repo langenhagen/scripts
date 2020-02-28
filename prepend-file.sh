@@ -4,15 +4,20 @@
 function show_help {
     script_name="${0##*/}"
     msg="${script_name}\n"
-    msg+="Prepend a given string to a given file.\n"
+    msg+="Prepend a given file with a given string from stdin.\n"
     msg+="\n"
     msg+="Usage:\n"
-    msg+="  ${script_name} <file> <<< <input-string>\n"
+    msg+="  ${script_name} [OPTIONS] <file> <<< <input-string>\n"
     msg+="  echo <input-string> | ${script_name} <file>\n"
+    msg+="\n"
+    msg+="Options:\n"
+    msg+="  -h, --help:                     Print the help message.\n"
+    msg+="  -i, --inline:                   Write output to same file as input file.\n"
+    msg+="  -o <file>, --output <file>:     Write output to specified output file.\n"
     msg+="\n"
     msg+="Examples:\n"
     msg+="  ${script_name} script.py <<< '#!/usr/env/bin python3\\\n# -*- coding: utf-8 -*-'\n"
-    msg+="  echo 'Step 0: ' | myfile.txt\n"
+    msg+="  printf 'Step 0: ' | ${script_name} myfile.txt\n"
     printf "$msg"
 }
 
