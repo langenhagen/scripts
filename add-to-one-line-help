@@ -1,0 +1,8 @@
+#!/bin/bash
+# Add a whitespace-trimmed entry to the one-line-help.txt file
+# and sort the one-line-help.txt.
+#
+# author: andreasl
+
+echo "$*" | awk '{$1=$1;print}' >> "$ONE_LINE_HELP_FILE_PATH"
+sort -u -o "$ONE_LINE_HELP_FILE_PATH" "$ONE_LINE_HELP_FILE_PATH"

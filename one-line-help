@@ -1,0 +1,14 @@
+#!/bin/bash
+# Iteratively grep for the given arguments in the one-line-help.txt file.
+#
+# author: andreasl
+
+if [ "$#" -eq 0 ]; then
+    vim -R "+call feedkeys('/')" "$ONE_LINE_HELP_FILE_PATH"  # -R readonly
+else
+    results="$(grep -i --color=never "$1" "$ONE_LINE_HELP_FILE_PATH")"
+    for arg in "$@"; do
+        results="$(printf -- '%s\n' "$results" | grep -i --color=never "$arg")"
+    done
+    printf -- '%s\n' "$results"
+fi
