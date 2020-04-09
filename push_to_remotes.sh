@@ -4,8 +4,7 @@
 #
 # author: andreasl
 
-cd "$*" || exit 1
-git status || exit 2
+cd "$*" && git status || exit 1
 
 remotes_and_urls_str="$(git remote -v | grep '(push)')"
 mapfile -t remotes_and_urls <<< "$remotes_and_urls_str"
