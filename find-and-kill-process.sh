@@ -10,4 +10,4 @@ done
 
 read -e -p "Kill process with number: " key
 pid="$(printf "${processes[$((key - 1))]}\n" | awk '{print $2}')"
-kill $pid
+kill "$pid"
