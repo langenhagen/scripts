@@ -4,5 +4,5 @@
 #
 # author: andreasl
 
-echo "$*" | awk '{$1=$1;print}' >> "$ONE_LINE_HELP_FILE_PATH"
+printf -- '%s\n' "$*" | sed 's/^ *//g' >> "$ONE_LINE_HELP_FILE_PATH"
 sort -u -o "$ONE_LINE_HELP_FILE_PATH" "$ONE_LINE_HELP_FILE_PATH"
