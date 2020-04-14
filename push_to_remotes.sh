@@ -15,10 +15,17 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
     if [[ "$remote_and_url" == *"29418"* ]]; then
         # push to gerrit
         if [[ "$(git branch | grep '\*')" == *"py3" ]]; then
-            git push "$remote" HEAD:refs/for/py3
+            push_output="$(git push "$remote" HEAD:refs/for/py3 2>&1)"
         else
-            git push "$remote" HEAD:refs/for/master
+            push_output="$(git push "$remote" HEAD:refs/for/master 2>&1)"
         fi
+
+        # open according gerrit page in browser
+        printf "$push_output" \
+                | tee /dev/stderr \
+                | grep -m1 -o 'https://.*' \
+                | awk '{print $1}' \
+                | xargs xdg-open
     else
         # default
         git push "$remote"
