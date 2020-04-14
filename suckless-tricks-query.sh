@@ -1,6 +1,6 @@
 #!/bin/bash
 # Open a dmenu which prompts for any number of whitespace-separated search terms and suggest old
-# selected results.
+# queries.
 # Grep iteratively the tricks.sh file for lines that contain all of the given search terms.
 # These lines are presented in a second dmenu pass from which the user can select one.
 # The raw selected item will be written to the system clipboard.
@@ -24,7 +24,7 @@ done
 selected_result="$(printf '%s\n' "${results[@]}" | dmenu -i -l 30 -p "select:")"
 [ -z "$selected_result" ] && exit 1
 
-sed -i "/${selected_result}/d" "$query_history_file"
-printf -- '%s\n' "$selected_result" >> "$query_history_file"
+sed -i "/${query}/d" "$query_history_file"
+printf -- '%s\n' "$query" >> "$query_history_file"
 
 printf '%s' "$selected_result" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard
