@@ -1,0 +1,11 @@
+#!/bin/bash
+# Alternative to the common tool fd.
+#
+# author: andreasl
+
+if [ "$1" == '-a' ]; then
+    shift
+    find -L . -iname "*${*}*"
+else
+    find -L . -not -path '*/\.*' -iname "*${*}*"
+fi
