@@ -5,7 +5,7 @@
 
 mapfile -t processes <<< "$(ps aux | grep -i "$@")"
 for key in "${!processes[@]}"; do
-    echo "$((key + 1))    ${processes[$key]}";
+    printf -- "$((key + 1))    ${processes[$key]}\n";
 done
 
 read -e -p "Kill process with number: " key
