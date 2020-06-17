@@ -14,8 +14,11 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
 
     if [[ "$remote_and_url" == *"29418"* ]]; then
         # push to gerrit
-        if [[ "$(git branch | grep '\*')" == *"py3" ]]; then
-            push_output="$(git push "$remote" HEAD:refs/for/py3 2>&1)"
+
+        remote_and_branch="$(git for-each-ref --format='%(upstream:short)' "$(git symbolic-ref -q HEAD)")"
+        remote_branch="${remote_and_branch/$remote\//}"
+        if [ -n "$remote_branch" ]; then
+            push_output="$(git push "$remote" HEAD:refs/for/"$remote_branch" 2>&1)"
         else
             push_output="$(git push "$remote" HEAD:refs/for/master 2>&1)"
         fi
