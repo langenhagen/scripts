@@ -18,7 +18,7 @@ if [ $? != 0 ]; then
     exit 1
 fi
 
-file="${HOME}/Work/2018-CeleraOne/journal.md"
+file="$JOURNAL_PATH"
 results=$(grep -i '#snippet' "$file")
 for searchterm in $query; do
     results="$(printf '%s' "$results" | grep -i "$searchterm")"
