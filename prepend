@@ -1,7 +1,7 @@
 #!/bin/bash
 # author: andreasl
 
-function show_help {
+show_help() {
     script_name="${0##*/}"
     msg="${script_name}\n"
     msg+="Prepend a given file with a given string from stdin.\n"
