@@ -29,7 +29,6 @@ die() {
 lockfile_path="$1"
 [ -n "$lockfile_path" ] || die "$(show_usage)" 1
 [ -e "$lockfile_path" ] || die "Error: Lockfile \"${lockfile_path}\" does not exist." 1
-
 output_file="${2:-dependencies.plantuml}"
 
 printf 'digraph D {\n\n' > "$output_file"
