@@ -24,14 +24,17 @@ die() {
     exit "$2"
 }
 
+[[ "$1" =~ ^(-h|--help)$ ]] && die "$(show_usage)" 1
+
 lockfile_path="$1"
 [ -n "$lockfile_path" ] || die "$(show_usage)" 1
 [ -e "$lockfile_path" ] || die "Error: Lockfile \"${lockfile_path}\" does not exist." 1
 
 output_file="${2:-dependencies.plantuml}"
 
-lockfile="$(cat "$lockfile_path")"
 printf 'digraph D {\n\n' > "$output_file"
+
+lockfile="$(cat "$lockfile_path")"
 grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/\1 [shape=box]/g' >> "$output_file"
 
 package_dependencies_str="$(grep -En '^(name =.*|\[package.dependencies\])$' <<< "$lockfile")"
