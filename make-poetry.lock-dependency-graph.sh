@@ -43,7 +43,7 @@ for i in $(seq ${#package_dependencies[@]}); do
     [[ "${package_dependencies[${i}]}" == *'[package.dependencies]' ]] || continue
     printf '\n' >> "$output_file"
     dependee="$(sed 's/.*"\(.*\)"/\1/g' <<< "${package_dependencies[$((i - 1 ))]}")"
-    j="$(cut -d: -f1 <<< "${package_dependencies[${i}]}" )"
+    j="${package_dependencies[${i}]%%:*}"
     while [ -n "${lockfile_array[${j}]}" ]; do
         dependency="$(sed 's/\(\) .*"/\1/g' <<< "${lockfile_array[${j}]}")"
         printf '%s -> %s\n' "$dependee" "$dependency" >> "$output_file"
@@ -54,4 +54,4 @@ done
 printf '\n}\n' >> "$output_file"
 
 dot -Tpng -o "${output_file%.*}.png" "$output_file"
-xdg-open "${output_file%.*}.png"
+command -v xdg-open 2>/dev/null && xdg-open "${output_file%.*}.png"
