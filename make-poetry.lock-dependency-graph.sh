@@ -1,5 +1,5 @@
 #!/bin/bash
-# Create a plantuml dependency graph from the given poetry.lock file.
+# Create a graphviz dot dependency graph from the given poetry.lock file.
 #
 # TODO: consider implementing variable only_main=true
 #
@@ -31,8 +31,8 @@ lockfile_path="$1"
 output_file="${2:-dependencies.plantuml}"
 
 lockfile="$(cat "$lockfile_path")"
-printf '@startuml\n\n' > "$output_file"
-grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/rectangle \1/g' >> "$output_file"
+printf 'digraph D {\n\n' > "$output_file"
+grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/\1 [shape=box]/g' >> "$output_file"
 
 package_dependencies_str="$(grep -En '^(name =.*|\[package.dependencies\])$' <<< "$lockfile")"
 mapfile -t package_dependencies <<< "$package_dependencies_str"
@@ -44,12 +44,12 @@ for i in $(seq ${#package_dependencies[@]}); do
     j="$(cut -d: -f1 <<< "${package_dependencies[${i}]}" )"
     while [ -n "${lockfile_array[${j}]}" ]; do
         dependency="$(sed 's/\(\) .*"/\1/g' <<< "${lockfile_array[${j}]}")"
-        printf '%s -down-> %s\n' "$dependee" "$dependency" >> "$output_file"
+        printf '%s -> %s\n' "$dependee" "$dependency" >> "$output_file"
         (( j += 1 ))
     done
 done
 
-printf '\n@enduml\n' >> "$output_file"
+printf '\n}\n' >> "$output_file"
 
-plantuml "$output_file"
+dot -Tpng -o "${output_file%.*}.png" "$output_file"
 xdg-open "${output_file%.*}.png"
