@@ -24,7 +24,7 @@ die() {
     exit "$2"
 }
 
-[[ "$1" =~ ^(-h|--help)$ ]] && die "$(show_usage)" 1
+[[ "$1" =~ ^(-h|--help)$ ]] && die "$(show_usage)" 0
 
 lockfile_path="$1"
 [ -n "$lockfile_path" ] || die "$(show_usage)" 1
