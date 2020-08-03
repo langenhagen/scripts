@@ -1,6 +1,5 @@
 #!/bin/bash
-# Push to all remotes of the given git repo and take special care for gerrit remotes,
-# including the py3 branches in CeleraoOne.
+# Push to all remotes of the given git repo and take special care for gerrit remotes.
 #
 # author: andreasl
 
