@@ -4,7 +4,7 @@
 # author: andreasl
 
 if [ "$#" -eq 0 ]; then
-    vim -R "+call feedkeys('/')" "$TRICKS_FILE_PATH"  # -R readonly
+    vim "+call feedkeys('/')" "$TRICKS_FILE_PATH"
 else
     results="$(grep -i --color=never "$1" "$TRICKS_FILE_PATH")"
     for arg in "$@"; do
