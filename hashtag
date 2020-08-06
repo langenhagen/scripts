@@ -1,0 +1,4 @@
+#!/bin/bash
+#
+
+grep -Ei "#(${@// /|})$" "${HOME}/Work/2020-Momox/journal.md"
