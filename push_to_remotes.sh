@@ -28,7 +28,7 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
             | grep -m1 -o 'https://.*' \
             | awk '{print $1}' \
             | xargs xdg-open
-    elif [[ "$remote_and_url" == *"gitlab.bof.mm.local"* ]]; then
+    elif [[ "$remote_and_url" == *"gitlab.bof.mm.local"* ]] && [[ "$remote_and_url" != *"alangenhagen"* ]]; then
         >&2 printf -- "$remote_and_url"
         # push merge-request to gitlab
         remote_branch="$(git log --oneline --format='%s' -n1 | sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g')"
