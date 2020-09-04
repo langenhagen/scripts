@@ -31,9 +31,9 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         # push merge-request to company gitlab
         local_branch="$(git rev-parse --abbrev-ref HEAD)"
         if [[ "$local_branch" =~ ^master$|^develop$ ]]; then
-            remote_branch="$local_branch"
-        else
             remote_branch="$(git log --oneline --format='%s' -n1 | sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g')"
+        else
+            remote_branch="$local_branch"
         fi
         output="$(git push "$remote" HEAD:"$remote_branch" 2>&1)"
         printf '%s' "$output"
