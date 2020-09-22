@@ -1,4 +1,5 @@
 #!/bin/bash
 # Print paragraphs from the work journal that have the given hashtags.
 
-awk -v RS= "/#${@// /|}$/" "${HOME}/Work/2020-Momox/journal.md" | sed "s/#${@// /|}$/\n/g"
+filename="${HOME}/Work/2020-Momox/journal.md"
+awk -v RS= "/#${@// /|}$/" "$filename" | sed "s/#${@// /|}$/\n/g" | head -n 35
