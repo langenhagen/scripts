@@ -1,5 +1,22 @@
 #!/bin/bash
 # Print paragraphs from the work journal that have the given hashtags.
+#
+# Usage:
+#   hashtag <tag-name>  # list recent paragraphs with the given hashtag.
+#   hashtag -l          # list all hashtags
+#   hashtag --list      # list all hashtags
+#
+# Example:
+#   hashtag retro       # list recent paragraphs with the hashtag 'retro'
+#
+# author: andreasl
 
 filename="${HOME}/Work/2020-Momox/journal.md"
-awk -v RS= "/#${@// /|}$/" "$filename" | sed "s/#${@// /|}$/\n/g" | head -n 35
+
+if [[ "$1" =~ ^(-l|--list)$ ]]; then
+    hashtags="$(grep -Eio '  #[^ ]+([ ]+#[^ ]+)*$' "$filename")"
+    printf '%s\n' $raw_hashtags | sort -h | uniq
+    exit 0
+else
+    awk -v RS= "/#${*// /|}$/" "$filename" | sed "s/#${*// /|}$/\n/g" | head -n 35
+fi
