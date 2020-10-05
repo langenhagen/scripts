@@ -13,9 +13,9 @@
 
 filename="${HOME}/Work/2020-Momox/journal.md"
 
-if [[ "$1" =~ ^(-l|--list)$ ]]; then
+if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
     hashtags="$(grep -Eio '  #[^ ]+([ ]+#[^ ]+)*$' "$filename")"
-    printf '%s\n' $raw_hashtags | sort -h | uniq
+    printf '%s\n' $hashtags | sort -h | uniq
     exit 0
 else
     awk -v RS= "/#${*// /|}$/" "$filename" | sed "s/#${*// /|}$/\n/g" | head -n 35
