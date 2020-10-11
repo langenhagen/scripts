@@ -19,12 +19,7 @@ show_help() {
     msg+="  ${script_name} --help           # print the usage message\n"
     printf "$msg"
 }
-if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_help
-    exit 0
-fi
+[[ "$1" =~ ^(-h|--help)$ ]] && { show_help; exit; }
 
 selection="$(find -L . -iname "*${*}*" | fzf -m)"
-if [ -n "$selection" ]; then
-    vim -p $(printf "$selection")
-fi
+[ -n "$selection" ] && vim -p "$(printf "$selection")"
