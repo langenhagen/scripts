@@ -20,12 +20,10 @@ show_help() {
     msg+="  ${script_name} --help       # print the usage message\n"
     printf "$msg"
 }
-if [[ "$1" =~ ^(-h|--help)$ ]] ; then
-    show_help
-    exit 0
-fi
+[[ "$1" =~ ^(-h|--help)$ ]] && { show_help; exit; }
 
-selection="$(grep -HiRns "$*" | fzf -m | awk -F ':' '{printf "%s ",$1 }')"
-if [ -n "$selection" ]; then
-    vim -p $(printf "$selection")
-fi
+grep_cmd='rg -LSn --hidden --no-heading --no-ignore --color=always'
+# manually cut; fzf can nicely --delimit similar to `cut`, but fails with file names that have leading & trailing spaces
+preview_cmd='printf "%s" {} | cut -d: -f1 | xargs -d"\n" batcat --color=always --style=header,numbers -H{2} --line-range={2}:'
+selections_str="$($grep_cmd "$*" | fzf -m --ansi --delimiter=: --preview="$preview_cmd" | cut -d: -f1)"
+[ -n "$selections_str" ] && { mapfile -t selections <<< "$selections_str"; vim -p "${selections[@]}"; }
