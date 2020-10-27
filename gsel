@@ -1,6 +1,9 @@
 #!/bin/bash
 # gsel - grep and select
 #
+# TODO: would be nice to open the selected files at the according position. However, vim 8 does not
+# support opening several files at custom lines out of the box.
+#
 # author: andreasl
 
 show_help() {
