@@ -94,7 +94,7 @@ fi
 if [ "$use_colors" == true ]; then
     red='\\e[31m'
     green='\\e[32m'
-    orange='\\e[33m'
+    orange='\\e[33;1m'
     nc='\\e[0m'
 
     output="$(sed -E "s:^1 (.*):${red}1 \1${nc}:g" <<< "$output")"
