@@ -14,9 +14,11 @@
 filename="${HOME}/Work/2020-Momox/journal.md"
 
 if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
+    # list hashtags
     hashtags="$(grep -Eio '  #[^ ]+([ ]+#[^ ]+)*$' "$filename")"
     printf '%s\n' $hashtags | sort -h | uniq
     exit 0
 else
+    # list recent notes to given hashtag
     awk -v RS= "/#${*// /|}$/" "$filename" | sed "s/#${*// /|}$/\n/g" | head -n 35
 fi
