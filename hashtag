@@ -19,6 +19,6 @@ if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
     printf '%s\n' $hashtags | sort -h | uniq
     exit 0
 else
-    # list recent notes to given hashtag
-    awk -v RS= "/#${*// /|}$/" "$filename" | sed "s/#${*// /|}$/\n/g" | head -n 35
+    # list recent notes to given hashtag, add blank lines between entries & limit the output
+    awk -v RS= "/#${*}/" "$filename" | sed "s/\(#[a-zA-Z0-9][a-zA-Z0-9]*\)$/\1\n/g" | head -n 35
 fi
