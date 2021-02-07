@@ -1,7 +1,9 @@
 #!/bin/bash
-# Compile a given single C++ file, immediately run and afterwards remove the executable.
+# Compile a given single C++ file and immediately run it.
+# Remove the executable afterwards.
 #
 # author: andreasl
 
 file="$1"
-g++ -Wall "$file" -o "${file}.o" && "./${file}.o" && rm "${file}.o"
+g++ -Wall "$file" -o "${file}.o" && "./${file}.o"
+rm "${file}.o"
