@@ -5,5 +5,5 @@
 # author: andreasl
 
 file="$1"
-g++ -Wall "$file" -o "${file}.o" && "./${file}.o"
+g++ -Wall -pthread "$file" -o "${file}.o" && "./${file}.o"
 rm "${file}.o"
