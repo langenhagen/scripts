@@ -6,5 +6,4 @@
 
 file="$1"
 shift
-g++ "$@" -pthread "$file" -o "${file}.o" && "./${file}.o"
-rm "${file}.o"
+g++ "$@" -pthread "$file" -o "${file}.o" && { "./${file}.o"; rm "${file}.o"; }
