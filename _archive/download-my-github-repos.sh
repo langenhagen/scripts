@@ -10,8 +10,11 @@
 # author: andreasl
 set -e;
 
-mkdir -p "$HOME/repos"
-cd "$HOME/repos"
+repo_dir="${HOME}/repos"
+[ -e "$repo_dir" ] && { printf "Error: Directory ${repo_dir} exists already!"; exit 1; }
+
+mkdir -p "$repo_dir"
+cd "$repo_dir"
 
 time {
     git clone git@github.com:langenhagen/awesome-lists
@@ -73,3 +76,5 @@ time {
     git clone git@github.com:langenhagen/xLayer
     git clone git@github.com:langenhagen/xpad-trigger
 }
+
+du -hs "$repo_dir"
