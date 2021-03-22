@@ -34,7 +34,7 @@ output_file="${2:-dependencies.plantuml}"
 printf 'digraph D {\n\n' > "$output_file"
 
 lockfile="$(cat "$lockfile_path")"
-grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/\1 [shape=box]/g' >> "$output_file"
+grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/"\1" [shape=box]/g' >> "$output_file"
 
 package_dependencies_str="$(grep -En '^(name =.*|\[package.dependencies\])$' <<< "$lockfile")"
 mapfile -t package_dependencies <<< "$package_dependencies_str"
@@ -45,8 +45,8 @@ for i in $(seq ${#package_dependencies[@]}); do
     dependee="$(sed 's/.*"\(.*\)"/\1/g' <<< "${package_dependencies[$((i - 1 ))]}")"
     j="${package_dependencies[${i}]%%:*}"
     while [ -n "${lockfile_array[${j}]}" ]; do
-        dependency="$(sed 's/\(\) .*"/\1/g' <<< "${lockfile_array[${j}]}")"
-        printf '%s -> %s\n' "$dependee" "$dependency" >> "$output_file"
+        dependency="$(sed 's/\(\) .*["{}]/\1/g' <<< "${lockfile_array[${j}]}")"
+        printf '"%s" -> "%s"\n' "$dependee" "$dependency" >> "$output_file"
         (( j += 1 ))
     done
 done
