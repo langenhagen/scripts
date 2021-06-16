@@ -16,7 +16,8 @@ filename="${HOME}/Work/2020-Momox/journal.md"
 if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
     # list hashtags
     hashtags="$(grep -Eio '  #[^ ]+([ ]+#[^ ]+)*$' "$filename")"
-    printf '%s\n' $hashtags | sort -h | uniq
+    # shellcheck disable=SC2086
+    printf '%s\n' $hashtags | tr '[:upper:]' '[:lower:]' | sort -h | uniq
     exit 0
 else
     # list recent notes to given hashtag, add blank lines between entries & limit the output
