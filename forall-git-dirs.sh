@@ -22,7 +22,7 @@ Examples:
 
 Note:
   If you want to use subshell related-variables, like e.g. \$PWD, wrap them into single quotation
-  marks so that they will not be expanded '' immediately.
+  marks '' so that they expanded not immediately.
 HELP_EOF
 
 use_maxdepth=false
