@@ -1,9 +1,6 @@
 #!/bin/bash
 # Delete superfluous storage-consuming directories and files and removes old packages.
 #
-# Input Parameters:
-#   --wholesome (optional): calls `git gq --aggressive` on all .git folders (indirectly) under "/".
-#
 # author: andreasl
 
 set -x;
@@ -42,7 +39,7 @@ printf "${b}Info: $HOME/.buildout/eggs has the following size: ${dirsize}${n}\n"
 rm -rfv "$HOME/.buildout/eggs";
 
 # Brew
-command -v brew >/dev/null && brew cleanup -s;
+[ "$(command -v brew)" ] && brew cleanup -s;
 
 # Apt
 if [ "$(command -v apt)" ]; then
@@ -52,24 +49,26 @@ if [ "$(command -v apt)" ]; then
     sudo apt autoremove;
 fi
 
-# dpkg
-if [ "$(command -v dpkg)" ]; then
-    sudo dpkg --purge --pending;
+# Snap
+if [ "$(command -v snap)" ]; then
+    # shellcheck disable=SC2162
+    LANG=C snap list --all | awk '/disabled/{print $1, $3}' |
+        while read snapname revision; do
+            snap remove "$snapname" --revision="$revision"
+        done
 fi
 
+# dpkg
+[ "$(command -v dpkg)" ] && sudo dpkg --purge --pending;
+
 # Docker
-command -v docker >/dev/null && docker system prune --all --force;
+[ "$(command -v docker)" ] && docker system prune --all --force;
 
 # Git
 find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd;" \;
-if [[ "$1" == '--wholesome' ]]; then
-   printf "${b}Do a  git gq --aggressive  on all git repos on the machine${n}\n";
-   find / -type d -name '.git' -exec bash -c "pushd '{}'; git gc --aggressive; popd;" \;
-fi
 
 # Python
-find ~ -name "*.py[co]" -delete;
-find ~ -name '__pycache__' -delete;
+find ~ -name "*.py[co]" -delete -or -name '__pycache__' -delete;
 
 # Jupyter
 find ~ -name '.ipynb_checkpoints' -exec rm -rf '{}' \;
