@@ -11,7 +11,7 @@
 #
 # author: andreasl
 
-filename="${HOME}/Work/2020-Momox/journal.md"
+filename="$JOURNAL_PATH"
 
 if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
     # list hashtags
