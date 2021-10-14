@@ -1,0 +1,8 @@
+#!/bin/bash
+# Delete trailing whitespaces from given files.
+
+while [ "$#" -gt 0 ]; do
+    grep -EHn --color=always '[[:space:]]+$' "$1"
+    sed --in-place 's/[[:space:]]\+$//' "$1"
+    shift
+done
