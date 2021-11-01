@@ -4,8 +4,6 @@
 #
 # author: andreasl
 
-cd "$*" && git status || exit 1
-
 remotes_and_urls_str="$(git remote -v | grep '(push)')"
 mapfile -t remotes_and_urls <<< "$remotes_and_urls_str"
 for remote_and_url in "${remotes_and_urls[@]}"; do
@@ -20,7 +18,7 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         else
             remote_branch="$local_branch"
         fi
-        output="$(git push "$remote" HEAD:"$remote_branch" 2>&1)"
+        output="$(git push "$remote" HEAD:"$remote_branch" "$@" 2>&1)"
         printf '%s' "$output"
         if [[ "$output" == *' * [new branch] '* ]]; then
             set -o pipefail
@@ -29,6 +27,6 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
 
     else
         # default
-        git push "$remote"
+        git push "$remote" "$@"
     fi
 done
