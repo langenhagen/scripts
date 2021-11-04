@@ -24,5 +24,5 @@ else
     tag="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
     awk -v RS= 'tolower($0) ~ /#'"${tag}"'/' "$filename" \
         | sed 's/\(#[a-zA-Z0-9][a-zA-Z0-9]*\)$/\1\n/g' \
-        | head -n 35
+        | tail -n 35
 fi
