@@ -22,7 +22,9 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         printf '%s' "$output"
         if [[ "$output" == *' * [new branch] '* ]]; then
             set -o pipefail
-            grep 'remote:   http[s]*://' <<< "$output" | grep -o 'http.*$' | xargs xdg-open
+            grep -E 'remote:[[:space:]]+http[s]*://' <<< "$output" \
+                | grep -o 'http.*$' \
+                | xargs xdg-open
         fi
 
     else
