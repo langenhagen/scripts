@@ -1,0 +1,28 @@
+#!/bin/bash
+# Find all empty subfolders in a given directory
+# and prompt the user whether to delete every individual empty folder,
+# and act accordingly.
+# If no directory is given, use the current current working directory.
+# Ignore everything inside .git dirs.
+#
+# author: andreasl
+
+root_folder="${1:-${PWD}}"
+
+directory_array=()
+while IFS=  read -r -d $'\0'; do
+    directory_array+=("$REPLY")
+done < <(find "$root_folder" -type d -print0)
+
+for dir in "${directory_array[@]}"; do
+    [[ "$dir" =~ .*\.git/.* ]] && continue
+
+    has_contents=$(ls -A "$dir")
+    [ -n "$has_contents" ] && continue
+
+    echo "$dir"
+    # -r raw, i.e. don't mangle backslashes; -e newline after input is read;
+    # -n1 capture 1 character, no ENTER needed
+    read -r -e -n1 -p "Delete [y/n]?: " do_delete
+    [ "$do_delete" == "y" ] && rm -rf "$dir"
+done
