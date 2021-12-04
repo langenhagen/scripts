@@ -1,5 +1,5 @@
 #!/bin/bash
-# Iteratively grep for the given arguments in the one-line-help.txt file.
+# Iteratively grep for the given arguments in the file one-line-help.txt.
 #
 # author: andreasl
 

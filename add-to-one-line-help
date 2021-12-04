@@ -1,5 +1,5 @@
 #!/bin/bash
-# Add a whitespace-trimmed entry to the one-line-help.txt file
+# Add a whitespace-trimmed entry to the file one-line-help.txt
 # and sort the one-line-help.txt.
 #
 # author: andreasl
