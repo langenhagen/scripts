@@ -18,8 +18,8 @@ def _euro(cents: float) -> decimal.Decimal:
 
 
 def main():
-    """Calculate the the money on a certain frequency based and print the
-    results to stdout and write the results to a file."""
+    """Calculate the the money based on additions in a certain frequency and
+    print the results to stdout and write the results to a file."""
     path = pathlib.Path.home() / ".config/money-by-minute.txt"
     with open(path, "r") as file:
         euros_per_hour = float(file.readline().strip())
