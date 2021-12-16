@@ -1,0 +1,54 @@
+#!/bin/bash
+# Non-interactively execute several kinds of git rebase operations.
+# Supported operations are `edit`, `fixup`, `reword` and `squash`.
+#
+# Usage:
+#
+#   rebase <COMMAND> <COMMIT> [<COMMIT>]
+#
+# Examples:
+#
+#  rebase edit cd32eb6             # edit the given given commit cd32eb6
+#  rebase fixup 91cf993 49b9895    # fixup the commit 49b9895 onto 91cf993
+#  rebase fixup 91cf993 HEAD       # fixup the current HEAD onto 91cf993
+#  rebase reword 845b96b           # reword the given commit
+#  rebase squash dd6f5ee f36c28    # squash the commit f36c28 onto dd6f5ee
+#  rebase squash dd6f5ee HEAD~3    # fixup HEAD~3 onto dd6f5ee
+#
+#  rebase e cd32eb6                # shorthand for rebase edit
+#  rebase f 91cf993 49b9895        # shorthand for rebase fixup
+#  rebase r 845b96b                # shorthand for rebase reword
+#  rebase s dd6f5ee f36c28         # shorthand for rebase squash
+#
+# author: andreasl
+
+command="$1"
+base_commit="$(git rev-parse --short "$2")" || exit 1
+
+if [[ "$command" =~ ^edit$|^e$|^reword$|^r$ ]]; then
+     # shellcheck disable=SC2016
+     script='$2 ~ base{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; next}1'
+
+elif [[ "$command" =~ ^fixup$|^f$|^squash$|^s$ ]]; then
+     top_commit="$(git rev-parse --short "$3")" || exit 2
+
+     # shellcheck disable=SC2016
+     script='
+          $2 ~ base{print $0; found = 1; next}
+          $2 ~ top{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; print between; found = 0; next}
+          found{between = between ? between RS $0 : $0; next}
+          1'
+else
+     >&2 printf "Error: unknown command: %sn" "$command"
+     exit 3
+fi
+
+editor="awk -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"
+
+# # shellcheck disable=SC2034
+GIT_EDITOR="$editor" git rebase -i "$(git rev-parse "${base_commit}~1")"
+
+
+# TODO use 
+# gawks inplace /
+# https://stackoverflow.com/questions/16529716/save-modifications-in-place-with-awk
