@@ -43,12 +43,7 @@ else
      exit 3
 fi
 
-editor="awk -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"
+editor="awk -i inplace -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"
 
 # # shellcheck disable=SC2034
-GIT_EDITOR="$editor" git rebase -i "$(git rev-parse "${base_commit}~1")"
-
-
-# TODO use 
-# gawks inplace /
-# https://stackoverflow.com/questions/16529716/save-modifications-in-place-with-awk
+GIT_SEQUENCE_EDITOR="$editor" git rebase -i "$(git rev-parse "${base_commit}~1")"
