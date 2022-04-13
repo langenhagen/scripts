@@ -3,11 +3,11 @@
 #
 # Usage:
 #
-#   download-m3u8.sh <URL> <OUT-FILE>
+#   download-m3u8.sh <URL> [<OUT-FILE>]
 #
 # author: andreasl
 
 m3u8_url="$1"
-out_file="${2:-stream.mkv}"
+out_file="${2-stream.mkv}"
 
 time ffmpeg -i "$m3u8_url" -c copy "$out_file"
