@@ -3,9 +3,9 @@
 #
 # author: andreasl
 
-sudo docker kill "$(docker ps -q)"
-sudo docker rm "$(docker ps -a -q)"
-sudo docker rmi "$(docker images -q)"
+sudo docker kill "$(docker ps --quiet)"
+sudo docker rm "$(docker ps --all -quiet)"
+sudo docker rmi "$(docker images --quiet)"
 
 echo 'Docker purged.'
 
