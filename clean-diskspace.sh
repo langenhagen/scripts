@@ -2,12 +2,11 @@
 # Delete superfluous storage-consuming directories and files and removes old packages.
 #
 # author: andreasl
-
 set -x;
 
 # color codes
-b='\e[1m'  # bold
-n='\e[m'  # normal
+b='\e[1m';  # bold
+n='\e[m';  # normal
 
 # Empty Trash
 dirsize=$(du -sh "$HOME/.local/share/Trash/" 2>/dev/null);
@@ -54,7 +53,7 @@ if [ "$(command -v snap)" ]; then
     # shellcheck disable=SC2162
     LANG=C snap list --all | awk '/disabled/{print $1, $3}' |
         while read snapname revision; do
-            snap remove "$snapname" --revision="$revision"
+            snap remove "$snapname" --revision="$revision";
         done
 fi
 
