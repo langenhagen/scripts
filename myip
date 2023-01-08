@@ -1,16 +1,14 @@
 #!/bin/bash
-# Print your local network IP address
-# and write it to the system clipboard.
+# Print your local network IP V4 addresses
+# and write the first one to the system clipboard.
 #
 # author: andreasl
 
-ip_addr="$(ip addr show | \
-    grep 'inet .*scope global' | \
-    grep -Eo '[1-9]{1,3}\.[1-9]{1,3}\.[1-9]{1,3}.[1-9]{1,3}' | \
-    head -1)"
+ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $4 "\t  " $NF}')"
 
-printf '%s\n' "$ip_addr"
+printf '%s\n' "$ip_addrs"
 
 if command -v xclip >/dev/null && [ -n "$DISPLAY" ] ; then
+    ip_addr="$(ip addr show | grep -Eom1 'inet\b.*scope global.*$' | awk '{print $4}')"
     printf '%s' "$ip_addr" | xclip -i -f -selection primary | xclip -i -selection clipboard
 fi
