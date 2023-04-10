@@ -3,7 +3,7 @@
 #
 # Usage:
 #
-#   download-m3u8.sh <URL> [<OUT-FILE>]
+#   download-m3u8 <URL> [<OUT-FILE>]
 #
 # author: andreasl
 
@@ -13,4 +13,4 @@ out_file="${2-stream.m4v}"
 
 [ "${out_file%.*}" == "$out_file" ] && out_file="${out_file}.m4v"
 
-time ffmpeg -i "$m3u8_url" -c copy "$out_file"
+time ffmpeg -timeout 5000000 -i "$m3u8_url" -c copy "$out_file"
