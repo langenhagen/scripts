@@ -3,11 +3,11 @@
 #
 # Usage:
 #
-#   convert-to-chromecast.sh <input-file> [<output-file>]
+#   convert-to-chromecast <input-file> [<output-file>]
 #
 # author: andreasl
 
-[ $# -lt 1 ] && { printf "Usage: ${0##*/} <input-file> [<output-file>]\n"; exit 1; }
+[ $# -lt 1 ] && { echo "Usage: ${0##*/} <input-file> [<output-file>]"; exit 1; }
 
 in_file="$1"
 out_file="${2-${in_file%.*}.m4v}"
