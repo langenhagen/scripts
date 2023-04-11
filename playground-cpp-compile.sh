@@ -30,7 +30,8 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-if g++ "${params[@]}" -pthread "$file" -o "${file}.o"; then
+# if g++ "${params[@]}" -pthread "$file" -o "${file}.o"; then
+if clang++ "${params[@]}" -pthread "$file" -o "${file}.o"; then
     "./${file}.o";
     [ "$keep_artifacts" = 'true' ] || rm "${file}.o";
 fi
