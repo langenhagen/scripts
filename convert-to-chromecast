@@ -13,3 +13,6 @@ in_file="$1"
 out_file="${2-${in_file%.*}.m4v}"
 
 time HandBrakeCLI --preset 'Chromecast 1080p60 Surround' --input "$in_file" --output "$out_file"
+
+# if you get stutters or whatnot, try with less fps
+# time HandBrakeCLI --preset 'Chromecast 1080p30 Surround' --input "$in_file" --output "$out_file"
