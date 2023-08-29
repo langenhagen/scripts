@@ -3,16 +3,35 @@
 #
 # Usage:
 #
-#   convert-to-chromecast <input-file> [<output-file>]
+#   convert-to-chromecast <input-file> [<output-file>] [--30fps]
+#
+#
+# Note:
+#
+#   If you get stutters when streaming to chromecast, try the --30fps option.
+#
 #
 # author: andreasl
 
-[ $# -lt 1 ] && { echo "Usage: ${0##*/} <input-file> [<output-file>]"; exit 1; }
+[ $# -lt 1 ] && { echo "Usage: ${0##*/} <input-file> [<output-file>] [--30fps]"; exit 1; }
 
-in_file="$1"
-out_file="${2-${in_file%.*}.m4v}"
+in_file=
+out_file=
+fps=60
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+    --30fps|--30)
+        fps=30
+        ;;
+    *)
+        out_file="${in_file:+${1}}"
+        in_file="${in_file:-${1}}"
+        ;;
+    esac
+    shift
+done
 
-time HandBrakeCLI --preset 'Chromecast 1080p60 Surround' --input "$in_file" --output "$out_file"
+out_file="${out_file:-${in_file%.*}.m4v}"
 
-# if you get stutters or whatnot, try with less fps
-# time HandBrakeCLI --preset 'Chromecast 1080p30 Surround' --input "$in_file" --output "$out_file"
+set -x
+time HandBrakeCLI --preset "Chromecast 1080p${fps} Surround" --input "$in_file" --output "$out_file"
