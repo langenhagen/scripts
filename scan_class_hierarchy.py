@@ -5,6 +5,7 @@ Limitations:
 - imports inside functions or and redefinitions of thingos may cause undefined behavior
 - wildcard imports will not be resolved
 - forward imports and stuffs via `__init__.py` might as well break
+- does not account for dirty tricks with your PYTHONPATH
 
 Use like:
 
@@ -200,15 +201,8 @@ def convert_class_names_to_qualified_names(module: Module):
         c.name = f"{module_path}.{c.name}"
 
 
-def main(directory: Path) -> int:
-    """Scan the given directory for python classes and their inheritance-relation."""
-    generator = walk(directory, file_regex=r".*\.py$", ignore_regex=r"\..+|__pycache__")
-    modules: list[Module] = [parse_file(file) for file in generator]
-
-    for m in modules:
-        convert_superclass_names_to_qualified_names(m)
-        convert_class_names_to_qualified_names(m)
-
+def write_output(modules: list[Module]):
+    """Write the module info to stdout as a Mermaid diagram."""
     write("```mermaid\n")
     write("graph RL;\n")
     for i, m in enumerate(modules, start=1):
@@ -229,6 +223,19 @@ def main(directory: Path) -> int:
                 write(f"  {c.name} {'-'*j}> {s}\n")
 
     write("```\n")
+
+
+def main(directory: Path) -> int:
+    """Scan the given directory for python classes and their inheritance-relation."""
+    generator = walk(directory, file_regex=r".*\.py$", ignore_regex=r"\..+|__pycache__")
+    modules: list[Module] = [parse_file(file) for file in generator]
+
+    for m in modules:
+        convert_superclass_names_to_qualified_names(m)
+        convert_class_names_to_qualified_names(m)
+
+    write_output(modules)
+
     return 0
 
 
