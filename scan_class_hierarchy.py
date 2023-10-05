@@ -141,10 +141,10 @@ def parse_file(file: Path) -> Module:
             for base in node.bases:
                 if isinstance(base, ast.Attribute):
                     # mymodule.MyClass, my.module.MyClass and so on
-                    parent = base.value
+                    parent = base
                     name_parts: list[str] = []
                     while not isinstance(parent, ast.Name):
-                        name_parts.append(base.attr)
+                        name_parts.append(parent.attr)
                         parent = parent.value
                     name_parts.append(parent.id)
                     name_parts.reverse()
@@ -167,6 +167,7 @@ def parse_file(file: Path) -> Module:
 
 def convert_superclass_names_to_qualified_names(module: Module):
     module_path = module.module_path
+
     for c in module.classes:
         qualified_supers: list[str] = []
         for s in c.superclasses:
