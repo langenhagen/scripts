@@ -32,6 +32,7 @@ done
 
 # if g++ "${params[@]}" -pthread "$file" -o "${file}.o"; then
 if clang++ "${params[@]}" -pthread "$file" -o "${file}.o"; then
+# if clang++ --std=c++11 "${params[@]}" -pthread "$file" -o "${file}.o"; then
     "./${file}.o";
     [ "$keep_artifacts" = 'true' ] || rm "${file}.o";
 fi
