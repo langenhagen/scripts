@@ -1,0 +1,32 @@
+#!/bin/bash
+# Print the Resident Set Size memory usage of a process with given PID
+# in a human readable format.
+#
+# Usage:
+#
+#   musage <PID>           # take the process by ID
+#   musage <PROCESS-NAME>  # take the newest process that matches the given name
+#
+# author: andreasl
+int_re='^[0-9]+$'
+if [[ "$1" =~ $int_re ]]; then
+    pid="$1"
+else
+    # the subshell containing the `pgrep` below is itself a matching process, filter it out
+    pids_str="$(pgrep --full "$1")"
+    mapfile -t pids <<< "$pids_str"
+    [ "${#pids[@]}" -lt 2 ] && { >&2 echo "Error: Found no process matching \"${1}\"."; exit 1; }
+    pid="${pids[-2]}"
+fi
+
+# shellcheck disable=SC2016
+awk_script='
+{
+    split("KB MB GB TB", units);
+    for (i = 1; $1 >= 1024 && i; i++) {
+        $1 = $1 / 1024;
+    }
+    printf "%.2f %s\n", $1, units[i];
+}'
+
+ps -o rss= -p "$pid" | awk "$awk_script"
