@@ -1,5 +1,6 @@
 #!/bin/bash
 # Set a random wallpaper from a given folder.
+# Might not work with cronjobs because gnome is a bitch.
 #
 # Usage:
 #
