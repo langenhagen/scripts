@@ -4,7 +4,7 @@
 #
 # author: andreasl
 
-ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $4 "\t  " $NF}')"
+ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $2 "\t  " $NF}')"
 
 printf '%s\n' "$ip_addrs"
 
