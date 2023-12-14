@@ -3,8 +3,17 @@
 #
 # Usage:
 #
-#   convert-to-chromecast <input-file> [<output-file>] [--30fps]
+#   convert-to-chromecast <input-file> [<output-file>] [--30fps] [-o|--allow-overwrite]
 #
+# Options:
+#  -30, --30fps:           Convert the output file with 30 fps target. Might fix audio stuttering.
+#  -o, --allow-overwrite:  If a file exists that matches the output file, allow to overwrite it.
+#
+# Examples:
+#  convert-to-chromecast my-movie.mp4                       # Create my-movie.m4v with 60 fps max
+#  convert-to-chromecast my-movie.mp4 cool-movie.m4v        # Create cool-movie.m4v with 60 fps max
+#  convert-to-chromecast my-movie.mp4 --30fps               # Create my-movie.m4v with 30 fps
+#  convert-to-chromecast my-movie.m4v --allow-overwrite     # Overwrite my-movie.m4v
 #
 # Note:
 #
@@ -12,16 +21,17 @@
 #
 #
 # author: andreasl
-
-[ $# -lt 1 ] && { echo "Usage: ${0##*/} <input-file> [<output-file>] [--30fps]"; exit 1; }
-
 in_file=
 out_file=
+allow_overwrite=false
 fps=60
 while [ "$#" -gt 0 ]; do
     case "$1" in
     --30fps|--30)
         fps=30
+        ;;
+    --allow-overwrite|-o)
+        allow_overwrite=true
         ;;
     *)
         out_file="${in_file:+${1}}"
@@ -31,7 +41,15 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
+if [ -z "$in_file" ]; then
+    echo "Usage: ${0##*/} <input-file> [<output-file>] [--30fps] [--allow-overwrite]"
+    exit 1
+fi
+
 out_file="${out_file:-${in_file%.*}.m4v}"
+if [ -e "$out_file" ] && [ "$allow_overwrite" == false ]; then
+    echo "Error: Output file \"${out_file}\" exists already."
+fi
 
 set -x
 time HandBrakeCLI --preset "Chromecast 1080p${fps} Surround" --input "$in_file" --output "$out_file"
