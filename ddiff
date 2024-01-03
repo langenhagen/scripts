@@ -1,4 +1,6 @@
 #!/bin/bash
+# Directory/file-wise diff. Compares file/folder names. Does not compare file contents.
+#
 # author: andreasl
 
 script_name="${0##*/}"

@@ -1,5 +1,9 @@
 #!/bin/bash
-# Alternative to the common tool fd.
+# Simple self-made alternative implementation to the popular file-finding tool `fd`.
+#
+# Usage:
+#
+#   fd [-a] <SEARCHTERM>
 #
 # author: andreasl
 

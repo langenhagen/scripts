@@ -1,6 +1,17 @@
 #!/bin/bash
 # Prepend all filenames in a given directory with a date of the form `YYYY-MM-DD-`.
 # Ignore files that already have a matching date string.
+#
+# Usage:
+#
+#   addates <DIR>
+#
+# Examples:
+#
+#   addates myfolder
+#   addates .
+#
+# author: andreasl
 shopt -s extglob
 
 cd "$1" || exit 1
