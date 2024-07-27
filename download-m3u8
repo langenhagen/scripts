@@ -7,7 +7,7 @@
 #
 # author: andreasl
 
-m3u8_url="$1"
+m3u8_url="$(echo "$1" | xargs)"
 out_file="${2-stream.m4v}"
 
 
