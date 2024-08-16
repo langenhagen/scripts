@@ -1,0 +1,32 @@
+#!/bin/bash
+# ezz - resteazy darker
+# Put the pixel brightness to dark after the keyboard & mouse input idled for a given amount of time.
+# Helpful if you want to disable the pixels but want to keep the monitor on.
+#
+# author: andreasl
+
+max_idle_time=${1:-5}
+is_dark=false
+
+# Command to execute affter the idle timeout.
+darker() {
+    is_dark=true
+    xrandr --output DisplayPort-0 --brightness 0.0;
+}
+
+brighter() {
+    is_dark=false
+    xrandr --output DisplayPort-0 --brightness 1;
+}
+
+
+while true; do
+    idle_time=$(( $(xprintidle) / 1000 ))
+
+    if [ "$idle_time" -ge "$max_idle_time" ]; then
+        [ "$is_dark" == 'false' ] && darker
+    else
+        [ "$is_dark" == 'true' ] && brighter
+        sleep $(( max_idle_time - idle_time ))
+    fi
+done
