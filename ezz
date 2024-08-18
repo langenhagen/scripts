@@ -8,15 +8,18 @@
 max_idle_time=${1:-5}
 is_dark=false
 
+# screen='DisplayPort-0'
+screen='eDP'
+
 # Command to execute affter the idle timeout.
 darker() {
     is_dark=true
-    xrandr --output DisplayPort-0 --brightness 0.0;
+    xrandr --output "$screen" --brightness 0.0;
 }
 
 brighter() {
     is_dark=false
-    xrandr --output DisplayPort-0 --brightness 1;
+    xrandr --output "$screen" --brightness 1;
 }
 
 
