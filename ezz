@@ -8,8 +8,8 @@
 max_idle_time=${1:-5}
 is_dark=false
 
-# screen='DisplayPort-0'
-screen='eDP'
+screen='DisplayPort-0'
+xrandr --listactivemonitors | grep --silent --no-messages 'DisplayPort-0' || screen='eDP'  # internal screen
 
 # Command to execute affter the idle timeout.
 darker() {
@@ -32,4 +32,5 @@ while true; do
         [ "$is_dark" == 'true' ] && brighter
         sleep $(( max_idle_time - idle_time ))
     fi
+    sleep 0.3
 done
