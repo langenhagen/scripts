@@ -25,6 +25,7 @@ import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from string import ascii_uppercase
 from typing import Generator
 
 write = sys.stdout.write
@@ -41,11 +42,10 @@ def n_to_alpha(n: int) -> str:
     28 maps to "AB"
     and so on.
     """
-    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     result = []
     while n > 0:
         n, remainder = divmod(n - 1, 26)
-        result.append(alphabet[remainder])
+        result.append(ascii_uppercase[remainder])
     return "".join(result[::-1])
 
 
@@ -65,7 +65,7 @@ def walk(
         resolved = p.resolve()
         if ignore_regex and re.match(ignore_regex, resolved.name):
             continue
-        elif p.is_dir():
+        if p.is_dir():
             yield from walk(p, file_regex, ignore_regex)
         elif file_regex is None or re.match(file_regex, resolved.name):
             yield p
@@ -89,7 +89,8 @@ class Class:
     @property
     def last_name_part(self) -> str:
         """Return only the last part of the (qualified) name.
-        E.g., for `my.cool.Class`, return `Class`."""
+        E.g., for `my.cool.Class`, return `Class`.
+        """
         return self.name.split(".")[-1]
 
 
@@ -102,7 +103,7 @@ class Module:
     classes: list[Class] = field(default_factory=list)
 
     @property
-    def module_path(self):
+    def module_path(self) -> str:
         """Get the modulized path name.
 
         E.g., if the `file` field is `my/module.py`, the result is `my.module`.
@@ -112,7 +113,8 @@ class Module:
 
 def parse_file(file: Path) -> Module:
     """From the given Python file, extract Python imports, classes and their
-    superclasses."""
+    superclasses.
+    """
     with file.open() as f:
         tree = ast.parse(f.read())
 
@@ -156,8 +158,11 @@ def parse_file(file: Path) -> Module:
                 elif isinstance(base, ast.Starred):
                     # arcane stuff like class DummyWA(*supers):
                     pass
+                elif isinstance(base, ast.Subscript):
+                    # generics stuff like: Generic[ElementType], unsupported atm
+                    pass
                 else:
-                    msg = f"That should never happen {type(base)}"
+                    msg = f"That should never happen {type(base)}: {file}: {node.name}"
                     raise TypeError(msg)
 
             result.classes.append(Class(name=node.name, superclasses=supers))
@@ -165,7 +170,8 @@ def parse_file(file: Path) -> Module:
     return result
 
 
-def convert_superclass_names_to_qualified_names(module: Module):
+def convert_superclass_names_to_qualified_names(module: Module) -> None:
+    """Convert superclass names to.qualified.names."""
     module_path = module.module_path
 
     for c in module.classes:
@@ -196,13 +202,14 @@ def convert_superclass_names_to_qualified_names(module: Module):
         c.superclasses = qualified_supers
 
 
-def convert_class_names_to_qualified_names(module: Module):
+def convert_class_names_to_qualified_names(module: Module) -> None:
+    """Convert class names to.qualified.names."""
     module_path = module.module_path
     for c in module.classes:
         c.name = f"{module_path}.{c.name}"
 
 
-def write_output(modules: list[Module]):
+def write_output(modules: list[Module]) -> None:
     """Write the module info to stdout as a Mermaid diagram."""
     write("```mermaid\n")
     write("graph RL;\n")
