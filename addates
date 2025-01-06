@@ -1,5 +1,5 @@
 #!/bin/bash
-# Prepend all filenames in a given directory with a date of the form `YYYY-MM-DD-`.
+# Prepend all filenames in a given directory with today's date of the form `YYYY-MM-DD-`.
 # Ignore files that already have a matching date string.
 #
 # Usage:
