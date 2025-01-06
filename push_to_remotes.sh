@@ -9,7 +9,7 @@ mapfile -t remotes_and_urls <<< "$remotes_and_urls_str"
 for remote_and_url in "${remotes_and_urls[@]}"; do
     remote="$(printf -- '%s' "$remote_and_url" | awk '{print $1}')"
 
-    if [[ "$remote_and_url" == *'code.wabo.run'* ]]; then
+    if [[ "$remote_and_url" == *'code.wabo.run'* ]] || [[ "$remote_and_url" == *'github.com:wandelbotsgmbh'* ]]; then
         # push merge-request to company GitLab
         local_branch="$(git rev-parse --abbrev-ref HEAD)"
         if [[ "$local_branch" =~ ^master$|^main$ ]]; then
