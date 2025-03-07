@@ -1,0 +1,14 @@
+#!/bin/bash
+# Run a few ruff commands against a given file or directory.
+#
+# See:
+# - https://docs.astral.sh/ruff/rules/#warning-plw
+#
+# author: andreasl
+
+file="${1:-.}"
+
+ruff format "$file";
+ruff check --select UP --fix "$file"
+ruff check --select I --fix "$file"  # imports
+ruff check "$file"
