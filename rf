@@ -9,6 +9,6 @@
 file="${1:-.}"
 
 ruff format "$file"
-ruff check --select UP,ANN,B,C4,EXE,FA,ISC,ICN,LOG,G,PIE,Q,RSE,SIM,TC,I,NPY,W,FURB --ignore B905,UP015,UP035 --fix "$file"
+ruff check --select UP,ANN,B,C4,EXE,FA,ISC,ICN,LOG,G,PIE,Q,RSE,SIM,TC,I,NPY,W,FURB,RET --ignore B905,D203,D213,UP015,UP035 --fix "$file"
 ruff check --select I --fix "$file"  # imports
 ruff check "$file"
