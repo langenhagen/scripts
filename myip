@@ -8,7 +8,7 @@ ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $2 "
 
 printf '%s\n' "$ip_addrs"
 
-if command -v xclip >/dev/null && [ -n "$DISPLAY" ] ; then
+if command -v xclip >/dev/null && [ -n "$DISPLAY" ]; then
     ip_addr="$(ip addr show | grep -Eom1 'inet\b.*scope global.*$' | awk '{print $4}')"
     printf '%s' "$ip_addr" | xclip -i -f -selection primary | xclip -i -selection clipboard
 fi

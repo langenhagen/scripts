@@ -7,7 +7,7 @@
 # author: andreasl
 
 script_name="${0##*/}"
-IFS= read -r -d '' script_description << HELP_EOF
+IFS= read -r -d '' script_description <<HELP_EOF
 Usage:
   ${script_name} [-q|--quiet] [-d|--depth <number>] [<path>] [-- <command>]
 
@@ -31,15 +31,15 @@ search_dir='.'
 while [ $# -gt 0 ]; do
     key="$1"
     case $key in
-    -q|--quiet)
+    -q | --quiet)
         quiet="True"
         ;;
-    -d|--depth)
+    -d | --depth)
         use_maxdepth=true
         depth="${2}"
         shift # past argument
         ;;
-    -p|--path)
+    -p | --path)
         search_dir="${2}"
         shift # past argument
         ;;
@@ -48,7 +48,7 @@ while [ $# -gt 0 ]; do
         command="$*"
         break
         ;;
-    -h|--help)
+    -h | --help)
         printf -- "$script_description"
         exit 0
         ;;

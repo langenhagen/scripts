@@ -37,17 +37,17 @@ only_list_filenames=false
 files=()
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    -d|--directory)
+    -d | --directory)
         directory="$2"
         shift
         ;;
-    -e|--exclude-mode)
+    -e | --exclude-mode)
         inclusive=false
         ;;
-    -F|--only-filenames)
+    -F | --only-filenames)
         only_list_filenames=true
         ;;
-    -h|--help)
+    -h | --help)
         show_help
         exit 0
         ;;
@@ -58,7 +58,7 @@ while [ "$#" -gt 0 ]; do
     shift
 done
 
-[ ${#files[@]} -eq 0 ] && inclusive=false;
+[ ${#files[@]} -eq 0 ] && inclusive=false
 
 if [ "$only_list_filenames" == true ]; then
     #shellcheck disable=SC2016
@@ -82,8 +82,8 @@ if [ "$inclusive" == true ]; then
     unset 'include_list[${#include_list[@]}-1]'
 
     find "$directory" -type f "${include_list[@]}" \
-        -exec sh -c "$file_action" shell {} \; \
-        | xclip -fi -selection clipboard
+        -exec sh -c "$file_action" shell {} \; |
+        xclip -fi -selection clipboard
 else
     prune_list=()
     exclude_list=()
@@ -102,6 +102,6 @@ else
     find "$directory" \
         $prune_str \
         -type f -not -path '*/.*' "${exclude_list[@]}" \
-        -exec sh -c "$file_action" shell {} \; \
-        | xclip -fi -selection clipboard
+        -exec sh -c "$file_action" shell {} \; |
+        xclip -fi -selection clipboard
 fi

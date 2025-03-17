@@ -10,7 +10,7 @@
 root_folder="${1:-${PWD}}"
 
 directory_array=()
-while IFS=  read -r -d $'\0'; do
+while IFS= read -r -d $'\0'; do
     directory_array+=("$REPLY")
 done < <(find "$root_folder" -type d -print0)
 

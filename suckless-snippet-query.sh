@@ -13,7 +13,7 @@
 query_history_file="${HOME}/.ssq_history"
 historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "$historic_queries" | dmenu -i -l 5 -p "snippet query?:" )"
+query="$(printf "$historic_queries" | dmenu -i -l 5 -p "snippet query?:")"
 if [ $? != 0 ]; then
     exit 1
 fi
@@ -34,6 +34,6 @@ if [ -z "$selected_result" ]; then
 fi
 
 sed -i "/${query}/d" "$query_history_file"
-printf '%s\n' "$query" >> "$query_history_file"
+printf '%s\n' "$query" >>"$query_history_file"
 
 printf '%s' "$selected_result" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard

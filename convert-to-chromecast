@@ -27,10 +27,10 @@ allow_overwrite=false
 fps=60
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    --30fps|--30)
+    --30fps | --30)
         fps=30
         ;;
-    --allow-overwrite|-o)
+    --allow-overwrite | -o)
         allow_overwrite=true
         ;;
     *)

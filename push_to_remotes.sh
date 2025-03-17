@@ -5,7 +5,7 @@
 # author: andreasl
 
 remotes_and_urls_str="$(git remote -v | grep '(push)')"
-mapfile -t remotes_and_urls <<< "$remotes_and_urls_str"
+mapfile -t remotes_and_urls <<<"$remotes_and_urls_str"
 for remote_and_url in "${remotes_and_urls[@]}"; do
     remote="$(printf -- '%s' "$remote_and_url" | awk '{print $1}')"
 
@@ -13,8 +13,8 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         # push merge-request to company GitLab
         local_branch="$(git rev-parse --abbrev-ref HEAD)"
         if [[ "$local_branch" =~ ^master$|^main$ ]]; then
-            remote_branch="$(git log --oneline --format='%s' -n1 \
-                | sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g')"
+            remote_branch="$(git log --oneline --format='%s' -n1 |
+                sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g')"
         else
             remote_branch="$local_branch"
         fi
@@ -22,9 +22,9 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         printf '%s' "$output"
         if [[ "$output" == *' * [new branch] '* ]]; then
             set -o pipefail
-            grep -E 'remote:[[:space:]]+http[s]*://' <<< "$output" \
-                | grep -o 'http.*$' \
-                | xargs xdg-open
+            grep -E 'remote:[[:space:]]+http[s]*://' <<<"$output" |
+                grep -o 'http.*$' |
+                xargs xdg-open
         fi
 
     else

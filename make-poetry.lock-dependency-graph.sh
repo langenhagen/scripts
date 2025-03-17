@@ -31,27 +31,27 @@ lockfile_path="$1"
 [ -e "$lockfile_path" ] || die "Error: Lockfile \"${lockfile_path}\" does not exist." 1
 output_file="${2:-dependencies.plantuml}"
 
-printf 'digraph D {\n\n' > "$output_file"
+printf 'digraph D {\n\n' >"$output_file"
 
 lockfile="$(cat "$lockfile_path")"
-grep '^name = .*$' <<< "$lockfile" | sed 's/.*"\(.*\)"/"\1" [shape=box]/g' >> "$output_file"
+grep '^name = .*$' <<<"$lockfile" | sed 's/.*"\(.*\)"/"\1" [shape=box]/g' >>"$output_file"
 
-package_dependencies_str="$(grep -En '^(name =.*|\[package.dependencies\])$' <<< "$lockfile")"
-mapfile -t package_dependencies <<< "$package_dependencies_str"
-mapfile -t lockfile_array <<< "$lockfile"
+package_dependencies_str="$(grep -En '^(name =.*|\[package.dependencies\])$' <<<"$lockfile")"
+mapfile -t package_dependencies <<<"$package_dependencies_str"
+mapfile -t lockfile_array <<<"$lockfile"
 for i in $(seq ${#package_dependencies[@]}); do
     [[ "${package_dependencies[${i}]}" == *'[package.dependencies]' ]] || continue
-    printf '\n' >> "$output_file"
-    dependee="$(sed 's/.*"\(.*\)"/\1/g' <<< "${package_dependencies[$((i - 1 ))]}")"
+    printf '\n' >>"$output_file"
+    dependee="$(sed 's/.*"\(.*\)"/\1/g' <<<"${package_dependencies[$((i - 1))]}")"
     j="${package_dependencies[${i}]%%:*}"
     while [ -n "${lockfile_array[${j}]}" ]; do
-        dependency="$(sed 's/\(\) .*["{}]/\1/g' <<< "${lockfile_array[${j}]}")"
-        printf '"%s" -> "%s"\n' "$dependee" "$dependency" >> "$output_file"
-        (( j += 1 ))
+        dependency="$(sed 's/\(\) .*["{}]/\1/g' <<<"${lockfile_array[${j}]}")"
+        printf '"%s" -> "%s"\n' "$dependee" "$dependency" >>"$output_file"
+        ((j += 1))
     done
 done
 
-printf '\n}\n' >> "$output_file"
+printf '\n}\n' >>"$output_file"
 
 dot -Tpng -o "${output_file%.*}.png" "$output_file"
 command -v xdg-open 2>/dev/null && xdg-open "${output_file%.*}.png"

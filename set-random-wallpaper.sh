@@ -16,11 +16,11 @@
 
 images_folder="$1"
 
- # shellcheck disable=SC2156
+# shellcheck disable=SC2156
 images_str="$(find "$images_folder" -exec sh -c "file --brief --mime-type '{}' | grep -qs 'image' && echo '{}'" \;)"
 
-mapfile -t images <<< "$images_str"
-random_index="$(((RANDOM%${#images[@]})))"
+mapfile -t images <<<"$images_str"
+random_index="$(((RANDOM % ${#images[@]})))"
 selected_image="${images[${random_index}]}"
 
 now="$(date '+%Y-%m-%d--%H-%M-%S')"

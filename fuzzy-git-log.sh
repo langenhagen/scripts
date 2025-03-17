@@ -5,11 +5,11 @@
 
 git log \
     --format='%C(yellow)%h %C(red)%d% %C(bold green)%ai %C(reset)%s %C(blue)<%an> %C(reset)' \
-    --color=always | \
+    --color=always |
     fzf \
         --ansi \
         --multi \
         --no-sort \
         --preview 'printf "%s" {} | cut -d" " -f1 | xargs -I@ sh -c "git show -p --stat --color=always @"' \
-        --reverse | \
+        --reverse |
     sed -e 's/^[[:space:]]*//;s/[[:space:]]*$//'

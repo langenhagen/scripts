@@ -25,6 +25,6 @@ selected_result="$(printf '%s\n' "${results[@]}" | dmenu -i -l 30 -p "select:")"
 [ -z "$selected_result" ] && exit 1
 
 sed -i "/${query}/d" "$query_history_file"
-printf -- '%s\n' "$query" >> "$query_history_file"
+printf -- '%s\n' "$query" >>"$query_history_file"
 
 printf '%s' "$selected_result" | head -1 | xclip -i -f -selection primary | xclip -i -selection clipboard

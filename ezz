@@ -22,15 +22,14 @@ brighter() {
     xrandr --output "$screen" --brightness 1;
 }
 
-
 while true; do
-    idle_time=$(( $(xprintidle) / 1000 ))
+    idle_time=$(($(xprintidle) / 1000))
 
     if [ "$idle_time" -ge "$max_idle_time" ]; then
         [ "$is_dark" == 'false' ] && darker
     else
         [ "$is_dark" == 'true' ] && brighter
-        sleep $(( max_idle_time - idle_time ))
+        sleep $((max_idle_time - idle_time))
     fi
     sleep 0.3
 done

@@ -8,9 +8,9 @@
 log_file_path="${HOME}/Administrative/logs/logins-$(uname -n)-$(date '+%Y').csv"
 
 dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver'" |
-  while read x; do
-    case "$x" in
-      *"boolean true"*) printf "$(date),locked\n" >> "$log_file_path";;
-      *"boolean false"*) printf "$(date)\n,unlocked" >> "$log_file_path";;
-    esac
-  done
+    while read x; do
+        case "$x" in
+        *"boolean true"*) printf "$(date),locked\n" >>"$log_file_path" ;;
+        *"boolean false"*) printf "$(date)\n,unlocked" >>"$log_file_path" ;;
+        esac
+    done

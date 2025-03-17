@@ -9,7 +9,7 @@
 query_history_file="${HOME}/.solhq_history"
 historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "$historic_queries" | dmenu -i -l 5 -p "olh query?:" )"
+query="$(printf "$historic_queries" | dmenu -i -l 5 -p "olh query?:")"
 [ $? != 0 ] && exit 1
 
 file="${HOME}/Dev/Zeugs/one-line-help.txt"
@@ -23,4 +23,4 @@ selected_result="$(printf '%s\n' "${results[@]}" | dmenu -i -l 30 -p "select:")"
 [ -z "$selected_result" ] && exit 1
 
 sed -i "/${query}/d" "$query_history_file"
-printf -- '%s\n' "$query" >> "$query_history_file"
+printf -- '%s\n' "$query" >>"$query_history_file"

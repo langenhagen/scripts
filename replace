@@ -21,10 +21,10 @@ function show_help {
     printf "$msg"
 }
 
-if [[ "$1" =~ ^(-h|--help)$ ]] ; then
+if [[ "$1" =~ ^(-h|--help)$ ]]; then
     show_help
     exit 1
-elif [ "$#" -lt 3 ] ; then
+elif [ "$#" -lt 3 ]; then
     printf 'Usage:\n'
     printf -- "  ${0##*/} -h|--help\n"
     printf -- "  ${0##*/} <search-pattern> <replace-string> <file-pattern>...\n"
@@ -41,15 +41,15 @@ for file_pattern in "$@"; do
     grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .
     [ "$?" -eq 0 ] && found_any_matches=true
 done
-if [ "$found_any_matches" != true ] ; then
+if [ "$found_any_matches" != true ]; then
     printf 'Found no matches.\n'
     exit 2
 fi
 
 read -r -e -n1 -p 'Do you want to continue? (y)es, (n)o, (i)nteractive: ' yes_no_i
-if [[ "$yes_no_i" == [iI] ]] ; then
+if [[ "$yes_no_i" == [iI] ]]; then
     interactive=true
-elif [[ "$yes_no_i" != [yY] ]] ; then
+elif [[ "$yes_no_i" != [yY] ]]; then
     exit 0
 fi
 
@@ -61,22 +61,22 @@ for file_pattern in "$@"; do
     files_lines="$(grep -Rl --include "$file_pattern" "$pattern_to_look_for" .)"
     while IFS= read -r line; do
         files+=("$line")
-    done <<< "$files_lines"
+    done <<<"$files_lines"
 done
 
 for file in "${files[@]}"; do
     # do replace
-    if [ "$interactive" == true ] ; then
+    if [ "$interactive" == true ]; then
         printf "Change occurences in ${b}${file}${n}? (y)es, (n)o, (s)how: "
         read -r -e -n1 yes_no_show
-        if [[ "$yes_no_show" == [sS] ]] ; then
+        if [[ "$yes_no_show" == [sS] ]]; then
             grep -Hn --color "$pattern_to_look_for" "$file"
             printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
             read -r -e -n1 yes_no
-            if [[ "$yes_no" != [yY] ]] ; then
+            if [[ "$yes_no" != [yY] ]]; then
                 continue
             fi
-        elif [[ "$yes_no_show" != [yY] ]] ; then
+        elif [[ "$yes_no_show" != [yY] ]]; then
             continue
         fi
     fi

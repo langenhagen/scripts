@@ -4,7 +4,7 @@
 # author: andreasl
 
 script_name="${0##*/}"
-IFS= read -r -d '' script_description << HELP_EOF
+IFS= read -r -d '' script_description <<HELP_EOF
 ${script_name}
 Compare file trees in a readable format using find, sort, comm and sed.
 
@@ -39,27 +39,27 @@ target_dir=.
 use_colors=true
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    -1|--in-1)
+    -1 | --in-1)
         must_be_in_1=true
         ;;
-    -2|--in-2)
+    -2 | --in-2)
         must_be_in_2=true
         ;;
-    -C|--no-color)
+    -C | --no-color)
         use_colors=false
         ;;
-    -d|--only-different)
+    -d | --only-different)
         only_different=true
         ;;
-    -e|--exclude)
+    -e | --exclude)
         excludes+=(-path "$2" -prune -o)
         shift
         ;;
-    -h|--help)
+    -h | --help)
         printf -- "$script_description"
         exit 0
         ;;
-    -s|--only-same)
+    -s | --only-same)
         only_same=true
         ;;
     *) # unknown option
@@ -77,19 +77,19 @@ tree2="$(find "$target_dir" "${excludes[@]}" -printf "%P\n" | sort)"
 output="$(comm <(printf '%s\n' "$tree1") <(printf '%s\n' "$tree2"))"
 
 # postprocess the output from comm
-output="$(sed -E "s:(^[^\t].*):1 \1:g" <<< "$output")"
-output="$(sed -E "s:^\t{2}(.*):3 \1:g" <<< "$output")"
-output="$(sed -E "s:^\t{1}(.*):2 \1:g" <<< "$output")"
+output="$(sed -E "s:(^[^\t].*):1 \1:g" <<<"$output")"
+output="$(sed -E "s:^\t{2}(.*):3 \1:g" <<<"$output")"
+output="$(sed -E "s:^\t{1}(.*):2 \1:g" <<<"$output")"
 
 # filter the output
 if [ "$must_be_in_1" == true ] || [ "$only_same" == true ]; then
-    output="$(sed '/^2 /d' <<< "$output")"
+    output="$(sed '/^2 /d' <<<"$output")"
 fi
 if [ "$must_be_in_2" == true ] || [ "$only_same" == true ]; then
-    output="$(sed '/^1 /d' <<< "$output")"
+    output="$(sed '/^1 /d' <<<"$output")"
 fi
 if [ "$only_different" == true ]; then
-    output="$(sed '/^3 /d' <<< "$output")"
+    output="$(sed '/^3 /d' <<<"$output")"
 fi
 
 # colorize output
@@ -99,9 +99,9 @@ if [ "$use_colors" == true ]; then
     orange='\\e[33;1m'
     nc='\\e[0m'
 
-    output="$(sed -E "s:^1 (.*):${red}1 \1${nc}:g" <<< "$output")"
-    output="$(sed -E "s:^2 (.*):${green}2 \1${nc}:g" <<< "$output")"
-    output="$(sed -E "s:^3 (.*):${orange}3 \1${nc}:g" <<< "$output")"
+    output="$(sed -E "s:^1 (.*):${red}1 \1${nc}:g" <<<"$output")"
+    output="$(sed -E "s:^2 (.*):${green}2 \1${nc}:g" <<<"$output")"
+    output="$(sed -E "s:^3 (.*):${orange}3 \1${nc}:g" <<<"$output")"
 fi
 
 printf '%b\n' "$output"

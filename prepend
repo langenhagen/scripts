@@ -24,14 +24,14 @@ show_help() {
 inline=false
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    -i|--inline)
+    -i | --inline)
         inline=true
         ;;
-    -o|--output)
+    -o | --output)
         output_file="$2"
         shift # past argument
         ;;
-    -h|--help)
+    -h | --help)
         show_help
         exit 0
         ;;
@@ -58,5 +58,5 @@ while IFS= read -rN1 character; do
 done
 
 file_content="$(<"$input_file")"
-printf -- "$input_to_prepend" > "$output_file"
-printf -- "$file_content" >> "$output_file"
+printf -- "$input_to_prepend" >"$output_file"
+printf -- "$file_content" >>"$output_file"

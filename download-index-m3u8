@@ -20,4 +20,4 @@ cd "$movie_name" || exit 2
 
 download-m3u8 "$m3u8_url" 'index.m3u8'
 
-cat $(ls -v *.ts) > "${movie_name}.ts"
+cat $(ls -v *.ts) >"${movie_name}.ts"

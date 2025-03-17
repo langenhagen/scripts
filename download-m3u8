@@ -10,7 +10,6 @@
 m3u8_url="$(echo "$1" | xargs)"
 out_file="${2-stream.m4v}"
 
-
 [ "${out_file%.*}" == "$out_file" ] && out_file="${out_file}.m4v"
 
 time ffmpeg -timeout 5000000 -i "$m3u8_url" -c copy "$out_file"

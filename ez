@@ -8,15 +8,15 @@ max_idle_time=${1:-5}
 
 # Command to execute affter the idle timeout.
 cmd() {
-    xset dpms force off;
+    xset dpms force off
 }
 
 while true; do
-    idle_time=$(( $(xprintidle) / 1000 ))
+    idle_time=$(($(xprintidle) / 1000))
 
     if [ "$idle_time" -ge "$max_idle_time" ]; then
         cmd
     else
-        sleep $(( max_idle_time - idle_time ))
+        sleep $((max_idle_time - idle_time))
     fi
 done

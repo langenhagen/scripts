@@ -26,21 +26,21 @@ command="$1"
 base_commit="$(git rev-parse --short "$2")" || exit 1
 
 if [[ "$command" =~ ^edit$|^e$|^reword$|^r$ ]]; then
-     # shellcheck disable=SC2016
-     script='$2 ~ base{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; next}1'
+    # shellcheck disable=SC2016
+    script='$2 ~ base{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; next}1'
 
 elif [[ "$command" =~ ^fixup$|^f$|^squash$|^s$ ]]; then
-     top_commit="$(git rev-parse --short "$3")" || exit 2
+    top_commit="$(git rev-parse --short "$3")" || exit 2
 
-     # shellcheck disable=SC2016
-     script='
-          $2 ~ base{print $0; found = 1; next}
-          $2 ~ top{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; print between; found = 0; next}
-          found{between = between ? between RS $0 : $0; next}
-          1'
+    # shellcheck disable=SC2016
+    script='
+        $2 ~ base{print $0; found = 1; next}
+        $2 ~ top{printf cmd " "; for (i=2; i<NF; i++) printf $i " "; print $NF; print between; found = 0; next}
+        found{between = between ? between RS $0 : $0; next}
+        1'
 else
-     >&2 printf "Error: unknown command: %sn" "$command"
-     exit 3
+    >&2 printf "Error: unknown command: %sn" "$command"
+    exit 3
 fi
 
 editor="awk -i inplace -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"

@@ -17,7 +17,7 @@
 keep_artifacts=false
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    -k|--keep)
+    -k | --keep)
         keep_artifacts=true
         ;;
     *)
