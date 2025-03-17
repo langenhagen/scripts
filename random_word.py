@@ -31,8 +31,7 @@ def _switch_char_type(curr_char_type: str) -> str:
     """Given the current character type, get the other one."""
     if curr_char_type == "CONSONANT":
         return "VOWEL"
-    else:
-        return "CONSONANT"
+    return "CONSONANT"
 
 
 # fmt: off
