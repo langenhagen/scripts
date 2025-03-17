@@ -5,6 +5,7 @@ Compare 2 given Pipfile.lock json files.
 author: andreasl
 version: 2021-02-04
 """
+
 import argparse
 import dataclasses
 import json

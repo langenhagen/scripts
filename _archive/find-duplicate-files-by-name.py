@@ -3,9 +3,10 @@
 
 author: andreasl
 """
-from pathlib import Path
+
 import sys
 from collections import defaultdict
+from pathlib import Path
 
 
 def main() -> None:

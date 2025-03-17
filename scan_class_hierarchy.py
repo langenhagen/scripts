@@ -20,6 +20,7 @@ Then, you can e.g. do:
 TODO:
 - nest modules
 """
+
 import ast
 import re
 import sys
@@ -228,7 +229,7 @@ def write_output(modules: list[Module]) -> None:
             for j, s in enumerate(c.superclasses, start=2):
                 if s == "object":
                     continue
-                write(f"  {c.name} {'-'*j}> {s}\n")
+                write(f"  {c.name} {'-' * j}> {s}\n")
 
     write("```\n")
 

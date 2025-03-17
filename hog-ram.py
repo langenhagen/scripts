@@ -7,6 +7,7 @@ Usage:
 
 author: andreasl
 """
+
 from sys import argv, exit
 
 if len(argv) < 2:

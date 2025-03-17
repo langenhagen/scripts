@@ -3,6 +3,7 @@
 
 @author: andreasl
 """
+
 import json
 import pathlib
 import re
