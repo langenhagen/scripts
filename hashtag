@@ -2,12 +2,14 @@
 # Print paragraphs from the work journal that have the given hashtags.
 #
 # Usage:
-#   hashtag <tag-name>  # list recent paragraphs with the given hashtag.
-#   hashtag -l          # list all hashtags
-#   hashtag --list      # list all hashtags
+#   hashtag                          # list all hashtags
+#   hashtag <tag-name> [<tag-name>]  # list recent paragraphs with the given hashtags.
+#   hashtag -l                       # list all hashtags
+#   hashtag --list                   # list all hashtags
 #
 # Example:
-#   hashtag retro       # list recent paragraphs with the hashtag 'retro'
+#   hashtag retro    # list recent paragraphs with the hashtag #retro
+#   hashtag lol wtf  # list recent paragraphs that have hashtags #wtf or #lol
 #
 # author: andreasl
 
@@ -15,14 +17,24 @@ filename="$JOURNAL_PATH"
 
 if [[ $# -eq 0 ]] || [[ "$1" =~ ^(-l|--list)$ ]]; then
     # list hashtags
-    hashtags="$(grep -Eio '  #[^ ]+([ ]+#[^ ]+)*$' "$filename")"
+    tags="$(grep -Eio '(^[ ]*|[ ][ ])#[^ ]+([ ]+#[^ ]+)*$' "$filename")"
+    #                   ^^^^| ^^^^^| ^^^^^| ^^^| ^^^^|
+    #     beginning of line/       |      |    |     |
+    #       or 2 spaces before tag/       |    |     |
+    #                           first tag/     |     |
+    #                         possible padding/      |
+    #                       possible additional tags/
+
     # shellcheck disable=SC2086
-    printf '%s\n' $hashtags | tr '[:upper:]' '[:lower:]' | sort -h | uniq
+    printf '%s\n' $tags | tr '[:upper:]' '[:lower:]' | sort -u
     exit 0
-else
-    # list recent notes to given hashtag, add blank lines between entries & limit the output
-    tag="$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')"
-    awk -v RS= 'tolower($0) ~ /#'"${tag}"'/' "$filename" |
-        sed 's/\(#[a-zA-Z0-9][a-zA-Z0-9]*\)$/\1\n/g' |
-        tail -n 35
 fi
+
+# list recent notes to given hashtags, add blank lines between entries & limit the output
+while [ "$#" -gt 0 ]; do
+    tag="$(tr '[:upper:]' '[:lower:]' <<<"$1")"
+    awk -v RS= 'tolower($0) ~ /#'"${tag}"'/' "$filename" |
+        sed 's/\(#[^ ]\+\)$/\1\n/g' |
+        tail -n 45
+    shift
+done
