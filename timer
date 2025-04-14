@@ -1,0 +1,54 @@
+#!/bin/bash
+# A timer that makes an audible sound after the time's up.
+#
+# author: andreasl
+
+[ "$#" -eq 0 ] && { echo "Usage: $0 [-h <hours>] [-m <minutes>] [-s <seconds>] [--quiet]"; exit 1; }
+
+hours=0
+minutes=0
+seconds=0
+quiet=false
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+    -h | --hours)
+        hours="$2"
+        shift
+        ;;
+    -m | --minutes)
+        minutes="$2"
+        shift
+        ;;
+    -s | --seconds)
+        seconds="$2"
+        shift
+        ;;
+    -q|--quiet)
+        quiet=true
+        ;;
+    *)
+        [ "$hours" -eq 0 ] && [ "$minutes" -eq 0 ] && [ "$seconds" -eq 0 ] && seconds="$1"
+        ;;
+    esac
+    shift
+done
+
+
+print() { [ "$quiet" != true ] && printf "%b" "$1"; }
+
+remaining=$((hours * 3600 + minutes * 60 + seconds))
+while [ "$remaining" -ge 5 ]; do
+    print "${remaining}..."
+    sleep 5
+    remaining=$((remaining - 5))
+done
+print "${remaining}..."
+sleep "$remaining"
+
+print "Time's up!\n"
+notes=(440 554 659 880 659 554 440)
+for f in "${notes[@]}"; do
+    timeout 0.2 speaker-test --period 10 --test sine --frequency "$f" >/dev/null 2>&1
+done
+
+exit 0
