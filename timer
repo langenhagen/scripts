@@ -3,7 +3,14 @@
 #
 # author: andreasl
 
-[ "$#" -eq 0 ] && { echo "Usage: $0 [-h <hours>] [-m <minutes>] [-s <seconds>] [--quiet]"; exit 1; }
+show_usage() {
+    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [--quiet]"
+}
+
+[ "$#" -eq 0 ] && {
+    show_usage
+    exit 1
+}
 
 hours=0
 minutes=0
@@ -23,8 +30,12 @@ while [ "$#" -gt 0 ]; do
         seconds="$2"
         shift
         ;;
-    -q|--quiet)
+    -q | --quiet)
         quiet=true
+        ;;
+    --help)
+        show_usage
+        exit 0
         ;;
     *)
         [ "$hours" -eq 0 ] && [ "$minutes" -eq 0 ] && [ "$seconds" -eq 0 ] && seconds="$1"
@@ -32,7 +43,6 @@ while [ "$#" -gt 0 ]; do
     esac
     shift
 done
-
 
 print() { [ "$quiet" != true ] && printf "%b" "$1"; }
 
