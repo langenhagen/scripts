@@ -4,7 +4,13 @@
 # author: andreasl
 
 show_usage() {
-    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [--quiet]"
+    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [-a] [--quiet]"
+    echo "  -h, --hours      Set hours"
+    echo "  -m, --minutes    Set minutes"
+    echo "  -s, --seconds    Set seconds"
+    echo "  -a, --alt-melody Use alternative melody"
+    echo "  -q, --quiet      Quiet mode"
+    echo "  --help           Show this help"
 }
 
 [ "$#" -eq 0 ] && {
@@ -16,6 +22,7 @@ hours=0
 minutes=0
 seconds=0
 quiet=false
+alt_melody=false
 while [ "$#" -gt 0 ]; do
     case "$1" in
     -h | --hours)
@@ -32,6 +39,10 @@ while [ "$#" -gt 0 ]; do
         ;;
     -q | --quiet)
         quiet=true
+        ;;
+    -a | --alt-melody)
+        echo !!!
+        alt_melody=true
         ;;
     --help)
         show_usage
@@ -55,8 +66,10 @@ done
 print "${remaining}..."
 sleep "$remaining"
 
-print "Time's up!\n"
 notes=(440 554 659 880 659 554 440)
+[ "$alt_melody" == true ] && notes=(880 698 587 523 587)
+
+print "Time's up!\n"
 for f in "${notes[@]}"; do
     timeout 0.2 speaker-test --period 10 --test sine --frequency "$f" >/dev/null 2>&1
 done
