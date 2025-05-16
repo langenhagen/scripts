@@ -4,11 +4,12 @@
 # author: andreasl
 
 show_usage() {
-    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [-a] [--quiet]"
+    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [--alt-melody] [--quiet]"
     echo "  -h, --hours      Set hours"
     echo "  -m, --minutes    Set minutes"
     echo "  -s, --seconds    Set seconds"
     echo "  -a, --alt-melody Use alternative melody"
+    echo "  -t, --time       Set alarm for clock time (HH:MM or HH:MM:SS)"
     echo "  -q, --quiet      Quiet mode"
     echo "  --help           Show this help"
 }
@@ -23,6 +24,7 @@ minutes=0
 seconds=0
 quiet=false
 alt_melody=false
+target_time=
 while [ "$#" -gt 0 ]; do
     case "$1" in
     -h | --hours)
@@ -41,8 +43,11 @@ while [ "$#" -gt 0 ]; do
         quiet=true
         ;;
     -a | --alt-melody)
-        echo !!!
         alt_melody=true
+        ;;
+    -t | --time)
+        target_time="$2"
+        shift
         ;;
     --help)
         show_usage
@@ -57,7 +62,18 @@ done
 
 print() { [ "$quiet" != true ] && printf "%b" "$1"; }
 
-remaining=$((hours * 3600 + minutes * 60 + seconds))
+if [ -n "$target_time" ]; then
+    # if absolute time is set via `-t` or `--time`
+    target_timestamp="$(date -d "$target_time" +%s)"
+    [ -z "$target_timestamp" ] && exit 2
+    now="$(date +%s)"
+    [ "$target_timestamp" -le "$now" ] && target_timestamp="$(date -d "tomorrow ${target_time}" +%s)"
+    remaining=$((target_timestamp - now))
+else
+    # if relative time is set via `-h`, `-m` and `-s`
+    remaining=$((hours * 3600 + minutes * 60 + seconds))
+fi
+
 while [ "$remaining" -ge 5 ]; do
     print "${remaining}..."
     sleep 5
