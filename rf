@@ -18,6 +18,7 @@ shift
 
 ruff format "$file" # --line-length 120
 # shellcheck disable=SC2068
-ruff check --select UP,ANN,B,C4,EXE,FA,ISC,ICN,LOG,G,PIE,Q,RSE,SIM,TC,I,NPY,W,FURB,RET --ignore B905,D203,D213,UP015,UP035 --fix "$file" $@
-ruff check --select I --fix "$file" # imports
+ruff check --select UP,ANN,B,C4,EXE,F,FA,FURB,I,ISC,ICN,LOG,G,NPY,PIE,Q,RET,RSE,SIM,TC,W --ignore B905,D203,D213,FA102,UP015,UP035 --fix "$file" $@
+ruff check --select I --fix "$file"          # imports
+ruff check --select F401,TC004 --fix "$file" # F401: remove unused imports; TC004: do add TYPE_CHECKING
 ruff check "$file"
