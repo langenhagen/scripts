@@ -62,7 +62,7 @@ done
 
 if [ "$only_list_filenames" == true ]; then
     #shellcheck disable=SC2016
-    file_action='file="$1"; file "$file" | grep -q "text" && printf "%s\n" "${file}"'
+    file_action='file="$1"; file --mime-type "$file" | grep -q "text" && printf "%s\n" "${file}"'
 else
     #shellcheck disable=SC2016
     file_action='
