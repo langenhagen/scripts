@@ -16,7 +16,8 @@ replace_chars() {
         -e 's/[“”]/"/g' \
         -e 's/[„"]/"/g' \
         -e 's/[–—−‑‒]/-/g' \
-        -e 's/[…]/.../g'
+        -e 's/[…]/.../g' \
+        -e 's/[​ ]//g'  # some invisible characters: <0x200b>, <0x202f>
 }
 
 remove_leading_and_trailing_blank_lines() {
