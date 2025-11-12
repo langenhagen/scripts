@@ -22,7 +22,7 @@ show_help() {
     msg+="Examples:\n\n"
     msg+="  ${script_name}                                  # list all files and print their contents under the CWD\n"
     msg+="  ${script_name} --directory ~/myproject          # list/print all files under ~/myproject\n"
-    msg+="  ${script_name} -d ~/myproject *.css             # list/print all .css files in ~/myproject\n"
+    msg+="  ${script_name} -d ~/myproject '*.css'           # list/print all .css files in ~/myproject\n"
     msg+="  ${script_name} index.html script.js             # list/print all index.html and script.js files\n"
     msg+="  ${script_name} --exclude-mode README.md css     # list/print all files except README.md and all files under css/\n"
     msg+="  ${script_name} -e README.md --only-filenames    # list all files except README.md\n"
