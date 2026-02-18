@@ -65,7 +65,7 @@ fi
 [ "$(command -v docker)" ] && docker system prune --all --force
 
 # Git
-find ~ -type d -name '.git' -exec bash -c "pushd '{}'; git gc; popd;" \;
+find ~ -type d -name '.git' -exec bash -c 'pushd "$1"; git gc; popd;' shell {} \;
 
 # Python
 find ~ -name "*.py[co]" -delete -or -name '__pycache__' -delete
