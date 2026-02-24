@@ -1,0 +1,93 @@
+#!/usr/bin/bash
+#
+# Wait until a process exits by PID.
+#
+# Accepts either --pid PID or a positional PID argument.
+# If no PID is given, opens an interactive fzf picker from `ps ax`
+# and infers the PID from the selected row.
+#
+# Useful for simple shell chaining, for example:
+#
+#   waitfor 1234; echo 'process 1234 finished - do something after'
+#   waitfor; echo 'process finished!'  # fzf-powered interactive process selection
+#
+# author: andreasl
+
+show_usage() {
+    echo "Usage: ${0##*/} [--pid PID] [PID]"
+    echo
+    echo 'Wait until the target process exits.'
+    echo 'If no PID is provided, an interactive fzf picker opens.'
+    echo
+    echo 'Examples:'
+    echo "  ${0##*/} --pid 1234"
+    echo "  ${0##*/} 1234"
+    echo "  ${0##*/}"
+    echo "  ${0##*/} 1234; echo 'process finished - do something after'"
+    echo "  ${0##*/}; echo 'interactively chosen process finished!'"
+}
+
+pid=''
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+    --pid)
+        shift
+        if [ -z "${1:-}" ]; then
+            echo 'Error: --pid requires a value.' >&2
+            exit 2
+        fi
+        pid="$1"
+        ;;
+    --pid=*)
+        pid="${1#--pid=}"
+        if [ -z "$pid" ]; then
+            echo 'Error: --pid requires a value.' >&2
+            exit 2
+        fi
+        ;;
+    -h | --help)
+        show_usage
+        exit 0
+        ;;
+    -*)
+        echo "Error: unknown option '$1'." >&2
+        show_usage >&2
+        exit 2
+        ;;
+    *)
+        if [ -n "$pid" ]; then
+            echo 'Error: PID specified more than once.' >&2
+            exit 2
+        fi
+        pid="$1"
+        ;;
+    esac
+    shift
+done
+
+if [ -z "$pid" ]; then
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo 'Error: fzf is required for interactive selection.' >&2
+        exit 127
+    fi
+
+    selection="$(ps ax -o pid= -o command= | fzf --prompt='waitfor> ' --header='Select process to wait for')"
+    [ -z "$selection" ] && {
+        echo 'No process selected.' >&2
+        exit 1
+    }
+
+    read -r pid _ <<EOF
+$selection
+EOF
+fi
+
+[[ ! "$pid" =~ ^[0-9]+$ ]] && {
+    echo "Error: PID must be numeric, got '$pid'." >&2
+    exit 2
+}
+
+tail -f /dev/null --pid="$pid"
+
+printf '%s: Process %s finished.\n' "$(date)" "$pid"
