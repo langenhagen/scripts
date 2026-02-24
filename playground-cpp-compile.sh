@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Compile a given single C++ file and immediately run it.
 # Remove the executable afterwards.
 #

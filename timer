@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # A timer that makes an audible sound after the time's up.
 #
 # author: andreasl

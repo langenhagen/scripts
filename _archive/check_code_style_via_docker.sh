@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/usr/bin/env -S bash -ex
 
 # Requires a running docker daemon
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # From the given image file create a 3x3 tiling image and open it to inspect it.
 #
 # author: andreasl

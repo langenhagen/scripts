@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Download an m3u8 file as a *.m4v file.
 #
 # Usage:

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Given a sparta build folder,
 # deletes the distributed sparta build folders given a certain impact level.

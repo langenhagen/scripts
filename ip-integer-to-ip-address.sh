@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Convert an integer denoting an IP address to a normal IP address
 ip_integer="$1"
 

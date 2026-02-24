@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Split a video/audio file into many based on a separate timestamps list.
 #
 #   Usage: ./split-file.sh input.webm timestamps.txt

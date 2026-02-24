@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Given an IP-Address, looks up the according continent, country and city mapping
 # using mmdblookup and a GeoIP2 database.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Non-interactively execute several kinds of git rebase operations.
 # Supported operations are `edit`, `fixup`, `reword` and `squash`.
 #

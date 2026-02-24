@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source ~/common.sh
 
 echo-head 'The RATS script: build an run all tests'

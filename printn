@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Print a given string a given number of times.
 #
 # author: andreasl

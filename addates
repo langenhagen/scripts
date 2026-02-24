@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Prepend all filenames in a given directory with today's date of the form `YYYY-MM-DD-`.
 # Ignore files that already have a matching date string.
 #

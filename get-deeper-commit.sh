@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # From 2 given commits, print the commit that is deeper in the ancestry line.
 #
 # Usage:

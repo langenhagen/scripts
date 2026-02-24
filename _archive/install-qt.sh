@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Download and install QT and its prerequisites.
 sudo apt update;
 sudo apt upgrade -y;

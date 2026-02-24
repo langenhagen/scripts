@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Add or update file headers for different file types.
 # Ideally, file headers may be retrieved from files from version control that are read into a
 # variable, but they may as well be defined in this file.

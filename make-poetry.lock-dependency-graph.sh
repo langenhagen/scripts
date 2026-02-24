@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Create a graphviz dot dependency graph from the given poetry.lock file.
 #
 # TODO: consider implementing variable only_main=true

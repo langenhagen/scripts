@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Delete trailing whitespaces from given files.
 #
 # author: andreasl

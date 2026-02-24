@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # gsel - grep and select
 #
 # TODO: would be nice to open the selected files at the according position. However, vim 8 does not

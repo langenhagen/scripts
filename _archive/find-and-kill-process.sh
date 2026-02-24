@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Grep for a given process name and interactively kill one of the results.
 #
 # author: andreasl

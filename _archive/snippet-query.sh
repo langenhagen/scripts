@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Given one or several input args,
 # If there are any lines that contain matches for each input arg and the string '#snippet' in a

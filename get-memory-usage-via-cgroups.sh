@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Get the system memory usage via `cgroups`.
 # Applicable e.g. inside kubernetes instances.
 # Probably not applicable to your laptop.

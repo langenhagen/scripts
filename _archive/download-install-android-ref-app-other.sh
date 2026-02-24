@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Takes an Android device id or uses the first found device,
 # determines the device's architecture,

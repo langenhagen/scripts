@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Shuffle a file by blocks of given number of lines, leave the order within each block intact and
 # write the results to another file.
 #

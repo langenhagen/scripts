@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Remove old snaps.
 #
 # Close all Snaps before running.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ez - resteazy
 # Put the monitor to sleep after the keyboard & mouse input idled for a given amount of time.
 #

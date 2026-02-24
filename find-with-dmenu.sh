@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Call dmenu and ask for a search query to call find under the ${HOME} directory,
 # then call dmenu with the list of results.
 # Attempt to open the result of the latter query with xdg-open or a comparable tool.

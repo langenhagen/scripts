@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Check if the files touched in a given git revision contain the headers
 # and print an error message if any of the files misses the correct header.
 # Return the number of files with incorrect header.

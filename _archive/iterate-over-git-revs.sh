@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Iterates over commit range,, checks out every revision in reverse order and performs actions on
 # each revision. Sums up the exit codes of each action and returns this sum at the end.

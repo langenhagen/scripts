@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # A script for working with datetimes and timestamps.
 # It can convert given timestamps into human readable dates/times and vice versa.

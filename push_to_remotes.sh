@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Push to all remotes of the given git repo and take special care for company remotes
 # Also, possibly open according websites for reviews.
 #

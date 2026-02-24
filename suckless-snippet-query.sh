@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Open a dmenu which prompts for any number of whitespace-separated search terms and suggests old
 # queries.
 # Grep iteratively in a certain hard coded file for lines that contain all of the given search

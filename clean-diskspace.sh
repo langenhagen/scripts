@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Delete superfluous storage-consuming directories and files and removes old packages.
 #
 # author: andreasl

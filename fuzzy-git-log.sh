@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Preview and fuzzy search the git log.
 #
 # author: andreasl

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Get the individual durations of audiofiles of several formats in a folder as well as their total
 # duration.
 #

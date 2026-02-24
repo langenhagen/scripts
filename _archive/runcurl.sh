@@ -1,4 +1,4 @@
-#!bin/bash/ex
+#!/usr/bin/env -S bash -ex
 
 # run for instance with
 # docker run --rm --name=test --net=container:mymockscbe1 -v /Users/langenha/Desktop/:/mnt tutum/curl bash mnt/runcurl.sh 127.0.0.1

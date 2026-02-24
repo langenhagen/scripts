@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Convert every `.flac` file in the CWD to an mp3 file.
 mkdir -p mp3
 

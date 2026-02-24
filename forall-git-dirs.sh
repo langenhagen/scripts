@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Given a directory, call a given command in bash on all its git subdirectories recursively
 # or down to a given number of directory levels.
 #

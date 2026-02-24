@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Print paragraphs from the work journal that have the given hashtags.
 #
 # Usage:

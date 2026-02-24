@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Given an optional reposet name,
 # for each pair in a mapping of git repo paths and branch names,

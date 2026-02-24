@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Executes the input arguments as a command or
 # pipes the input stream and

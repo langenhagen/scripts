@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Import order is a tough one, since there exist some unforseeable exceptions to the general rule.
 # I could apply the import order however only to the c1 block. that would be a small gain.

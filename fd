@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Simple self-made alternative implementation to the popular file-finding tool `fd`.
 #
 # Usage:

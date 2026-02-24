@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Download a m3u8 indexfile that causes to download many .ts files
 # and concatenate the .ts files to a single .ts file.
 #

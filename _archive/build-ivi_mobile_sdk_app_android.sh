@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 touch ~/code/sparta/corenav/sdk/common/src/main/cpp/core/Location.cpp
 cd /Users/langenha/code/sparta/build/build-android-21-arm64-v8a
 start_time=`date +%s`

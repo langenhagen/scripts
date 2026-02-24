@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Remove the latin audio track from teh given mkv files. Requires `mkvmerge`.
 #
 # Usage:

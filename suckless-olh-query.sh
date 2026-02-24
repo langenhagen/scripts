@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Open a dmenu which prompts for any number of whitespace-separated search terms and suggest old
 # queries.
 # Grep iteratively the one-line-help.txt file for lines that contain all of the given search terms.

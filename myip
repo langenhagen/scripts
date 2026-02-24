@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Print your local network IP V4 addresses
 # and write the first one to the system clipboard.
 #

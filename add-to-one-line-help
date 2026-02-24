@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Add a whitespace-trimmed entry to the file one-line-help.txt
 # and sort the one-line-help.txt.
 #

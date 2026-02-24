@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # In every unstaged and staged file in in a git project,
 # deletes every line that contains the string ' /rm'.

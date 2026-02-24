@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # List non-hidden files, non-binary files in a given directory, print their contents
 # and write the output to the clipboard.
 #

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Convert given text to NATO alphabet.
 
 declare -A dict=(

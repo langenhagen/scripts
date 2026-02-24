@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Print the Resident Set Size memory usage of a process with given PID
 # in a human readable format.
 #

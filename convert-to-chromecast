@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Convert a video file to chromecast-compatible format.
 #
 # Usage:

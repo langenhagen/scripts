@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Clone all my github repos into a folder.
 #
 # I created the list on 2021-03-20 via:

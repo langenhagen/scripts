@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/usr/bin/env -S bash -ex
 # Check the documentation coverage.
 #
 # Note: This must be run from the sdk_extensions directory: scripts/check-doc.sh

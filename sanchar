@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Get text from clipboard and transform certain charcaters to simpler ones and write the result back
 # to the clipboard.
 #

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Given a directory, will call git pull rebase on all its git subdirectories recursively or down to
 # a given number of directory levels.
 #

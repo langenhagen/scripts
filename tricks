@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Iteratively grep for the given arguments in the tricks file.
 #
 # author: andreasl
