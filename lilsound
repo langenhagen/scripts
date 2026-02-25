@@ -38,4 +38,4 @@ else
     sound_index=$((16#${hash_prefix} % ${#sound_files[@]}))
 fi
 
-ffplay -nodisp -autoexit "${sound_files[${sound_index}]}"
+ffplay -nodisp -autoexit "${sound_files[${sound_index}]}" 2>/dev/null
