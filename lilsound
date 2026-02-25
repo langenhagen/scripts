@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#
+# Play a sound from lilsound.sounds/ folder.
+#
+# - No args: play the first sound in the folder.
+# - With args: hash the input and choose a stable sound index.
+#
+# author: andreasl
+
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+sound_dir="${script_dir}/lilsound.sounds"
+
+shopt -s nullglob
+all_entries=("${sound_dir}"/*)
+shopt -u nullglob
+
+sound_files=()
+for entry in "${all_entries[@]}"; do
+    if [[ -f "${entry}" ]]; then
+        sound_files+=("${entry}")
+    fi
+done
+
+if ((${#sound_files[@]} == 0)); then
+    echo "Error: no sounds found in ${sound_dir}" >&2
+    exit 1
+fi
+
+if (($# == 0)); then
+    sound_index=0
+else
+    input_text="$*"
+    hash_output="$(printf '%s' "${input_text}" | sha256sum)"
+    hash_hex="${hash_output%% *}"
+    hash_prefix="${hash_hex:0:8}"
+    sound_index=$((16#${hash_prefix} % ${#sound_files[@]}))
+fi
+
+ffplay -nodisp -autoexit "${sound_files[${sound_index}]}"
