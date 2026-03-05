@@ -9,8 +9,8 @@
 # Examples:
 #
 #  playground-cpp-compile.sh main.cpp           # compile the program, run it and delete it afterwards
-#  playground-cpp-compile.sh main.cpp -myarg    # compile the program, run it with -myarg and delete it afterwards
-#  playground-cpp-compile.sh -k main.cpp        # compile the program, run it and don't delete it afterwards
+#  playground-cpp-compile.sh main.cpp -myarg    # compile the program with -myarg, run it and delete it afterwards
+#  playground-cpp-compile.sh --keep main.cpp    # compile the program, run it and don't delete it afterwards
 #
 # author: andreasl
 
