@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Split a video/audio file into many based on a separate timestamps list.
 #
-#   Usage: ./split-file.sh input.webm timestamps.txt
+#   Usage: ./split-media-file.sh input.webm timestamps.txt
 #
 # The timestamps file should have following format:
 #
@@ -12,6 +12,33 @@
 #   [...]
 #
 # author: andreasl
+print_help() {
+    cat <<'EOF'
+Usage: split-media-file.sh [OPTIONS] <input-file> <timestamps-file>
+
+Split a media file into multiple chapter files using timestamps.
+
+Options:
+  -h, --help  Show this help message and exit
+
+Timestamps file format:
+  0:00 - Introduction
+  1:23 - Chapter 1
+  34:56 - Chapter 2
+  1:02:34 - The rest of the file
+EOF
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    print_help
+    exit 0
+fi
+
+if [[ $# -ne 2 ]]; then
+    print_help >&2
+    exit 1
+fi
+
 input_file="$1"
 timestamps_file="$2"
 
@@ -25,11 +52,11 @@ codec=$(ffprobe \
 
 # Map codec to container/extension
 case "$codec" in
-  opus)   out_ext="opus";  out_fmt="opus" ;;
-  aac)    out_ext="m4a";   out_fmt="ipod" ;;
-  mp3)    out_ext="mp3";   out_fmt="mp3"  ;;
-  vorbis) out_ext="ogg";   out_fmt="ogg"  ;;
-  *)      out_ext="audio"; out_fmt=""     ;;
+    opus)   out_ext="opus";  out_fmt="opus" ;;
+    aac)    out_ext="m4a";   out_fmt="ipod" ;;
+    mp3)    out_ext="mp3";   out_fmt="mp3"  ;;
+    vorbis) out_ext="ogg";   out_fmt="ogg"  ;;
+    *)      out_ext="audio"; out_fmt=""     ;;
 esac
 
 mapfile -t lines <"$timestamps_file"
