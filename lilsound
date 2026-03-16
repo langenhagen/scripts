@@ -23,6 +23,10 @@ for entry in "${all_entries[@]}"; do
     fi
 done
 
+if ((${#sound_files[@]} > 1)); then
+    mapfile -t sound_files < <(printf '%s\n' "${sound_files[@]}" | LC_ALL=C sort)
+fi
+
 if ((${#sound_files[@]} == 0)); then
     echo "Error: no sounds found in ${sound_dir}" >&2
     exit 1
