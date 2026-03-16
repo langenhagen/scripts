@@ -32,10 +32,9 @@ if (($# == 0)); then
     sound_index=0
 else
     input_text="$*"
-    hash_output="$(printf '%s' "${input_text}" | sha256sum)"
-    hash_hex="${hash_output%% *}"
-    hash_prefix="${hash_hex:0:8}"
-    sound_index=$((16#${hash_prefix} % ${#sound_files[@]}))
+    checksum_output="$(printf '%s' "${input_text}" | cksum)"
+    checksum_value="${checksum_output%% *}"
+    sound_index=$((checksum_value % ${#sound_files[@]}))
 fi
 
 ffplay -nodisp -autoexit "${sound_files[${sound_index}]}" 2>/dev/null
