@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Calculate, show and store the amount of money by minute."""
 
 import datetime as dt
