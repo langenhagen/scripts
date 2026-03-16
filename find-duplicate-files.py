@@ -22,10 +22,13 @@ def hash_file(file_path: Path, algo: str = "sha256") -> str:
 
 def find_duplicates(file_path: Path, search_dir: Path) -> Generator[Path, None, None]:
     """Recursively find all duplicates of the file at given path in `search_dir`."""
+    file_size = file_path.stat().st_size
     file_hash = hash_file(file_path)
 
     for candidate_path in search_dir.rglob("*"):
         if candidate_path.is_file() and candidate_path != file_path:
+            if candidate_path.stat().st_size != file_size:
+                continue
             if hash_file(candidate_path) == file_hash:
                 yield candidate_path
 
