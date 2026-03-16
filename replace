@@ -36,10 +36,12 @@ shift
 string_to_replace_with="$1"
 shift
 
+found_any_matches=false
 for file_pattern in "$@"; do
     # preview
-    grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .
-    [ "$?" -eq 0 ] && found_any_matches=true
+    if grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .; then
+        found_any_matches=true
+    fi
 done
 if [ "$found_any_matches" != true ]; then
     printf 'Found no matches.\n'
@@ -81,7 +83,7 @@ for file in "${files[@]}"; do
         fi
     fi
 
-    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # GNU
+    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file" # GNU
     #sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # Mac BSD sed
     grep -FHn --color --include "$file_pattern" "$string_to_replace_with" "$file"
 done
