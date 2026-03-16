@@ -13,8 +13,7 @@
 query_history_file="${HOME}/.ssq_history"
 historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "$historic_queries" | dmenu -i -l 5 -p "snippet query?:")"
-if [ $? != 0 ]; then
+if ! query="$(printf "$historic_queries" | dmenu -i -l 5 -p "snippet query?:")"; then
     exit 1
 fi
 

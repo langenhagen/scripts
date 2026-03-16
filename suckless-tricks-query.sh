@@ -11,8 +11,9 @@
 query_history_file="${HOME}/.stq_history"
 historic_queries="$(tac "$query_history_file")"
 
-query="$(printf "$historic_queries" | dmenu -i -l 5 -p "tricks query?:")"
-[ $? != 0 ] && exit 1
+if ! query="$(printf "$historic_queries" | dmenu -i -l 5 -p "tricks query?:")"; then
+    exit 1
+fi
 
 file="${HOME}/Dev/Zeugs/tricks.sh"
 results=$(<"$file")
