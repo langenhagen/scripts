@@ -3,10 +3,13 @@
 # then call dmenu with the list of results.
 # Attempt to open the result of the latter query with xdg-open or a comparable tool.
 #
-# At the moment, this script uses the ~/.edmrc file but possibly, it does not need any rc file or
-# deserves its own.
+# At the moment, this script uses the ~/.config/edm/edmrc file but possibly, it does not need any
+# rc file or deserves its own.
 #
 # author: andreasl
+
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/edm"
+mkdir -p "$config_dir"
 
 define_standard_settings() {
     root_path="$HOME"
@@ -17,13 +20,11 @@ define_standard_settings() {
     fi
 }
 define_standard_settings
-source "${HOME}/.edmrc" 2>/dev/null
+source "${config_dir}/edmrc" 2>/dev/null
 
 search_history_file="${HOME}/.fwdm_history"
 historic_searches="$(tac "$search_history_file")"
-
-search_query="$(printf -- "$historic_searches" | dmenu -i -l 3 -p "search for?:")"
-if [ $? != 0 ]; then
+if ! search_query="$(printf -- "$historic_searches" | dmenu -i -l 3 -p "search for?:")"; then
     exit 1
 fi
 
@@ -31,9 +32,7 @@ sed -i "/${search_query}/d" "$search_history_file"
 echo "$search_query" >>"$search_history_file"
 
 search_results="$(find "$root_path" -iname "*${search_query}*" 2>/dev/null)"
-
-selected_result="$(printf '%s\n' "${search_results[@]}" | dmenu -i -p "select:" -l 30)"
-if [ $? != 0 ]; then
+if ! selected_result="$(printf '%s\n' "${search_results[@]}" | dmenu -i -p "select:" -l 30)"; then
     exit 2
 fi
 
