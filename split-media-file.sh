@@ -64,17 +64,20 @@ mapfile -t lines <"$timestamps_file"
 for ((i = 0; i < ${#lines[@]}; i++)); do
     printf -v num "%04d" $((i + 1))
 
-    IFS=" - " read -r start title <<<"${lines[i]}"
+    line="${lines[i]}"
+    start_time="${line%% - *}"
+    title="${line#* - }"
 
     # Check next line for end timestamp
     if ((i + 1 < ${#lines[@]})); then
-        IFS=" - " read -r next_start _ <<<"${lines[i + 1]}"
+        next_line="${lines[i + 1]}"
+        next_start_time="${next_line%% - *}"
         ffmpeg \
             -hide_banner \
             -nostdin \
             -i "$input_file" \
-            -ss "$start" \
-            -to "$next_start" \
+            -ss "$start_time" \
+            -to "$next_start_time" \
             -c copy \
             -vn ${out_fmt:+-f "$out_fmt"} \
             "${num}_${title}.${out_ext}"
@@ -83,7 +86,7 @@ for ((i = 0; i < ${#lines[@]}; i++)); do
             -hide_banner \
             -nostdin \
             -i "$input_file" \
-            -ss "$start" \
+            -ss "$start_time" \
             -c copy \
             -vn ${out_fmt:+-f "$out_fmt"} \
             "${num}_${title}.${out_ext}"
