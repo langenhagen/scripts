@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Generate random, pronounceable words based on multigraph character-sequences
 and their probability based on an american-english dictionary.
 
