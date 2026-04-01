@@ -2,12 +2,14 @@
 # Print paragraphs from the work journal that have the given hashtags.
 #
 # Usage:
+#
 #   hashtag                          # list all hashtags
-#   hashtag <tag-name> [<tag-name>]  # list recent paragraphs with the given hashtags.
+#   hashtag <tag-name> [<tag-name>...]  # list recent paragraphs with either of the given hashtags
 #   hashtag -l                       # list all hashtags
 #   hashtag --list                   # list all hashtags
 #
-# Example:
+# Examples:
+#
 #   hashtag retro    # list recent paragraphs with the hashtag #retro
 #   hashtag lol wtf  # list recent paragraphs that have hashtags #wtf or #lol
 #
