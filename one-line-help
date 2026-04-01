@@ -13,7 +13,7 @@
 # author: andreasl
 
 if [ "$#" -eq 0 ]; then
-    vim -R "+call feedkeys('/')" "$ONE_LINE_HELP_FILE_PATH"  # -R readonly
+    vim -R "+call feedkeys('/')" "$ONE_LINE_HELP_FILE_PATH" # -R readonly
 else
     results="$(grep -i --color=never "$1" "$ONE_LINE_HELP_FILE_PATH")"
     for arg in "$@"; do

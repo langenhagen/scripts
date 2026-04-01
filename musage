@@ -19,8 +19,11 @@ if [[ "$1" =~ $int_re ]]; then
 else
     # the subshell containing the `pgrep` below is itself a matching process, filter it out
     pids_str="$(pgrep --full "$1")"
-    mapfile -t pids <<< "$pids_str"
-    [ "${#pids[@]}" -lt 2 ] && { >&2 echo "Error: Found no process matching \"${1}\"."; exit 1; }
+    mapfile -t pids <<<"$pids_str"
+    [ "${#pids[@]}" -lt 2 ] && {
+        >&2 echo "Error: Found no process matching \"${1}\"."
+        exit 1
+    }
     pid="${pids[-2]}"
 fi
 

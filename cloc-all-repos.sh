@@ -16,4 +16,5 @@
 #
 # author: andreasl
 
+# shellcheck disable=SC2016
 reposet apply -q "$*" -- 'cloc --csv --quiet --vcs=git | sed "/\(^[A-Za-z]\|^$\)/d; s:^:$(date +%Y-%m-%d),${repo_path##*/},${repo_path},:g"'
