@@ -4,6 +4,10 @@
 # Grep iteratively the one-line-help.txt file for lines that contain all of the given search terms.
 # This is a neat way of querying and retrieving snippets from the one-line-help.txt file.
 #
+# Usage:
+#
+#   suckless-olh-query.sh
+#
 # author: andreasl
 
 query_history_file="${HOME}/.solhq_history"

@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Preview and fuzzy search the git log.
 #
+# Usage:
+#
+#   fuzzy-git-log.sh
+#
 # author: andreasl
 
 git log \

@@ -2,6 +2,15 @@
 # ez - resteazy
 # Put the monitor to sleep after the keyboard & mouse input idled for a given amount of time.
 #
+# Usage:
+#
+#   ez [<IDLE-SECONDS>]
+#
+# Examples:
+#
+#   ez      # Default to 5 seconds idle time
+#   ez 120  # Allow 120 seconds idle time
+#
 # author: andreasl
 
 max_idle_time=${1:-5}

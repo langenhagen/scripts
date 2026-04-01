@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """Given a file, find all duplicate files under a given directory.
 
+Usage:
+
+  find-duplicate-files.py <FILE_PATH> [<SEARCH_DIR>]  # recursively print duplicate file paths
+                                                      # default search dir: current working directory
+
+Examples:
+
+  find-duplicate-files.py photo.jpg               # Search for duplicates of photo.jpg in the CWD
+  find-duplicate-files.py movie.mkv /mnt/archive  # Search for movie.mkv duplicates in /mnt/archive
+
 author: andreasl
 """
 

@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
-# Get text from clipboard and transform certain charcaters to simpler ones and write the result back
-# to the clipboard.
+# Get text from clipboard
+# and transform certain characters to simpler ones
+# and write the result back to the clipboard.
+#
+# Usage:
+#
+#   sanchar
 #
 # author: andreasl
 
@@ -22,7 +27,7 @@ replace_chars() {
         -e 's|[⧸]|/|g' \
         -e 's|[＜]|<|g' \
         -e 's|[＞]|>|g' \
-        -e 's/[​ ]//g'  # some invisible characters: <0x200b>, <0x202f>
+        -e 's/[​ ]//g' # some invisible characters: <0x200b>, <0x202f>
 }
 
 remove_leading_and_trailing_blank_lines() {

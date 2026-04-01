@@ -2,6 +2,14 @@
 # Echo the given input
 # and send the input as a string as a push notification via pushover.
 #
+# Usage:
+#
+#   pushover <MESSAGE>...
+#
+# Examples:
+#
+#   pushover "Hello there!"
+#
 # author: andreasl
 
 pushover() {

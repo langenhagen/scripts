@@ -3,8 +3,13 @@
 # duration.
 #
 # Usage:
-#   get-length-of-audiofiles.sh                # get the duration of audiofiles inside the cwd
-#   get-length-of-audiofiles.sh  ~/my/folder/  # get the duration of audiofiles inside given folder
+#
+#   get-length-of-audiofiles.sh [<FOLDER>]
+#
+# Examples:
+#
+#   get-length-of-audiofiles.sh                # get the duration of audio files inside the CWD
+#   get-length-of-audiofiles.sh  ~/my/folder/  # use given folder
 #
 # author: andreasl
 

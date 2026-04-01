@@ -4,7 +4,11 @@
 #
 # based on:
 # https://unix.stackexchange.com/questions/28181/run-script-on-screen-lock-unlock
-
+#
+# Usage:
+#
+#   log-screen-lock-unlock.sh
+#
 log_file_path="${HOME}/Administrative/logs/logins-$(uname -n)-$(date '+%Y').csv"
 
 dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver'" |

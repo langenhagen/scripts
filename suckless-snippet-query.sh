@@ -8,6 +8,10 @@
 # The raw selected item will be written to the system clipboard.
 # This is a neat way of querying and retrieving snippets into any desktop environment.
 #
+# Usage:
+#
+#   suckless-snippet-query.sh
+#
 # author: andreasl
 
 query_history_file="${HOME}/.ssq_history"

@@ -2,6 +2,10 @@
 # Print your local network IP V4 addresses
 # and write the first one to the system clipboard.
 #
+# Usage:
+#
+#   myip
+#
 # author: andreasl
 
 ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $2 "\t  " $NF}')"

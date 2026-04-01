@@ -5,10 +5,18 @@
 #
 #   ./hog-ram.sh <size_in_MB>
 #
+# Examples:
+#
+#   ./hog-ram.sh 512
+#   ./hog-ram.sh 2048
+#
 # author: andreasl
 
 size_mb=$1
-[ -z "$size_mb" ] && { >&2 printf 'Usage:\n\n    %s <size_in_MB>\n\n' "$0"; exit 1; }
+[ -z "$size_mb" ] && {
+    >&2 printf 'Usage:\n\n    %s <size_in_MB>\n\n' "$0"
+    exit 1
+}
 
 echo "Hogging ${size_mb} MB of RAM..."
 

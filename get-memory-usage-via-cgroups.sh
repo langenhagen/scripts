@@ -7,6 +7,11 @@
 #
 #   mem-usage-cgroups.sh [-1|--oneline]
 #
+# Examples:
+#
+#   get-memory-usage-via-cgroups.sh
+#   get-memory-usage-via-cgroups.sh --oneline  # print results compact in one line
+#
 # author: andreasl
 
 [[ "$1" =~ ^(-1|--oneline)$ ]] && sep='\t' || sep='\n'

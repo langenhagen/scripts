@@ -3,7 +3,12 @@
 # Delete all Opencode memory sessions.
 #
 # Because Opencode is a vibe-coded piece of shite.
-
+#
+# Usage:
+#
+#   clean-opencode-sessions.sh
+#
+# author: andreasl
 pkill -f opencode || true
 rm -f "${HOME}/.local/share/opencode/"{opencode.db,opencode.db-shm,opencode.db-wal}
 rm -rf "${HOME}/.local/share/opencode/storage/message/"*

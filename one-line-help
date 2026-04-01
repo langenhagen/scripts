@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 # Iteratively grep for the given arguments in the file one-line-help.txt.
 #
+# Usage:
+#
+#   one-line-help [<TERM>...]
+#
+# Examples:
+#
+#   one-line-help                   # open the one-line-help file in vim
+#   one-line-help docker images     # query the one-line-help for given terms; all terms must match
+#
 # author: andreasl
 
 if [ "$#" -eq 0 ]; then

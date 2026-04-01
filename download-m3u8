@@ -5,6 +5,11 @@
 #
 #   download-m3u8 <URL> [<OUT-FILE>]
 #
+# Examples:
+#
+#   download-m3u8 "https://example.com/stream.m3u8"
+#   download-m3u8 "https://example.com/stream.m3u8" my-video.m4v
+#
 # author: andreasl
 
 m3u8_url="$(echo "$1" | xargs)"

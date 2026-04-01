@@ -2,6 +2,15 @@
 # Add a whitespace-trimmed entry to the file one-line-help.txt
 # and sort the one-line-help.txt.
 #
+# Usage:
+#
+#   add-to-one-line-help <TEXT>...
+#
+# Examples:
+#
+#   add-to-one-line-help "tmux kill-server"
+#   add-to-one-line-help git status
+#
 # author: andreasl
 
 printf -- '%s\n' "$*" | sed 's/^ *//g' >>"$ONE_LINE_HELP_FILE_PATH"

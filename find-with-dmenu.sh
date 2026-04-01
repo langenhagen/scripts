@@ -6,6 +6,10 @@
 # At the moment, this script uses the ~/.config/edm/edmrc file but possibly, it does not need any
 # rc file or deserves its own.
 #
+# Usage:
+#
+#   find-with-dmenu.sh
+#
 # author: andreasl
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/edm"

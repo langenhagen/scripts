@@ -3,8 +3,12 @@
 #
 # Usage:
 #
-#  get-deeper-commit.sh aaaaaa  bbbbbb      # prints `aaaaaa``, assuming aaaaaa is the older commit
-#  get-deeper-commit.sh HEAD~4  HEAD~5      # prints `HEAD~5`
+#   get-deeper-commit.sh <COMMIT1> <COMMIT2>
+#
+# Examples:
+#
+#   get-deeper-commit.sh aaaaaa  bbbbbb     # prints `aaaaaa``, assuming aaaaaa is the older commit
+#   get-deeper-commit.sh HEAD~4  HEAD~5     # prints `HEAD~5`
 #
 # author: andreasl
 

@@ -2,6 +2,17 @@
 """Generate random, pronounceable words based on multigraph character-sequences
 and their probability based on an american-english dictionary.
 
+Usage:
+
+  random_word.py [<WORD_LENGTH>]
+  random_word.py -h
+
+Examples:
+
+  random_word.py -h     # show the help
+  random_word.py        # print a random word with a default word length
+  random_word.py 8      # print a random word with given word length
+
 @author: andreasl
 """
 

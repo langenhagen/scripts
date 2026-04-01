@@ -3,23 +3,32 @@
 # Put the pixel brightness to dark after the keyboard & mouse input idled for a given amount of time.
 # Helpful if you want to disable the pixels but want to keep the monitor on.
 #
+# Usage:
+#
+#   ezz [<IDLE-SECONDS>]
+#
+# Examples:
+#
+#   ezz     # Default to 5 seconds idle time
+#   ezz 90  # Allow 90 seconds idle time
+#
 # author: andreasl
 
 max_idle_time=${1:-5}
 is_dark=false
 
 screen='DisplayPort-0'
-xrandr --listactivemonitors | grep --silent --no-messages 'DisplayPort-0' || screen='eDP'  # internal screen
+xrandr --listactivemonitors | grep --silent --no-messages 'DisplayPort-0' || screen='eDP' # internal screen
 
 # Command to execute affter the idle timeout.
 darker() {
     is_dark=true
-    xrandr --output "$screen" --brightness 0.0;
+    xrandr --output "$screen" --brightness 0.0
 }
 
 brighter() {
     is_dark=false
-    xrandr --output "$screen" --brightness 1;
+    xrandr --output "$screen" --brightness 1
 }
 
 while true; do

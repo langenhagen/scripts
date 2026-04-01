@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Convert every `.flac` file in the CWD to an mp3 file.
+# Convert every `.flac` file in the CWD to an `.mp3` file.
+#
+# Usage:
+#
+#   convert-to-mp3.sh
+#
 mkdir -p mp3
 
 for file in *.flac; do

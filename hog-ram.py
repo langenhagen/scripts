@@ -5,6 +5,11 @@ Usage:
 
   ./hog-ram.py <size_in_MB>
 
+Examples:
+
+  ./hog-ram.py 512
+  ./hog-ram.py 2048
+
 author: andreasl
 """
 

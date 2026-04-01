@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 # Delete trailing whitespaces from given files.
 #
+# Usage:
+#
+#   deltrail <FILE>...
+#
+# Examples:
+#
+#   deltrail notes.txt
+#   deltrail src/*.py
+#
 # author: andreasl
 
 while [ "$#" -gt 0 ]; do

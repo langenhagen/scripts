@@ -7,9 +7,14 @@ Limitations:
 - forward imports and stuffs via `__init__.py` might as well break
 - does not account for dirty tricks with your PYTHONPATH
 
-Use like:
+Usage:
+
+    scan_class_hierarchy.py <ROOT_DIR>
+
+Examples:
 
     python scan_class_hierarchy.py . | tee ~/Desktop/diagram.md
+    python scan_class_hierarchy.py src/ > /tmp/diagram.md
 
 Then, you can e.g. do:
 

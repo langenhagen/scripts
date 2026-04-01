@@ -9,6 +9,7 @@
 #  If a repo is defined several times in the reposets, it will also be checked several times.
 #
 # Usage:
+#
 #   cloc-all-repos.sh
 #   cloc-all-repos.sh <reposet>...
 #   cloc-all-repos.sh 1>loc.csv 2>/dev/null

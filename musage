@@ -7,6 +7,11 @@
 #   musage <PID>           # take the process by ID
 #   musage <PROCESS-NAME>  # take the newest process that matches the given name
 #
+# Examples:
+#
+#   musage 12345
+#   musage firefox
+#
 # author: andreasl
 int_re='^[0-9]+$'
 if [[ "$1" =~ $int_re ]]; then

@@ -5,6 +5,16 @@
 # - No args: play the first sound in the folder.
 # - With args: hash the input and choose a stable sound index.
 #
+# Usage:
+#
+#   lilsound [<SEED-TEXT>...]
+#
+# Examples:
+#
+#   lilsound
+#   lilsound 12345
+#   lilsound "finished tests"
+#
 # author: andreasl
 
 set -euo pipefail

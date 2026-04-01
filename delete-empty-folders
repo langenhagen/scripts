@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-# Find all empty subfolders in a given directory
+# Recursively find all empty subfolders in a given directory
 # and prompt the user whether to delete every individual empty folder,
 # and act accordingly.
 # If no directory is given, use the current current working directory.
 # Ignore everything inside .git dirs.
+#
+# Usage:
+#
+#   delete-empty-folders [<ROOT-DIR>]
+#
+# Examples:
+#
+#   delete-empty-folders              # Use the CWD as root dir
+#   delete-empty-folders ~/Downloads  # Use given directory as root dir
 #
 # author: andreasl
 

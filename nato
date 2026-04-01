@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 # Convert given text to NATO alphabet.
-
+#
+# Usage:
+#
+#   nato <TEXT>...
+#
+# Examples:
+#
+#   nato hi there
+#
+# author: andreasl
 declare -A dict=(
     [a]="Alfa" [b]="Bravo" [c]="Charlie" [d]="Delta" [e]="Echo" [f]="Foxtrot"
     [g]="Golf" [h]="Hotel" [i]="India" [j]="Juliett" [k]="Kilo" [l]="Lima"

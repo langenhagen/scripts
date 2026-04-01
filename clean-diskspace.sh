@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Delete superfluous storage-consuming directories and files and removes old packages.
 #
+# Usage:
+#
+#   clean-diskspace.sh
+#
 # author: andreasl
 set -x
 

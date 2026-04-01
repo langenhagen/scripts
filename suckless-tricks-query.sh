@@ -6,6 +6,10 @@
 # The raw selected item will be written to the system clipboard.
 # This is a neat way of querying and retrieving snippets from the tricks.sh file.
 #
+# Usage:
+#
+#   suckless-tricks-query.sh
+#
 # author: andreasl
 
 query_history_file="${HOME}/.stq_history"

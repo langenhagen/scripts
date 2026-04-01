@@ -2,6 +2,15 @@
 # Push to all remotes of the given git repo and take special care for company remotes
 # Also, possibly open according websites for reviews.
 #
+# Usage:
+#
+#   push_to_remotes.sh [<GIT-PUSH-ARG>...]
+#
+# Examples:
+#
+#   push_to_remotes.sh
+#   push_to_remotes.sh --tags  # call `git push ... --tags`
+#
 # author: andreasl
 
 remotes_and_urls_str="$(git remote -v | grep '(push)')"

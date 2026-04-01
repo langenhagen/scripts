@@ -5,6 +5,11 @@
 #
 #   fd [-a] <SEARCHTERM>
 #
+# Examples:
+#
+#   fd invoice
+#   fd -a .git
+#
 # author: andreasl
 
 if [ "$1" == '-a' ]; then
