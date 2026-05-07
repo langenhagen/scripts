@@ -5,29 +5,46 @@ function show_help {
     script_name="${0##*/}"
 
     msg="${script_name}\n"
-    msg+="Replace strings in files in a directory tree."
+    msg+="Interactively replace strings in files in a directory tree.\n"
     msg+="Grep a given pattern on files with given file masks below the cwd and replace it with a"
     msg+=" given string after asking for confirmation.\n"
     msg+="\n"
     msg+="Usage:\n"
-    msg+="  ${script_name} <search-pattern> <replace-string> <file-pattern>...\n"
+    msg+="  ${script_name} [-i|--ignore-case] <search-pattern> <replace-string> <file-pattern>...\n"
     msg+="\n"
     msg+="Examples:\n"
     msg+="  ${script_name} 'echo' 'printf' *.sh            # replace 'echo' with 'printf' in all *.sh files below the cwd\n"
     msg+="  ${script_name} '2018' '2019' *.txt *.md        # replace '2018' with '2019' in all *.txt and *.md files below the cwd\n"
     msg+="  ${script_name} 'wind|rain' sun vacation.txt    # replace all matching text passages with 'sun' in files called \"vacation.txt\"\n"
+    msg+="  ${script_name} -i 'foo' 'bar' *.txt            # case-insensitive replace of 'foo' with 'bar' in all *.txt files\n"
     msg+="  ${script_name} -h                              # print the usage message\n"
     msg+="  ${script_name} --help                          # print the usage message\n"
     printf "$msg"
 }
 
-if [[ "$1" =~ ^(-h|--help)$ ]]; then
-    show_help
-    exit 1
-elif [ "$#" -lt 3 ]; then
+ignore_case=false
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+    -h | --help)
+        show_help
+        exit 1
+        ;;
+    -i | --ignore-case)
+        ignore_case=true
+        shift
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *) break ;;
+    esac
+done
+
+if [ "$#" -lt 3 ]; then
     printf 'Usage:\n'
     printf -- "  ${0##*/} -h|--help\n"
-    printf -- "  ${0##*/} <search-pattern> <replace-string> <file-pattern>...\n"
+    printf -- "  ${0##*/} [-i|--ignore-case] <search-pattern> <replace-string> <file-pattern>...\n"
     exit 1
 fi
 
@@ -36,10 +53,17 @@ shift
 string_to_replace_with="$1"
 shift
 
+grep_case_flag=()
+sed_flags='g'
+if [ "$ignore_case" = true ]; then
+    grep_case_flag=(-i)
+    sed_flags='gI'
+fi
+
 found_any_matches=false
 for file_pattern in "$@"; do
     # preview
-    if grep -HRn --color --include "$file_pattern" "$pattern_to_look_for" .; then
+    if grep -HRn --color "${grep_case_flag[@]}" --include "$file_pattern" "$pattern_to_look_for" .; then
         found_any_matches=true
     fi
 done
@@ -48,7 +72,7 @@ if [ "$found_any_matches" != true ]; then
     exit 2
 fi
 
-read -r -e -n1 -p 'Do you want to continue? (y)es, (n)o, (i)nteractive: ' yes_no_i
+read -r -e -n1 -p 'Do you want to continue? (y)es, (N)o, (i)nteractive: ' yes_no_i
 if [[ "$yes_no_i" == [iI] ]]; then
     interactive=true
 elif [[ "$yes_no_i" != [yY] ]]; then
@@ -60,8 +84,9 @@ n='\e[m'
 
 files=()
 for file_pattern in "$@"; do
-    files_lines="$(grep -Rl --include "$file_pattern" "$pattern_to_look_for" .)"
+    files_lines="$(grep -Rl "${grep_case_flag[@]}" --include "$file_pattern" "$pattern_to_look_for" .)"
     while IFS= read -r line; do
+        [ -z "$line" ] && continue
         files+=("$line")
     done <<<"$files_lines"
 done
@@ -72,7 +97,7 @@ for file in "${files[@]}"; do
         printf "Change occurences in ${b}${file}${n}? (y)es, (n)o, (s)how: "
         read -r -e -n1 yes_no_show
         if [[ "$yes_no_show" == [sS] ]]; then
-            grep -Hn --color "$pattern_to_look_for" "$file"
+            grep -Hn --color "${grep_case_flag[@]}" "$pattern_to_look_for" "$file"
             printf "Change occurences in ${b}${file}${n}? [yY/nN]: "
             read -r -e -n1 yes_no
             if [[ "$yes_no" != [yY] ]]; then
@@ -83,7 +108,8 @@ for file in "${files[@]}"; do
         fi
     fi
 
-    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file" # GNU
-    #sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@g" "$file"  # Mac BSD sed
-    grep -FHn --color --include "$file_pattern" "$string_to_replace_with" "$file"
+    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@${sed_flags}" "$file" # GNU
+    # Mac BSD sed (note: BSD sed does not support the I flag for case-insensitive substitution)
+    # sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@${sed_flags}" "$file"
+    grep -FHn --color "$string_to_replace_with" "$file"
 done
