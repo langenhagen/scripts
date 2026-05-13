@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# ez - resteazy
-# Put the monitor to sleep after the keyboard & mouse input idled for a given amount of time.
+# ez - resteazy (Wayland/GNOME)
+# Blank the display after keyboard/mouse idle.
 #
 # Usage:
 #
@@ -12,20 +12,55 @@
 #   ez 120  # Allow 120 seconds idle time
 #
 # author: andreasl
+set -eu
 
 max_idle_time=${1:-5}
 
-# Command to execute affter the idle timeout.
-cmd() {
-    xset dpms force off
+orig_idle_delay=$(gsettings get org.gnome.desktop.session idle-delay)
+orig_lock_enabled=$(gsettings get org.gnome.desktop.screensaver lock-enabled)
+
+restore() {
+    gsettings set org.gnome.desktop.session idle-delay "$orig_idle_delay"
+    gsettings set org.gnome.desktop.screensaver lock-enabled "$orig_lock_enabled"
+}
+trap restore EXIT INT TERM HUP
+
+# Disable auto-lock for the duration; blanking must never lead to the lock screen.
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+
+# Read idle time in whole seconds from GNOME Mutter's IdleMonitor over D-Bus.
+get_idle_seconds() {
+    local out ms
+    out=$(gdbus call --session \
+        --dest org.gnome.Mutter.IdleMonitor \
+        --object-path /org/gnome/Mutter/IdleMonitor/Core \
+        --method org.gnome.Mutter.IdleMonitor.GetIdletime 2>/dev/null) || return 1
+    # Output format: (uint64 559,)
+    ms=${out#*uint64 }
+    ms=${ms%,*}
+    [[ $ms =~ ^[0-9]+$ ]] || return 1
+    printf '%s' $((ms / 1000))
 }
 
+blanked=0
 while true; do
-    idle_time=$(($(xprintidle) / 1000))
+    if ! idle_time=$(get_idle_seconds); then
+        sleep 1
+        continue
+    fi
 
-    if [ "$idle_time" -ge "$max_idle_time" ]; then
-        cmd
+    if ((idle_time >= max_idle_time)); then
+        if ((blanked == 0)); then
+            # Force GNOME to blank almost immediately; lock stays disabled.
+            gsettings set org.gnome.desktop.session idle-delay 'uint32 1'
+            blanked=1
+        fi
+        sleep 1
     else
+        if ((blanked == 1)); then
+            gsettings set org.gnome.desktop.session idle-delay "$orig_idle_delay"
+            blanked=0
+        fi
         sleep $((max_idle_time - idle_time))
     fi
 done
