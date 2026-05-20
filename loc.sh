@@ -7,4 +7,4 @@
 #
 # author: andreasl
 
-cloc "$HOME/Dev" --exclude-dir='_Lib' --exclude-dir='Zeugs'
+cloc "$HOME/Dev" --exclude-dir='Zeugs'
