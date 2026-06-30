@@ -3,17 +3,14 @@
 # and transform certain characters to simpler ones
 # and write the result back to the clipboard.
 #
+# Alternatively, sanitize given text files directly.
+#
 # Usage:
 #
-#   sanchar
+#   sanchar                  # copy sanitized clipboard text back to clipboard
+#   sanchar FILE [FILE...]   # sanitize file(s) in-place
 #
 # author: andreasl
-
-input_text="$(xclip -selection clipboard -out)"
-if [ -z "$input_text" ]; then
-    echo "Clipboard is empty or does not contain text."
-    exit 1
-fi
 
 replace_chars() {
     sed \
@@ -34,10 +31,47 @@ remove_leading_and_trailing_blank_lines() {
     sed '/./,$!d; :a; /^[[:space:]]*$/{$d; N; ba}'
 }
 
-# Perform replacements
-output_text="$(echo "$input_text" | replace_chars | remove_leading_and_trailing_blank_lines)"
+show_help() {
+    cat <<'EOF'
+Usage:
+  sanchar                  sanitize clipboard text and write back to clipboard
+  sanchar FILE [FILE...]   sanitize file(s) in-place
 
-# Update clipboard with modified text
-printf '%s' "$output_text" | xclip -selection clipboard
+Options:
+  -h, --help  show this help message and exit
+EOF
+    exit 0
+}
 
-echo "Special characters have been replaced and the clipboard has been updated."
+case "${1:-}" in
+-h | --help) show_help ;;
+esac
+
+if [ $# -eq 0 ]; then
+    # sanitize clipboard
+    input_text="$(xclip -selection clipboard -out)"
+    if [ -z "$input_text" ]; then
+        echo "Clipboard is empty or does not contain text."
+        exit 1
+    fi
+
+    output_text="$(echo "$input_text" | replace_chars | remove_leading_and_trailing_blank_lines)"
+
+    printf '%s' "$output_text" | xclip -selection clipboard
+
+    echo "Special characters have been replaced and the clipboard has been updated."
+else
+    # sanitize given files
+    for file in "$@"; do
+        # add a sentinel `x` character to presever trailing newlines
+        input_text="$(
+            cat "$file"
+            printf x
+        )"
+        input_text="${input_text%x}"
+        tmp="$(mktemp)"
+        printf '%s' "$input_text" | replace_chars >"$tmp"
+        mv "$tmp" "$file"
+        echo "Sanitized: $file"
+    done
+fi
