@@ -7,14 +7,15 @@ script_name="${0##*/}"
 IFS= read -r -d '' script_description <<HELP_EOF
 ${script_name}
 Compare file trees in a readable format using find, sort, comm and sed.
+Only compares file/folder names, not contents!
 
 Usage:
   ${script_name} [OPTIONS] <dir1> <dir2>
   ${script_name} <dir1> <dir2> [OPTIONS]
 
 Options:
-  -1, --in-1:                          Only show lines that are in dir1.
-  -2, --in-2:                          Only show lines that are in dir2.
+  -1, --in-1:                          Only show entries that are in dir1.
+  -2, --in-2:                          Only show entries that are in dir2.
   -C, --no-color:                      Disable colored output.
   -d, --only-different:                Show only directories/files that exist only in dir1 or only in dir2.
   -e <pattern>, --exclude <pattern>:   Exclude glob pattern <pattern>, e.g. "*.git".
