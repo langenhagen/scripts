@@ -81,8 +81,9 @@ if [ "$inclusive" == true ]; then
     done
     unset 'include_list[${#include_list[@]}-1]'
 
-    find "$directory" -type f "${include_list[@]}" \
-        -exec sh -c "$file_action" shell {} \; |
+    find "$directory" -type f "${include_list[@]}" -print0 |
+        sort -z |
+        xargs -0 -I {} sh -c "$file_action" shell {} |
         xclip -fi -selection clipboard
 else
     prune_list=()
@@ -101,7 +102,8 @@ else
     #shellcheck disable=SC2086
     find "$directory" \
         $prune_str \
-        -type f -not -path '*/.*' "${exclude_list[@]}" \
-        -exec sh -c "$file_action" shell {} \; |
+        -type f -not -path '*/.*' "${exclude_list[@]}" -print0 |
+        sort -z |
+        xargs -0 -I {} sh -c "$file_action" shell {} |
         xclip -fi -selection clipboard
 fi
