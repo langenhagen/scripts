@@ -4,14 +4,14 @@
 # author: andreasl
 
 show_usage() {
-    echo "Usage: ${0##*/} [-h <hours>] [-m <minutes>] [-s <seconds>] [--alt-melody] [--quiet]"
-    echo "  -h, --hours      Set hours"
+    echo "Usage: ${0##*/} [-H <hours>] [-m <minutes>] [-s <seconds>] [--alt-melody] [--quiet]"
+    echo "  -H, --hours      Set hours"
     echo "  -m, --minutes    Set minutes"
     echo "  -s, --seconds    Set seconds"
     echo "  -a, --alt-melody Use alternative melody"
     echo "  -t, --time       Set alarm for clock time (HH:MM or HH:MM:SS)"
     echo "  -q, --quiet      Quiet mode"
-    echo "  --help           Show this help"
+    echo "  -h, --help       Show this help"
 }
 
 [ "$#" -eq 0 ] && {
@@ -27,7 +27,7 @@ alt_melody=false
 target_time=
 while [ "$#" -gt 0 ]; do
     case "$1" in
-    -h | --hours)
+    -H | --hours)
         hours="$2"
         shift
         ;;
@@ -49,7 +49,7 @@ while [ "$#" -gt 0 ]; do
         target_time="$2"
         shift
         ;;
-    --help)
+    -h | --help)
         show_usage
         exit 0
         ;;
