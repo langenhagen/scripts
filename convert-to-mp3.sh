@@ -5,6 +5,8 @@
 #
 #   convert-to-mp3.sh
 #
+# author: andreasl
+
 mkdir -p mp3
 
 for file in *.flac; do
