@@ -26,7 +26,15 @@ show_help() {
 [[ "$1" =~ ^(-h|--help)$ ]] && { show_help; exit; }
 
 grep_cmd='rg -LSn --hidden --no-heading --no-ignore --color=always'
+bat_cmd="$(command -v batcat || command -v bat)" # `batcat` on Debian/Ubuntu, `bat` elsewhere
 # manually cut; fzf can nicely --delimit similar to `cut`, but fails with file names that have leading & trailing spaces
-preview_cmd='printf "%s" {} | cut -d: -f1 | xargs -d"\n" batcat --color=always --style=header,numbers -H{2} --line-range={2}:'
+# shellcheck disable=SC2016  # `$f` must stay unexpanded here; fzf expands it when running the preview
+preview_cmd='f="$(printf "%s" {} | cut -d: -f1)"; '"$bat_cmd"' --color=always --style=header,numbers -H{2} --line-range={2}: "$f"'
 selections_str="$($grep_cmd "$*" | fzf -m --ansi --delimiter=: --preview="$preview_cmd" | cut -d: -f1)"
-[ -n "$selections_str" ] && { mapfile -t selections <<< "$selections_str"; vim -p "${selections[@]}"; }
+[ -n "$selections_str" ] && {
+    selections=()
+    while IFS= read -r selection; do
+        selections+=("$selection")
+    done <<<"$selections_str"
+    vim -p "${selections[@]}"
+}

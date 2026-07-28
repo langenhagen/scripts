@@ -14,7 +14,10 @@
 # author: andreasl
 
 remotes_and_urls_str="$(git remote -v | grep '(push)')"
-mapfile -t remotes_and_urls <<<"$remotes_and_urls_str"
+remotes_and_urls=()
+while IFS= read -r remotes_and_urls_line; do
+    remotes_and_urls+=("$remotes_and_urls_line")
+done <<<"$remotes_and_urls_str"
 for remote_and_url in "${remotes_and_urls[@]}"; do
     remote="$(printf -- '%s' "$remote_and_url" | awk '{print $1}')"
 
@@ -22,8 +25,12 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
         # push merge-request to company GitLab
         local_branch="$(git rev-parse --abbrev-ref HEAD)"
         if [[ "$local_branch" =~ ^master$|^main$ ]]; then
+            # lowercasing via `tr`, since sed's `\L` is a GNU extension. `LC_ALL=C` keeps
+            # `a-zA-Z` strictly ASCII, so non-ASCII is slugged to `-` rather than surviving
+            # the class and then not being lowercased by byte-oriented `tr`.
             remote_branch="$(git log --oneline --format='%s' -n1 |
-                sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g;s/./\L&/g')"
+                LC_ALL=C sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g' |
+                tr '[:upper:]' '[:lower:]')"
         else
             remote_branch="$local_branch"
         fi
@@ -33,7 +40,7 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
             set -o pipefail
             grep -E 'remote:[[:space:]]+http[s]*://' <<<"$output" |
                 grep -o 'http.*$' |
-                xargs xdg-open
+                xargs "$(command -v xdg-open || echo open)" # `xdg-open` on Gnome, `open` on macOS
         fi
 
     else

@@ -88,6 +88,8 @@ fi
     exit 2
 }
 
-tail -f /dev/null --pid="$pid"
+while ps -p "$pid" >/dev/null 2>&1; do
+    sleep 1
+done
 
 printf '%s: Process %s finished.\n' "$(date)" "$pid"

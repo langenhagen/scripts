@@ -73,14 +73,18 @@ while [ "$#" -gt 0 ]; do
 done
 
 # get the file trees and do the comparisons
-tree1="$(find "$source_dir" "${excludes[@]}" -printf "%P\n" | sort)"
-tree2="$(find "$target_dir" "${excludes[@]}" -printf "%P\n" | sort)"
+# `cd` into the dir and strip the leading `./` instead of using `-printf "%P\n"`, which is GNU-only
+tree1="$(cd "$source_dir" && find . "${excludes[@]}" -print | sed -e 's|^\./||' -e 's|^\.$||' | sort)"
+tree2="$(cd "$target_dir" && find . "${excludes[@]}" -print | sed -e 's|^\./||' -e 's|^\.$||' | sort)"
 output="$(comm <(printf '%s\n' "$tree1") <(printf '%s\n' "$tree2"))"
 
-# postprocess the output from comm
-output="$(sed -E "s:(^[^\t].*):1 \1:g" <<<"$output")"
-output="$(sed -E "s:^\t{2}(.*):3 \1:g" <<<"$output")"
-output="$(sed -E "s:^\t{1}(.*):2 \1:g" <<<"$output")"
+# postprocess the output from comm, which marks its three columns by leading tabs
+# `$'\t'` is a real tab character; writing `\t` in the regex instead would only work with GNU
+# sed, as BSD/macOS sed reads it as a literal `t`.
+tab=$'\t'
+output="$(sed -E "s:(^[^${tab}].*):1 \1:g" <<<"$output")"
+output="$(sed -E "s:^${tab}{2}(.*):3 \1:g" <<<"$output")"
+output="$(sed -E "s:^${tab}{1}(.*):2 \1:g" <<<"$output")"
 
 # filter the output
 if [ "$must_be_in_1" == true ] || [ "$only_same" == true ]; then

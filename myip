@@ -1,18 +1,40 @@
-#!/usr/bin/env bash
-# Print your local network IP V4 addresses
-# and write the first one to the system clipboard.
-#
-# Usage:
-#
-#   myip
-#
-# author: andreasl
+#!/usr/bin/env python3
+"""Print your local network IP V4 address and write it to the system clipboard.
 
-ip_addrs="$(ip addr show | grep -Eo 'inet\b.*scope global.*$' | awk '{print $2 "\t  " $NF}')"
+Usage:
 
-printf '%s\n' "$ip_addrs"
+  myip
 
-if command -v xclip >/dev/null && [ -n "$DISPLAY" ]; then
-    ip_addr="$(ip addr show | grep -Eom1 'inet\b.*scope global.*$' | awk '{print $4}')"
-    printf '%s' "$ip_addr" | xclip -i -f -selection primary | xclip -i -selection clipboard
-fi
+author: andreasl
+"""
+
+import os
+import shutil
+import socket
+import subprocess
+
+# Ask the kernel which source address it would pick to reach the outside world.
+# Connecting a UDP socket sends no packets; it only performs a route lookup.
+with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+    sock.connect(("1.1.1.1", 53))
+    ip_addr = sock.getsockname()[0]
+
+print(ip_addr)
+
+if shutil.which("pbcopy"):
+    clip_cmd = ["pbcopy"]
+elif shutil.which("xclip") and os.environ.get("DISPLAY"):
+    clip_cmd = ["xclip", "-selection", "clipboard"]
+else:
+    msg = "No clipboard application set!"
+    raise RuntimeError(msg)
+
+# Set stdout to DEVNULL in order to keep `xclip`, which forks and keeps running to
+# own the selection, from holding our stdout open and making the script hang.
+subprocess.run(
+    clip_cmd,
+    input=ip_addr,
+    text=True,
+    check=True,
+    stdout=subprocess.DEVNULL,
+)

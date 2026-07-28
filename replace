@@ -53,6 +53,10 @@ shift
 string_to_replace_with="$1"
 shift
 
+# GNU sed is `gsed` on macOS (`brew install gnu-sed`) and `sed` on Linux. BSD sed would need
+# `-i ''` rather than a bare `-i` and has no `I` substitution flag at all.
+sed_cmd="$(command -v gsed || command -v sed)"
+
 grep_case_flag=()
 sed_flags='g'
 if [ "$ignore_case" = true ]; then
@@ -108,8 +112,6 @@ for file in "${files[@]}"; do
         fi
     fi
 
-    sed --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@${sed_flags}" "$file" # GNU
-    # Mac BSD sed (note: BSD sed does not support the I flag for case-insensitive substitution)
-    # sed -i '' "s@${pattern_to_look_for}@${string_to_replace_with}@${sed_flags}" "$file"
+    "$sed_cmd" --follow-symlinks -i "s@${pattern_to_look_for}@${string_to_replace_with}@${sed_flags}" "$file"
     grep -FHn --color "$string_to_replace_with" "$file"
 done

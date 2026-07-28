@@ -16,5 +16,7 @@ else
     out="$(date '+%Y-%m-%d')"
 fi
 
+command -v pbcopy >/dev/null && clip_cmd=(pbcopy) || clip_cmd=(xclip -selection clipboard)
+
 printf '%s\n' "$out"
-printf '%s' "$out" | xclip -selection clipboard
+printf '%s' "$out" | "${clip_cmd[@]}"

@@ -28,7 +28,21 @@ replace_chars() {
 }
 
 remove_leading_and_trailing_blank_lines() {
-    sed '/./,$!d; :a; /^[[:space:]]*$/{$d; N; ba}'
+    # Remove leading and trailing blank lines, but keep the ones in the middle.
+    # Blank lines are not printed right away, they are held back until a line with content
+    # shows up and releases them. Leading blanks are dropped because no content has been seen
+    # yet, trailing ones because the input ends before anything releases them. The blanks in
+    # between survive, because the next content line flushes them.
+    awk '
+        /[^[:space:]]/ {                  # line has at least one non-whitespace character
+            printf "%s", blanks           # print the blank lines collected in `blanks`
+            blanks = ""                   # reset `blanks`
+            seen = 1                      # remember that content has appeared
+            print                         # print this line
+            next                          # done with this line, skip the rule below
+        }
+        seen { blanks = blanks $0 "\n" }  # blank line after content: hold it, do not print
+    '
 }
 
 show_help() {
@@ -48,8 +62,11 @@ case "${1:-}" in
 esac
 
 if [ $# -eq 0 ]; then
+    command -v pbpaste >/dev/null && clip_out=(pbpaste) || clip_out=(xclip -selection clipboard -out)
+    command -v pbcopy >/dev/null && clip_in=(pbcopy) || clip_in=(xclip -selection clipboard)
+
     # sanitize clipboard
-    input_text="$(xclip -selection clipboard -out)"
+    input_text="$("${clip_out[@]}")"
     if [ -z "$input_text" ]; then
         echo "Clipboard is empty or does not contain text."
         exit 1
@@ -57,7 +74,7 @@ if [ $# -eq 0 ]; then
 
     output_text="$(echo "$input_text" | replace_chars | remove_leading_and_trailing_blank_lines)"
 
-    printf '%s' "$output_text" | xclip -selection clipboard
+    printf '%s' "$output_text" | "${clip_in[@]}"
 
     echo "Special characters have been replaced and the clipboard has been updated."
 else

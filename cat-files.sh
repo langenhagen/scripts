@@ -60,6 +60,16 @@ done
 
 [ ${#files[@]} -eq 0 ] && inclusive=false
 
+# Copy stdin to the clipboard and echo it through, the way `xclip -f` does.
+# `pbcopy` on macOS does not echo, hence the `tee`.
+copy_to_clipboard() {
+    if command -v pbcopy >/dev/null; then
+        tee >(pbcopy >/dev/null)
+    else
+        xclip -fi -selection clipboard
+    fi
+}
+
 if [ "$only_list_filenames" == true ]; then
     #shellcheck disable=SC2016
     file_action='file="$1"; file --mime-type "$file" | grep -q "text" && printf "%s\n" "${file}"'
@@ -84,7 +94,7 @@ if [ "$inclusive" == true ]; then
     find "$directory" -type f "${include_list[@]}" -print0 |
         sort -z |
         xargs -0 -I {} sh -c "$file_action" shell {} |
-        xclip -fi -selection clipboard
+        copy_to_clipboard
 else
     prune_list=()
     exclude_list=()
@@ -105,5 +115,5 @@ else
         -type f -not -path '*/.*' "${exclude_list[@]}" -print0 |
         sort -z |
         xargs -0 -I {} sh -c "$file_action" shell {} |
-        xclip -fi -selection clipboard
+        copy_to_clipboard
 fi

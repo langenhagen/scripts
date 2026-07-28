@@ -35,8 +35,8 @@ fi
 # list recent notes to given hashtags, add blank lines between entries & limit the output
 while [ "$#" -gt 0 ]; do
     tag="$(tr '[:upper:]' '[:lower:]' <<<"$1")"
-    awk -v RS= 'tolower($0) ~ /#'"${tag}"'/' "$filename" |
-        sed 's/\(#[^ ]\+\)$/\1\n/g' |
+    # `RS=` reads whole paragraphs, `ORS` puts blank lines between entries.
+    awk -v RS= -v ORS='\n\n' 'tolower($0) ~ /#'"${tag}"'/' "$filename" |
         tail -n 45
     shift
 done

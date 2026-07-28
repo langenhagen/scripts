@@ -39,11 +39,11 @@ elif [[ "$command" =~ ^fixup$|^f$|^squash$|^s$ ]]; then
         found{between = between ? between RS $0 : $0; next}
         1'
 else
-    >&2 printf "Error: unknown command: %sn" "$command"
+    >&2 printf "Error: unknown command: %s\n" "$command"
     exit 3
 fi
 
-editor="awk -i inplace -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"
+# `gawk` rather than `awk`, because `-i inplace` is a gawk extension and macOS ships BSD awk.
+editor="gawk -i inplace -v 'cmd=${command}' -v 'base=${base_commit}' -v 'top=${top_commit}' '${script}'"
 
-# # shellcheck disable=SC2034
 GIT_SEQUENCE_EDITOR="$editor" git rebase -i "$(git rev-parse "${base_commit}~1")"

@@ -64,10 +64,12 @@ print() { [ "$quiet" != true ] && printf "%b" "$1"; }
 
 if [ -n "$target_time" ]; then
     # if absolute time is set via `-t` or `--time`
-    target_timestamp="$(date -d "$target_time" +%s)"
+    # GNU `date` is `gdate` on macOS (coreutils via brew) and plain `date` on Linux
+    date_cmd="$(command -v gdate || command -v date)"
+    target_timestamp="$("$date_cmd" -d "$target_time" +%s)"
     [ -z "$target_timestamp" ] && exit 2
     now="$(date +%s)"
-    [ "$target_timestamp" -le "$now" ] && target_timestamp="$(date -d "tomorrow ${target_time}" +%s)"
+    [ "$target_timestamp" -le "$now" ] && target_timestamp="$("$date_cmd" -d "tomorrow ${target_time}" +%s)"
     remaining=$((target_timestamp - now))
 else
     # if relative time is set via `-h`, `-m` and `-s`
@@ -86,8 +88,13 @@ notes=(440 554 659 880 659 554 440)
 [ "$alt_melody" == true ] && notes=(880 698 587 523 587)
 
 print "Time's up!\n"
-for f in "${notes[@]}"; do
-    timeout 0.2 speaker-test --period 10 --test sine --frequency "$f" >/dev/null 2>&1
-done
 
-exit 0
+# -f lavfi:   the input is a filtergraph, not a file
+# -i "...":   the graph itself
+# -nodisp:    no video window
+# -autoexit:  quit when the audio ends, otherwise ffplay sits there
+ffplay -nodisp -autoexit -f lavfi -i "$(
+    for i in "${!notes[@]}"; do printf 'sine=frequency=%s:duration=0.2[a%s];' "${notes[$i]}" "$i"; done
+    printf '[a%s]' "${!notes[@]}"
+    printf 'concat=n=%s:v=0:a=1' "${#notes[@]}"
+)" >/dev/null 2>&1

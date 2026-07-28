@@ -19,6 +19,12 @@
 
 set -euo pipefail
 
+# Bash sorts glob results by `LC_COLLATE`, so force byte collation to keep the
+# seed-to-sound mapping by globbing identical on every machine. `LC_ALL` rather
+# than `LC_COLLATE`, because an `LC_ALL` in the environment would override the
+# latter.
+LC_ALL=C
+
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 sound_dir="${script_dir}/lilsound.sounds"
 
@@ -27,15 +33,13 @@ all_entries=("${sound_dir}"/*)
 shopt -u nullglob
 
 sound_files=()
-for entry in "${all_entries[@]}"; do
+# Bash 3.2 (macOS) treats `"${arr[@]}"` of an empty array as unset under `set -u`
+# but `${all_entries[@]+"${all_entries[@]}"}` is fine. Bruh.
+for entry in ${all_entries[@]+"${all_entries[@]}"}; do
     if [[ -f "${entry}" ]]; then
         sound_files+=("${entry}")
     fi
 done
-
-if ((${#sound_files[@]} > 1)); then
-    mapfile -t sound_files < <(printf '%s\n' "${sound_files[@]}" | LC_ALL=C sort)
-fi
 
 if ((${#sound_files[@]} == 0)); then
     echo "Error: no sounds found in ${sound_dir}" >&2

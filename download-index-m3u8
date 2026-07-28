@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Download a m3u8 indexfile that causes to download many .ts files
-# and concatenate the .ts files to a single .ts file.
+# Download an m3u8 stream into a single .ts file named after the movie.
 #
 # Usage:
 #
@@ -15,9 +14,7 @@
 m3u8_url="$1"
 movie_name="$2"
 
-mkdir "$movie_name" || exit 1
-cd "$movie_name" || exit 2
-
-download-m3u8 "$m3u8_url" 'index.m3u8'
-
-cat $(ls -v *.ts) >"${movie_name}.ts"
+# Name the output *.ts so that ffmpeg writes a single file. An *.m3u8 output name would pick
+# ffmpeg's HLS muxer instead, which chops the stream into hundreds of index<N>.ts segments
+# that then have to be concatenated back together in numeric order.
+download-m3u8 "$m3u8_url" "${movie_name}.ts"

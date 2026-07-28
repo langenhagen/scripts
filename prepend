@@ -7,8 +7,8 @@ show_help() {
     msg+="Prepend a given file with a given string from stdin.\n"
     msg+="\n"
     msg+="Usage:\n"
-    msg+="  ${script_name} [OPTIONS] <file> <<< <input-string>\n"
-    msg+="  echo <input-string> | ${script_name} <file>\n"
+    msg+="  ${script_name} [OPTIONS] <file> -o <output-file> <<< <input-string>\n"
+    msg+="  echo <input-string> | ${script_name} <file> -o <output-file>\n"
     msg+="\n"
     msg+="Options:\n"
     msg+="  -h, --help:                     Print the help message.\n"
@@ -16,8 +16,8 @@ show_help() {
     msg+="  -o <file>, --output <file>:     Write output to specified output file.\n"
     msg+="\n"
     msg+="Examples:\n"
-    msg+="  ${script_name} script.py <<< '#!/usr/env/bin python3\\\n# -*- coding: utf-8 -*-'\n"
-    msg+="  printf 'Step 0: ' | ${script_name} myfile.txt\n"
+    msg+="  ${script_name} -i script.py <<< '#!/usr/env/bin python3\\\n# -*- coding: utf-8 -*-'\n"
+    msg+="  printf 'Step 0: ' | ${script_name} myfile.txt -o otherfile.txt\n"
     printf "$msg"
 }
 
@@ -53,10 +53,22 @@ if [ -z "$output_file" ]; then
     exit 1
 fi
 
-while IFS= read -rN1 character; do
-    input_to_prepend+="$character"
-done
+# read all of stdin at once; the sentinel `x` preserves trailing newlines.
+# `read -N` would be shorter but needs Bash 4.1+, which macOS does not ship.
+input_to_prepend="$(
+    cat
+    printf x
+)"
+input_to_prepend="${input_to_prepend%x}"
 
-file_content="$(<"$input_file")"
-printf -- "$input_to_prepend" >"$output_file"
-printf -- "$file_content" >>"$output_file"
+file_content="$(
+    cat "$input_file"
+    printf x
+)"
+file_content="${file_content%x}"
+
+# `%b` expands escapes like `\n` in the prepended string, so we can have e.g. newlines in the
+# prepended input.
+# The file's own content goes through `%s`, so that nothing in it is interpreted at all.
+printf '%b' "$input_to_prepend" >"$output_file"
+printf '%s' "$file_content" >>"$output_file"

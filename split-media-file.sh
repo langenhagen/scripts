@@ -59,7 +59,11 @@ case "$codec" in
     *)      out_ext="audio"; out_fmt=""     ;;
 esac
 
-mapfile -t lines <"$timestamps_file"
+lines=()
+# the `-n` test keeps a final line that is not terminated by a newline
+while IFS= read -r timestamps_line || [ -n "$timestamps_line" ]; do
+    lines+=("$timestamps_line")
+done <"$timestamps_file"
 
 for ((i = 0; i < ${#lines[@]}; i++)); do
     printf -v num "%04d" $((i + 1))

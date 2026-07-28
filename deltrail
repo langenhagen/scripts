@@ -12,8 +12,16 @@
 #
 # author: andreasl
 
+if sed --version >/dev/null 2>&1; then
+    # GNU sed
+    sed_inplace=(-i)
+else
+    # BSD sed
+    sed_inplace=(-i '')
+fi
+
 while [ "$#" -gt 0 ]; do
     grep -EHn --color=always '[[:space:]]+$' "$1"
-    sed --in-place 's/[[:space:]]\+$//' "$1"
+    sed "${sed_inplace[@]}" -E 's/[[:space:]]+$//' "$1"
     shift
 done
