@@ -12,10 +12,19 @@ set -x
 b='\e[1m' # bold
 n='\e[m'  # normal
 
-# Empty Trash
-dirsize=$(du -sh "$HOME/.local/share/Trash/" 2>/dev/null)
-printf "${b}Info: $HOME/.local/share/Trash has the following size: ${dirsize}${n}\n"
-rm -rfv "$HOME/.local/share/Trash/*"
+# Empty Trash Linux
+if [ -d "$HOME/.local/share/Trash" ]; then
+    dirsize=$(du -sh "$HOME/.local/share/Trash/" 2>/dev/null)
+    printf "${b}Info: $HOME/.local/share/Trash has the following size: ${dirsize}${n}\n"
+    rm -rfv "$HOME/.local/share/Trash/"*
+fi
+
+# Empty Trash macOS
+if [ -d "$HOME/.Trash" ]; then
+    dirsize=$(du -sh "$HOME/.Trash/" 2>/dev/null)
+    printf "${b}Info: $HOME/.Trash has the following size: ${dirsize}${n}\n"
+    rm -rfv "$HOME/.Trash/"*
+fi
 
 # Gradle & related
 dirsize=$(du -sh "$HOME/.gradle/caches" 2>/dev/null)
@@ -40,6 +49,9 @@ rm -rfv "$HOME/.buildout/download-cache"
 dirsize=$(du -sh "$HOME/.buildout/eggs" 2>/dev/null)
 printf "${b}Info: $HOME/.buildout/eggs has the following size: ${dirsize}${n}\n"
 rm -rfv "$HOME/.buildout/eggs"
+
+# ccache
+[ "$(command -v ccache)" ] && ccache --show-stats && ccache --clear
 
 # Brew
 [ "$(command -v brew)" ] && brew cleanup -s
