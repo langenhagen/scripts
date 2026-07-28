@@ -52,11 +52,26 @@ codec=$(ffprobe \
 
 # Map codec to container/extension
 case "$codec" in
-    opus)   out_ext="opus";  out_fmt="opus" ;;
-    aac)    out_ext="m4a";   out_fmt="ipod" ;;
-    mp3)    out_ext="mp3";   out_fmt="mp3"  ;;
-    vorbis) out_ext="ogg";   out_fmt="ogg"  ;;
-    *)      out_ext="audio"; out_fmt=""     ;;
+opus)
+    out_ext="opus"
+    out_fmt="opus"
+    ;;
+aac)
+    out_ext="m4a"
+    out_fmt="ipod"
+    ;;
+mp3)
+    out_ext="mp3"
+    out_fmt="mp3"
+    ;;
+vorbis)
+    out_ext="ogg"
+    out_fmt="ogg"
+    ;;
+*)
+    out_ext="audio"
+    out_fmt=""
+    ;;
 esac
 
 lines=()
