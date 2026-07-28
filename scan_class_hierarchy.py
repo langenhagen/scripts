@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scan a folder for python files and create a `Mermaid` class diagram.
+"""Scan a folder for Python files and create a `Mermaid` class diagram.
 
 Limitations:
 - imports inside functions or and redefinitions of thingos may cause undefined behavior
