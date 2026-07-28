@@ -8,20 +8,22 @@
 #
 # Examples:
 #
-#   get-length-of-audiofiles.sh                # get the duration of audio files inside the CWD
-#   get-length-of-audiofiles.sh  ~/my/folder/  # use given folder
+#   get-length-of-audiofiles.sh               # get the duration of audio files inside the CWD
+#   get-length-of-audiofiles.sh ~/my/folder/  # use given folder
 #
 # author: andreasl
+
+cd "${1:-.}" || exit 1
 
 total_seconds=0
 
 for file in *.{aac,flac,m4a,mp3,ogg,opus,wav,wma}; do
-	[ -e "$file" ] || continue # skip if no matching files
+    [ -e "$file" ] || continue # skip if no matching files
 
-	duration=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$file")
-	seconds=${duration%.*} # Convert to integer (remove decimals)
-	total_seconds=$((total_seconds + seconds))
-	printf "%s: %02d:%02d:%02d\n" "$file" $((seconds / 3600)) $(((seconds % 3600) / 60)) $((seconds % 60))
+    duration=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$file")
+    seconds=${duration%.*} # Convert to integer (remove decimals)
+    total_seconds=$((total_seconds + seconds))
+    printf "%s: %02d:%02d:%02d\n" "$file" $((seconds / 3600)) $(((seconds % 3600) / 60)) $((seconds % 60))
 done
 
 printf "Total duration: %02d:%02d:%02d\n" $((total_seconds / 3600)) $(((total_seconds % 3600) / 60)) $((total_seconds % 60))

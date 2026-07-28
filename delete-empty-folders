@@ -18,20 +18,16 @@
 
 root_folder="${1:-${PWD}}"
 
-directory_array=()
-while IFS= read -r -d $'\0'; do
-    directory_array+=("$REPLY")
-done < <(find "$root_folder" -type d -print0)
-
-for dir in "${directory_array[@]}"; do
-    [[ "$dir" =~ .*\.git/.* ]] && continue
-
-    has_contents=$(ls -A "$dir")
-    [ -n "$has_contents" ] && continue
-
+# let `find` do the emptiness test and the .git filtering. Note that a parent only holding
+# empty folders is not itself empty at scan time and is therefore never offered, not even
+# after its children have been deleted - rerun the script to collapse such a nest one level
+# at a time.
+# The folder list arrives on file descriptor 3, so that stdin stays free for the confirmation
+# prompt.
+while IFS= read -r -d '' dir <&3; do
     echo "$dir"
     # -r raw, i.e. don't mangle backslashes; -e newline after input is read;
     # -n1 capture 1 character, no ENTER needed
     read -r -e -n1 -p "Delete [y/n]?: " do_delete
-    [ "$do_delete" == "y" ] && rm -rf "$dir"
-done
+    [ "$do_delete" == "y" ] && rmdir "$dir"
+done 3< <(find "$root_folder" -type d -empty -not -path '*/.git/*' -print0)

@@ -49,6 +49,7 @@ fi
 out_file="${out_file:-${in_file%.*}.m4v}"
 if [ -e "$out_file" ] && [ "$allow_overwrite" == false ]; then
     echo "Error: Output file \"${out_file}\" exists already."
+    exit 1
 fi
 
 set -x

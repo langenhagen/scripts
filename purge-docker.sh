@@ -7,9 +7,10 @@
 #
 # author: andreasl
 
-sudo docker kill "$(docker ps --quiet)"
-sudo docker rm "$(docker ps --all -quiet)"
-sudo docker rmi "$(docker images --quiet)"
+# shellcheck disable=SC2046  # container ids are whitespace-free; word splitting is wanted here
+sudo docker kill $(docker ps --quiet)
+
+sudo docker system prune --all --force --volumes
 
 echo 'Docker purged.'
 
