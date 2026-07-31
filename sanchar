@@ -10,21 +10,37 @@
 #   sanchar                  # copy sanitized clipboard text back to clipboard
 #   sanchar FILE [FILE...]   # sanitize file(s) in-place
 #
+# Beware: editing some lines in this script in some editors may lead to quirky results, e.g. in vim,
+# which apparently has issues coping with some of the invisible characters.
+#
 # author: andreasl
 
 replace_chars() {
     sed \
-        -e "s/[’‘]/'/g" \
-        -e 's/[“”]/"/g' \
-        -e 's/[„"]/"/g' \
-        -e 's/[–—−‑‒]/-/g' \
+        -e "s/[’‘‚‛]/'/g" \
+        -e 's/[“”„＂]/"/g' \
+        -e 's/[–—−‑‒―]/-/g' \
         -e 's/[…]/.../g' \
+        -e 's/[•‣◦▪●]/-/g' \
+        -e 's/[×]/x/g' \
+        -e 's|[÷]|/|g' \
+        -e 's/[，]/,/g' \
+        -e 's/[．]/./g' \
+        -e 's/[！]/!/g' \
+        -e 's/[？]/?/g' \
+        -e 's/[；]/;/g' \
+        -e 's/[～]/~/g' \
+        -e 's/[（]/(/g' \
+        -e 's/[）]/)/g' \
+        -e 's/[［]/[/g' \
+        -e 's/[］]/]/g' \
         -e 's/[：]/:/g' \
         -e 's/[｜]/|/g' \
-        -e 's|[⧸]|/|g' \
+        -e 's|[⧸⁄∕]|/|g' \
         -e 's|[＜]|<|g' \
         -e 's|[＞]|>|g' \
-        -e 's/[​ ]//g' # some invisible characters: <0x200b>, <0x202f>
+        -e 's/[             　]/ /g' \
+        -e 's/[­​‌‍‎‏‪‫‬‭‮⁠﻿]//g' # some invisible characters
 }
 
 remove_leading_and_trailing_blank_lines() {
