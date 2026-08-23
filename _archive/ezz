@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ezz - resteazy darker
+# ezz - resteazy darker (X11)
 # Put the pixel brightness to dark after the keyboard & mouse input idled for a given amount of time.
 # Helpful if you want to disable the pixels but want to keep the monitor on.
 #
