@@ -1,18 +1,29 @@
 #!/usr/bin/env bash
-# ez - resteazy (Wayland/GNOME)
-# Blank the display after keyboard/mouse idle.
-#
-# Usage:
-#
-#   ez [<IDLE-SECONDS>]
-#
-# Examples:
-#
-#   ez      # Default to 5 seconds idle time
-#   ez 120  # Allow 120 seconds idle time
-#
 # author: andreasl
 set -eu
+
+show_usage() {
+    cat <<'EOF'
+ez - resteazy
+Blank the display after keyboard/mouse idle.
+
+Usage:
+
+  ez [<IDLE-SECONDS>]
+
+Examples:
+
+  ez      # Default to 5 seconds idle time
+  ez 120  # Allow 120 seconds idle time
+EOF
+}
+
+case ${1:-} in
+-h | --help)
+    show_usage
+    exit 0
+    ;;
+esac
 
 max_idle_time=${1:-5}
 
