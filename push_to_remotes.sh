@@ -32,7 +32,7 @@ for remote_and_url in "${remotes_and_urls[@]}"; do
                 LC_ALL=C sed -E 's/[^_a-zA-Z0-9-]+/-/g;s/^-+|-+$//g' |
                 tr '[:upper:]' '[:lower:]')"
         else
-            remote_branch="$local_branch"
+            remote_branch="$(tr '[:upper:]' '[:lower:]' <<<"$local_branch")"
         fi
         output="$(git push "$remote" HEAD:"$remote_branch" "$@" 2>&1)"
         printf '%s' "$output"
