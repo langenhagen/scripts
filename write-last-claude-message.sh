@@ -62,6 +62,8 @@ extract_message() {
     ' "${transcript_path}"
 }
 
+sleep 0.1 # give Claude time to write the final reply to the transcript first
+
 message=""
 previous_message=""
 attempt=0
